@@ -85,18 +85,18 @@
         </section>
 
         <!-- Tools Grid -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             
             <!-- Tool Card 1: Magic Lamp (Yes or No) -->
             <a href="magiclamp/magiclamp.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex items-start gap-6">
-                    <div class="icon-container w-20 h-20 rounded-2xl bg-yellow-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-5xl text-yellow-600">auto_fix_high</span>
+                <div class="flex flex-col gap-6">
+                    <div class="icon-container w-16 h-16 rounded-2xl bg-yellow-100 flex items-center justify-center shrink-0 transition-transform duration-300">
+                        <span class="material-icons text-4xl text-yellow-600">auto_fix_high</span>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold mb-2" data-key="card1_title">요술 램프 (Yes or No)</h2>
-                        <p class="text-gray-600 leading-relaxed mb-4" data-key="card1_desc">"할까 말까?" 고민되는 질문을 던져보세요. 램프의 요정이 당신의 운명을 점치고 재미있는 조언을 해줍니다.</p>
+                        <h2 class="text-xl font-bold mb-2" data-key="card1_title">요술 램프 (Yes or No)</h2>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card1_desc">"할까 말까?" 고민되는 질문을 던져보세요. 램프의 요정이 당신의 운명을 점치고 재미있는 조언을 해줍니다.</p>
                         <span class="inline-flex items-center text-primary font-medium group-hover:text-primaryLight transition-colors">
                             <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
                         </span>
@@ -104,15 +104,32 @@
                 </div>
             </a>
 
-            <!-- Tool Card 2: Coming Soon -->
-            <div class="tool-card block bg-surface/50 p-8 rounded-3xl border border-dashed border-gray-300 relative overflow-hidden cursor-not-allowed opacity-80">
-                <div class="flex items-start gap-6">
-                    <div class="icon-container w-20 h-20 rounded-2xl bg-gray-200 flex items-center justify-center shrink-0">
-                        <span class="material-icons text-5xl text-gray-400">casino</span>
+            <!-- Tool Card 2: 3D Coin Flip -->
+            <a href="coinflip/coinflip.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                <div class="flex flex-col gap-6">
+                    <div class="icon-container w-16 h-16 rounded-2xl bg-teal-100 flex items-center justify-center shrink-0 transition-transform duration-300">
+                        <span class="material-icons text-4xl text-teal-600">toll</span>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold mb-2 text-gray-500" data-key="card2_title">운명의 주사위</h2>
-                        <p class="text-gray-500 leading-relaxed mb-4" data-key="card2_desc">여러 개의 선택지 중 하나를 골라야 할 때 사용하는 커스텀 룰렛 & 주사위입니다.</p>
+                        <h2 class="text-xl font-bold mb-2" data-key="card2_title">3D 동전 던지기</h2>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card2_desc">앞면일까, 뒷면일까? 실제 같은 3D 물리 효과와 함께 운명에 맡겨보세요. 예측 성공 시 특별한 효과가 나타납니다.</p>
+                        <span class="inline-flex items-center text-secondary font-medium group-hover:text-primaryLight transition-colors">
+                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Tool Card 3: Dice of Destiny (Coming Soon) -->
+            <div class="tool-card block bg-surface/50 p-8 rounded-3xl border border-dashed border-gray-300 relative overflow-hidden cursor-not-allowed opacity-80">
+                <div class="flex flex-col gap-6">
+                    <div class="icon-container w-16 h-16 rounded-2xl bg-gray-200 flex items-center justify-center shrink-0">
+                        <span class="material-icons text-4xl text-gray-400">casino</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold mb-2 text-gray-500" data-key="card3_title">운명의 주사위</h2>
+                        <p class="text-sm text-gray-500 leading-relaxed mb-4" data-key="card3_desc">여러 개의 선택지 중 하나를 골라야 할 때 사용하는 커스텀 룰렛과 주사위 도구입니다.</p>
                         <span class="inline-flex items-center text-gray-400 font-medium" data-key="coming_soon">
                             곧 추가됩니다...
                         </span>
@@ -164,8 +181,10 @@
                 "card1_title": "Magic Lamp (Yes or No)",
                 "card1_desc": "Ask any question on your mind. The genie will predict your destiny and give fun advice.",
                 "use_it": "Try it now",
-                "card2_title": "Dice of Destiny",
-                "card2_desc": "Custom roulette & dice for when you need to pick one from many options.",
+                "card2_title": "3D Coin Flip",
+                "card2_desc": "Heads or Tails? Flip with real 3D physics. Special effects appear on correct predictions.",
+                "card3_title": "Dice of Destiny",
+                "card3_desc": "Custom roulette and dice tools for when you need to pick one from many options.",
                 "coming_soon": "Coming soon...",
                 "article_section_title": "Decision Insights",
                 "art1_title": "Overcoming Decision Fatigue",
@@ -194,8 +213,10 @@
                 "card1_title": "요술 램프 (Yes or No)",
                 "card1_desc": "\"할까 말까?\" 고민되는 질문을 던져보세요. 램프의 요정이 당신의 운명을 점치고 재미있는 조언을 해줍니다.",
                 "use_it": "사용해보기",
-                "card2_title": "운명의 주사위",
-                "card2_desc": "여러 개의 선택지 중 하나를 골라야 할 때 사용하는 커스텀 룰렛 & 주사위입니다.",
+                "card2_title": "3D 동전 던지기",
+                "card2_desc": "앞면일까, 뒷면일까? 실제 같은 3D 물리 효과와 함께 운명에 맡겨보세요. 예측 성공 시 특별한 효과가 나타납니다.",
+                "card3_title": "운명의 주사위",
+                "card3_desc": "여러 개의 선택지 중 하나를 골라야 할 때 사용하는 커스텀 룰렛과 주사위 도구입니다.",
                 "coming_soon": "곧 추가됩니다...",
                 "article_section_title": "의사결정 인사이트",
                 "art1_title": "선택 장애를 극복하는 법",
