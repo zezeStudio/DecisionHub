@@ -761,7 +761,7 @@ function askLamp() {
         }
 
         answerAdvice.textContent = fateData.text;
-        answerFunfact.textContent = fateData.funFact || "";
+        if (answerFunfact) answerFunfact.textContent = fateData.funFact || "";
         
         // Pick Genie's Voice message
         const genieVoice = document.getElementById('genie-voice');
