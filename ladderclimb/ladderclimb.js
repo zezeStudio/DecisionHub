@@ -285,8 +285,7 @@ async function startClimb(playerIndex, isMulti = false) {
     let currentRow = 0;
     const pathColor = playerColors[playerIndex % playerColors.length];
 
-    ctx.strokeStyle = pathColor;
-    ctx.lineWidth = 6;
+    // Set common styles
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
 
@@ -297,15 +296,21 @@ async function startClimb(playerIndex, isMulti = false) {
         currentRow++;
         const endY = padding + currentRow * rowHeight;
 
+        // CRITICAL: Set color right before stroking each segment to prevent multi-color bleeding
+        ctx.strokeStyle = pathColor;
+        ctx.lineWidth = 6;
+
         ctx.beginPath();
         ctx.moveTo(startX, startY);
         ctx.lineTo(startX, endY);
         ctx.stroke();
+        
         if (!isMulti || playerCount < 6) SoundManager.playTick();
         await sleep(isMulti ? 20 : 40);
 
         if (currentCol > 0 && ladderData[currentCol - 1][currentRow]) {
             const endX = padding + (currentCol - 1) * colWidth;
+            ctx.strokeStyle = pathColor; // Ensure color is still correct
             ctx.beginPath();
             ctx.moveTo(startX, endY);
             ctx.lineTo(endX, endY);
@@ -314,6 +319,7 @@ async function startClimb(playerIndex, isMulti = false) {
             await sleep(isMulti ? 30 : 60);
         } else if (currentCol < playerCount - 1 && ladderData[currentCol][currentRow]) {
             const endX = padding + (currentCol + 1) * colWidth;
+            ctx.strokeStyle = pathColor; // Ensure color is still correct
             ctx.beginPath();
             ctx.moveTo(startX, endY);
             ctx.lineTo(endX, endY);
