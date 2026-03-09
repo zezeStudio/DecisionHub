@@ -55,6 +55,14 @@ let players = [];
 let results = [];
 let ladderData = []; // Array of vertical lines and their horizontal bars
 let isAnimating = false;
+let completedPlayers = new Set();
+
+// Path Colors
+const playerColors = [
+    '#6200EE', '#03DAC6', '#FF0266', '#FF9800', 
+    '#4CAF50', '#2196F3', '#9C27B0', '#F44336', 
+    '#795548', '#607D8B'
+];
 
 // DOM Elements
 const playerInputsContainer = document.getElementById('player-inputs');
@@ -124,6 +132,7 @@ function setupLadder() {
         [results[i], results[j]] = [results[j], results[i]];
     }
 
+    completedPlayers.clear();
     generateLadderData();
     drawLadder();
     
@@ -141,9 +150,7 @@ function generateLadderData() {
 
     for (let j = 1; j < rows - 1; j++) {
         for (let i = 0; i < playerCount - 1; i++) {
-            // Randomly place horizontal bars
             if (Math.random() > 0.6) {
-                // Check if adjacent bar exists to prevent overlapping
                 if (i > 0 && ladderData[i - 1][j]) continue;
                 ladderData[i][j] = true;
             }
@@ -151,14 +158,14 @@ function generateLadderData() {
     }
 }
 
-function drawLadder(highlightPaths = []) {
+function drawLadder() {
     const padding = 40;
     const width = 320;
     const height = 400;
     const colWidth = (width - padding * 2) / (playerCount - 1);
     const rowHeight = (height - padding * 2) / (ladderData[0].length - 1);
 
-    canvas.width = width * 2; // High DPI
+    canvas.width = width * 2;
     canvas.height = height * 2;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
@@ -166,16 +173,13 @@ function drawLadder(highlightPaths = []) {
 
     ctx.clearRect(0, 0, width, height);
 
-    // Draw Labels
     ctx.font = 'bold 12px Roboto';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    // Draw Vertical Lines and Names
+    // Draw Vertical Lines
     for (let i = 0; i < playerCount; i++) {
         const x = padding + i * colWidth;
-        
-        // Vertical line
         ctx.beginPath();
         ctx.strokeStyle = '#E5E7EB';
         ctx.lineWidth = 4;
@@ -184,12 +188,10 @@ function drawLadder(highlightPaths = []) {
         ctx.lineTo(x, height - padding);
         ctx.stroke();
 
-        // Name Tag
-        ctx.fillStyle = '#6200EE';
+        // Names and placeholders
+        ctx.fillStyle = playerColors[i % playerColors.length];
         ctx.fillText(players[i], x, padding - 20);
-        
-        // Result Tag (Initially hidden or grayed)
-        ctx.fillStyle = '#9CA3AF';
+        ctx.fillStyle = '#D1D5DB';
         ctx.fillText('???', x, height - padding + 20);
     }
 
@@ -209,110 +211,112 @@ function drawLadder(highlightPaths = []) {
         }
     }
 
-    // Click zones for starting climb
     addClickZones(padding, colWidth, width, height);
 }
 
 function addClickZones(padding, colWidth, width, height) {
-    // We'll use a transparent layer over the names
     const container = document.getElementById('ladder-container');
     const existingZones = container.querySelectorAll('.click-zone');
     existingZones.forEach(z => z.remove());
 
-    const hint = document.createElement('div');
+    const hint = container.querySelector('.click-hint') || document.createElement('div');
     hint.className = 'click-hint absolute top-2 left-0 right-0 text-center text-[10px] text-primary font-bold animate-pulse';
     hint.textContent = translations[currentLang].click_to_start;
-    container.appendChild(hint);
+    if (!container.querySelector('.click-hint')) container.appendChild(hint);
 
     for (let i = 0; i < playerCount; i++) {
         const x = padding + i * colWidth;
         const zone = document.createElement('div');
         zone.className = 'click-zone absolute cursor-pointer hover:bg-primary/10 rounded-full transition-colors';
-        zone.style.left = `${x - 20}px`;
+        zone.style.left = `${x - 25}px`;
         zone.style.top = `${padding - 35}px`;
-        zone.style.width = '40px';
-        zone.style.height = '30px';
+        zone.style.width = '50px';
+        zone.style.height = '35px';
         zone.addEventListener('click', () => startClimb(i));
         container.appendChild(zone);
     }
 }
 
 async function startClimb(playerIndex) {
-    if (isAnimating) return;
+    if (isAnimating || completedPlayers.has(playerIndex)) return;
     isAnimating = true;
     SoundManager.init();
 
     const padding = 40;
-    const width = 320;
-    const height = 400;
-    const colWidth = (width - padding * 2) / (playerCount - 1);
-    const rowHeight = (height - padding * 2) / (ladderData[0].length - 1);
+    const colWidth = (320 - padding * 2) / (playerCount - 1);
+    const rowHeight = (400 - padding * 2) / (ladderData[0].length - 1);
 
     let currentCol = playerIndex;
     let currentRow = 0;
-    
-    const dot = document.createElement('div');
-    dot.className = 'climb-dot';
-    document.getElementById('ladder-container').appendChild(dot);
+    const pathColor = playerColors[playerIndex % playerColors.length];
 
-    const updateDot = (col, row) => {
-        const x = padding + col * colWidth;
-        const y = padding + row * rowHeight;
-        dot.style.left = `${x}px`;
-        dot.style.top = `${y}px`;
-    };
+    ctx.strokeStyle = pathColor;
+    ctx.lineWidth = 6;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
 
     while (currentRow < ladderData[0].length - 1) {
-        updateDot(currentCol, currentRow);
+        const startX = padding + currentCol * colWidth;
+        const startY = padding + currentRow * rowHeight;
         
-        // Move down one step
         currentRow++;
-        await sleep(50);
-        updateDot(currentCol, currentRow);
-        SoundManager.playTick();
+        const endY = padding + currentRow * rowHeight;
 
-        // Check for horizontal bars
-        // Check left
+        // Draw Vertical segment
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(startX, endY);
+        ctx.stroke();
+        SoundManager.playTick();
+        await sleep(40);
+
+        // Check for Horizontal bridge
         if (currentCol > 0 && ladderData[currentCol - 1][currentRow]) {
+            const endX = padding + (currentCol - 1) * colWidth;
+            ctx.beginPath();
+            ctx.moveTo(startX, endY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
             currentCol--;
-            await sleep(100);
-            updateDot(currentCol, currentRow);
-        } 
-        // Check right
-        else if (currentCol < playerCount - 1 && ladderData[currentCol][currentRow]) {
+            await sleep(60);
+        } else if (currentCol < playerCount - 1 && ladderData[currentCol][currentRow]) {
+            const endX = padding + (currentCol + 1) * colWidth;
+            ctx.beginPath();
+            ctx.moveTo(startX, endY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
             currentCol++;
-            await sleep(100);
-            updateDot(currentCol, currentRow);
+            await sleep(60);
         }
     }
 
-    // Finished
     const finalResult = results[currentCol];
+    completedPlayers.add(playerIndex);
+    
     resultSection.classList.remove('hidden');
     resultDisplay.textContent = `${players[playerIndex]} → ${finalResult}`;
+    resultDisplay.style.color = pathColor;
     
-    // Reveal only this result on the ladder
-    revealLadderResult(currentCol, finalResult);
+    revealLadderResult(currentCol, finalResult, pathColor);
     
     if (finalResult.includes('당첨') || finalResult.toLowerCase().includes('win')) {
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 }, colors: [pathColor, '#FFFFFF'] });
     }
 
-    dot.remove();
     isAnimating = false;
 }
 
-function revealLadderResult(colIndex, text) {
+function revealLadderResult(colIndex, text, color = '#1F2937') {
     const padding = 40;
-    const width = 320;
     const height = 400;
-    const colWidth = (width - padding * 2) / (playerCount - 1);
+    const colWidth = (320 - padding * 2) / (playerCount - 1);
     const x = padding + colIndex * colWidth;
     
     ctx.font = 'bold 12px Roboto';
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#1F2937';
-    ctx.clearRect(x - 20, height - padding + 5, 40, 30); // Clear the '???'
+    ctx.fillStyle = color;
+    // Clear area for result text
+    ctx.clearRect(x - 25, height - padding + 5, 50, 30);
     ctx.fillText(text, x, height - padding + 20);
 }
 
