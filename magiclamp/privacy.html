@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인정보처리방침 - 요술 램프</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="magiclamp.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6200EE',
+                        primaryLight: '#BB86FC',
+                        secondary: '#03DAC6',
+                        background: '#0F0524',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-white font-sans antialiased min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/5 backdrop-blur-md border-b border-white/10 z-50">
+        <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="magiclamp.html" class="p-2 -ml-2 rounded-full hover:bg-white/10 focus:outline-none flex items-center text-primaryLight">
+                    <span class="material-icons">arrow_back</span>
+                </a>
+                <span class="text-xl font-bold text-primaryLight" data-key="privacy_nav_title">개인정보처리방침</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-md mx-auto py-24 px-6 w-full flex-grow">
+        <section class="bg-white/5 p-6 rounded-3xl border border-white/10 shadow-lg text-sm text-gray-300 space-y-4 leading-relaxed">
+            <h2 class="text-xl font-bold text-white mb-2" data-key="privacy_promise_title">프라이버시 보호 약속</h2>
+            
+            <p data-key="privacy_promise_desc">Zeze 요술 램프 앱은 사용자 여러분의 개인 정보를 존중하며 보호하기 위해 최선을 다합니다.</p>
+
+            <h3 class="text-md font-bold text-yellow-400 mt-6" data-key="privacy_section1_title">1. 개인정보 수집 및 저장</h3>
+            <p data-key="privacy_section1_desc">본 서비스는 어떠한 개인 식별 정보(이름, 연락처, 이메일 등)도 수집, 저장 또는 공유하지 않습니다. 여러분이 램프에 입력하는 모든 질문과 결과, 통계 데이터는 전적으로 <strong>사용자 기기의 브라우저 로컬 저장소(Local Storage)</strong>에만 안전하게 저장됩니다.</p>
+
+            <h3 class="text-md font-bold text-yellow-400 mt-6" data-key="privacy_section2_title">2. 데이터 제어권</h3>
+            <p data-key="privacy_section2_desc">사용자의 데이터는 외부 서버로 전송되지 않으므로 제3자가 열람할 수 없습니다. 사용자는 앱 내의 '기록 지우기' 옵션을 사용하여 언제든지 자신의 모든 데이터를 완전히 삭제하고 제어할 수 있습니다.</p>
+
+            <h3 class="text-md font-bold text-yellow-400 mt-6" data-key="privacy_section3_title">3. 정책의 변경</h3>
+            <p data-key="privacy_section3_desc">본 개인정보처리방침은 서비스 업데이트 또는 법적 요구사항의 변경에 따라 수정될 수 있습니다. 중요한 변경 사항이 있을 경우 서비스 내 공지사항을 통해 사전에 알려드립니다.</p>
+        </section>
+    </main>
+
+    <script>
+        const translations = {
+            "en": {
+                "privacy_doc_title": "Privacy - Magic Lamp",
+                "privacy_nav_title": "Privacy Policy",
+                "privacy_promise_title": "Privacy Promise",
+                "privacy_promise_desc": "The Zeze Magic Lamp app is committed to respecting and protecting your privacy.",
+                "privacy_section1_title": "1. Data Collection & Storage",
+                "privacy_section1_desc": "This service does not collect, store, or share any personally identifiable information (name, contact, email, etc.). All questions, results, and statistics are stored exclusively and safely in your browser's Local Storage.",
+                "privacy_section2_title": "2. Data Control",
+                "privacy_section2_desc": "Your data is never sent to external servers and cannot be viewed by third parties. You have full control to delete all your data at any time using the 'Clear Log' option.",
+                "privacy_section3_title": "3. Policy Changes",
+                "privacy_section3_desc": "This privacy policy may be updated due to service improvements or legal requirements. Significant changes will be announced within the service."
+            },
+            "ko": {
+                "privacy_doc_title": "개인정보처리방침 - 요술 램프",
+                "privacy_nav_title": "개인정보처리방침",
+                "privacy_promise_title": "프라이버시 보호 약속",
+                "privacy_promise_desc": "Zeze 요술 램프 앱은 사용자 여러분의 개인 정보를 존중하며 보호하기 위해 최선을 다합니다.",
+                "privacy_section1_title": "1. 개인정보 수집 및 저장",
+                "privacy_section1_desc": "본 서비스는 어떠한 개인 식별 정보(이름, 연락처, 이메일 등)도 수집, 저장 또는 공유하지 않습니다. 여러분이 램프에 입력하는 모든 질문과 결과, 통계 데이터는 전적으로 사용자 기기의 브라우저 로컬 저장소(Local Storage)에만 안전하게 저장됩니다.",
+                "privacy_section2_title": "2. 데이터 제어권",
+                "privacy_section2_desc": "사용자의 데이터는 외부 서버로 전송되지 않으므로 제3자가 열람할 수 없습니다. 사용자는 앱 내의 '기록 지우기' 옵션을 사용하여 언제든지 자신의 모든 데이터를 완전히 삭제하고 제어할 수 있습니다.",
+                "privacy_section3_title": "3. 정책의 변경",
+                "privacy_section3_desc": "본 개인정보처리방침은 서비스 업데이트 또는 법적 요구사항의 변경에 따라 수정될 수 있습니다. 중요한 변경 사항이 있을 경우 서비스 내 공지사항을 통해 사전에 알려드립니다."
+            }
+        };
+
+        function applyLanguage() {
+            const lang = localStorage.getItem('lang') || 'ko';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key]; // Use innerHTML for strong tags
+                }
+            });
+            // Update Doc Title
+            if (translations[lang] && translations[lang].privacy_doc_title) {
+                document.title = translations[lang].privacy_doc_title;
+            }
+            document.documentElement.lang = lang;
+        }
+
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
+</body>
+</html>

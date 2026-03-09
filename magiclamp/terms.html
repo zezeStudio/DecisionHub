@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서비스 약관 - 요술 램프</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="magiclamp.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6200EE',
+                        primaryLight: '#BB86FC',
+                        secondary: '#03DAC6',
+                        background: '#0F0524',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-white font-sans antialiased min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/5 backdrop-blur-md border-b border-white/10 z-50">
+        <div class="max-w-md mx-auto px-4 h-16 flex items-center space-x-2">
+            <a href="magiclamp.html" class="p-2 -ml-2 rounded-full hover:bg-white/10 focus:outline-none flex items-center text-primaryLight">
+                <span class="material-icons">arrow_back</span>
+            </a>
+            <span class="text-xl font-bold text-primaryLight" data-key="terms_nav_title">서비스 약관</span>
+        </div>
+    </nav>
+
+    <main class="max-w-md mx-auto py-24 px-6 w-full flex-grow">
+        <section class="bg-white/5 p-6 rounded-3xl border border-white/10 shadow-lg text-sm text-gray-300 space-y-4 leading-relaxed">
+            <h2 class="text-xl font-bold text-white mb-2" data-key="terms_main_title">Zeze Hub 이용 약관</h2>
+            
+            <p data-key="terms_intro">Zeze Decision Hub와 요술 램프 서비스(이하 '본 서비스')를 이용해 주셔서 감사합니다. 본 서비스는 오락 및 가벼운 의사 결정을 돕기 위한 목적으로 제공됩니다.</p>
+
+            <h3 class="text-md font-bold text-yellow-400 mt-6" data-key="terms_section1_title">1. 면책 조항</h3>
+            <p data-key="terms_section1_desc">본 서비스는 암호학적으로 안전한 무작위 난수(Web Crypto API)를 사용하여 결과를 도출하지만, <strong>본 서비스가 제공하는 어떠한 조언이나 결과에 대해서도 법적, 재정적 책임을 지지 않습니다.</strong> 사용자는 본 서비스의 결과를 중요한 인생의 결정, 재정 문제, 또는 심각한 의료/법률적 사안에 사용해서는 안 됩니다.</p>
+
+            <h3 class="text-md font-bold text-yellow-400 mt-6" data-key="terms_section2_title">2. 저작권</h3>
+            <p data-key="terms_section2_desc">본 서비스의 모든 디자인, 텍스트, 코드, SVG 이미지 및 기능은 저작권법의 보호를 받습니다. 무단 복제, 배포, 또는 상업적 이용을 엄격히 금지합니다.</p>
+
+            <h3 class="text-md font-bold text-yellow-400 mt-6" data-key="terms_section3_title">3. 서비스 이용의 제한</h3>
+            <p data-key="terms_section3_desc">욕설, 비방, 불법적인 내용이 포함된 질문을 지속적으로 입력하는 등 서비스의 취지에 어긋나는 비정상적인 이용 시 서비스 접근이 제한될 수 있습니다.</p>
+        </section>
+    </main>
+
+    <script>
+        const translations = {
+            "en": {
+                "terms_doc_title": "Terms - Magic Lamp",
+                "terms_nav_title": "Terms of Service",
+                "terms_main_title": "Zeze Hub Terms of Service",
+                "terms_intro": "Thank you for using Zeze Decision Hub and Magic Lamp service. This service is provided for entertainment and light decision-making assistance.",
+                "terms_section1_title": "1. Disclaimer",
+                "terms_section1_desc": "Although this service uses cryptographically secure randomness (Web Crypto API), <strong>we do not take any legal or financial responsibility for the advice or results provided.</strong> Users should not use results for critical life decisions, financial matters, or serious medical/legal issues.",
+                "terms_section2_title": "2. Copyright",
+                "terms_section2_desc": "All designs, texts, code, SVG images, and features of this service are protected by copyright laws. Unauthorized reproduction, distribution, or commercial use is strictly prohibited.",
+                "terms_section3_title": "3. Usage Restrictions",
+                "terms_section3_desc": "Service access may be restricted for abnormal use that goes against the purpose of the service, such as continuously entering profanity, slander, or illegal content."
+            },
+            "ko": {
+                "terms_doc_title": "서비스 약관 - 요술 램프",
+                "terms_nav_title": "서비스 약관",
+                "terms_main_title": "Zeze Hub 이용 약관",
+                "terms_intro": "Zeze Decision Hub와 요술 램프 서비스(이하 '본 서비스')를 이용해 주셔서 감사합니다. 본 서비스는 오락 및 가벼운 의사 결정을 돕기 위한 목적으로 제공됩니다.",
+                "terms_section1_title": "1. 면책 조항",
+                "terms_section1_desc": "본 서비스는 암호학적으로 안전한 무작위 난수(Web Crypto API)를 사용하여 결과를 도출하지만, <strong>본 서비스가 제공하는 어떠한 조언이나 결과에 대해서도 법적, 재정적 책임을 지지 않습니다.</strong> 사용자는 본 서비스의 결과를 중요한 인생의 결정, 재정 문제, 또는 심각한 의료/법률적 사안에 사용해서는 안 됩니다.",
+                "terms_section2_title": "2. 저작권",
+                "terms_section2_desc": "본 서비스의 모든 디자인, 텍스트, 코드, SVG 이미지 및 기능은 저작권법의 보호를 받습니다. 무단 복제, 배포, 또는 상업적 이용을 엄격히 금지합니다.",
+                "terms_section3_title": "3. 서비스 이용의 제한",
+                "terms_section3_desc": "욕설, 비방, 불법적인 내용이 포함된 질문을 지속적으로 입력하는 등 서비스의 취지에 어긋나는 비정상적인 이용 시 서비스 접근이 제한될 수 있습니다."
+            }
+        };
+
+        function applyLanguage() {
+            const lang = localStorage.getItem('lang') || 'ko';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            // Update Doc Title
+            if (translations[lang] && translations[lang].terms_doc_title) {
+                document.title = translations[lang].terms_doc_title;
+            }
+            document.documentElement.lang = lang;
+        }
+
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
+</body>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가이드 - 요술 램프</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="magiclamp.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6200EE',
+                        primaryLight: '#BB86FC',
+                        secondary: '#03DAC6',
+                        surface: '#FFFFFF',
+                        background: '#0F0524',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-white font-sans antialiased min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/5 backdrop-blur-md border-b border-white/10 z-50">
+        <div class="max-w-md mx-auto px-4 h-16 flex items-center space-x-2">
+            <a href="magiclamp.html" class="p-2 -ml-2 rounded-full hover:bg-white/10 focus:outline-none flex items-center text-primaryLight">
+                <span class="material-icons">arrow_back</span>
+            </a>
+            <span class="text-xl font-bold text-primaryLight" data-key="guide_nav_title">사용 가이드</span>
+        </div>
+    </nav>
+
+    <main class="max-w-md mx-auto py-24 px-6 w-full flex-grow">
+        <section class="bg-white/5 p-6 rounded-3xl border border-white/10 shadow-lg">
+            <h2 class="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+                <span class="material-icons">auto_fix_high</span> <span data-key="guide_title">램프 사용 방법</span>
+            </h2>
+            
+            <div class="space-y-6 text-gray-300 text-sm leading-relaxed">
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2" data-key="guide_step1_title">1. 카테고리 선택</h3>
+                    <p data-key="guide_step1_desc">음식, 연애, 금전 등 당신의 고민에 가장 잘 맞는 카테고리를 먼저 선택해 주세요. 요정이 상황에 맞는 정확한 조언을 해줄 수 있습니다.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2" data-key="guide_step2_title">2. 질문 작성</h3>
+                    <p data-key="guide_step2_desc">반드시 '예' 혹은 '아니오'로 대답할 수 있는 명확한 질문을 적어주세요. 장난스러운 글자나 욕설, 의미 없는 숫자를 입력하면 요정이 대답을 거부할 수 있습니다.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2" data-key="guide_step3_title">3. 램프 문지르기</h3>
+                    <p data-key="guide_step3_desc">질문을 모두 적었다면 하단의 [램프 문지르기] 버튼을 누르세요. 신비로운 연기와 함께 당신의 운명이 나타납니다.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-2" data-key="guide_step4_title">4. 결과 확인 및 공유</h3>
+                    <p data-key="guide_step4_desc">나타난 결과 카드에는 명쾌한 해답, 따뜻한 조언, 그리고 관련된 재미있는 심리학/과학적 사실이 포함되어 있습니다. 카드를 이미지로 저장하거나 친구들에게 바로 공유해보세요!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const translations = {
+            "en": {
+                "guide_doc_title": "Guide - Magic Lamp",
+                "guide_nav_title": "User Guide",
+                "guide_title": "How to use the Lamp",
+                "guide_step1_title": "1. Choose Category",
+                "guide_step1_desc": "Select the category that best fits your concern (Food, Love, Money, etc.). This helps the genie give more accurate advice.",
+                "guide_step2_title": "2. Write your Question",
+                "guide_step2_desc": "Ask a clear Yes/No question. The genie might refuse to answer jokes, profanity, or meaningless numbers.",
+                "guide_step3_title": "3. Rub the Lamp",
+                "guide_step3_desc": "Once your question is ready, click the [Rub the Lamp] button. Your destiny will appear with mystical smoke.",
+                "guide_step4_title": "4. Check & Share",
+                "guide_step4_desc": "The result card includes a clear answer, warm advice, and fun facts. Save the result as an image or share it with friends!"
+            },
+            "ko": {
+                "guide_doc_title": "가이드 - 요술 램프",
+                "guide_nav_title": "사용 가이드",
+                "guide_title": "램프 사용 방법",
+                "guide_step1_title": "1. 카테고리 선택",
+                "guide_step1_desc": "음식, 연애, 금전 등 당신의 고민에 가장 잘 맞는 카테고리를 먼저 선택해 주세요. 요정이 상황에 맞는 정확한 조언을 해줄 수 있습니다.",
+                "guide_step2_title": "2. 질문 작성",
+                "guide_step2_desc": "반드시 '예' 혹은 '아니오'로 대답할 수 있는 명확한 질문을 적어주세요. 장난스러운 글자나 욕설, 의미 없는 숫자를 입력하면 요정이 대답을 거부할 수 있습니다.",
+                "guide_step3_title": "3. 램프 문지르기",
+                "guide_step3_desc": "질문을 모두 적었다면 하단의 [램프 문지르기] 버튼을 누르세요. 신비로운 연기와 함께 당신의 운명이 나타납니다.",
+                "guide_step4_title": "4. 결과 확인 및 공유",
+                "guide_step4_desc": "나타난 결과 카드에는 명쾌한 해답, 따뜻한 조언, 그리고 관련된 재미있는 심리학/과학적 사실이 포함되어 있습니다. 카드를 이미지로 저장하거나 친구들에게 바로 공유해보세요!"
+            }
+        };
+
+        function applyLanguage() {
+            const lang = localStorage.getItem('lang') || 'ko';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            // Update Doc Title
+            if (translations[lang] && translations[lang].guide_doc_title) {
+                document.title = translations[lang].guide_doc_title;
+            }
+            document.documentElement.lang = lang;
+        }
+
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
+</body>
+</html>
