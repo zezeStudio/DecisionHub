@@ -1,0 +1,101 @@
+/* 3D Coin Flip Styling */
+
+:root {
+    --secondary: #03DAC6;
+    --gold: #FFD700;
+    --coin-size: 140px;
+}
+
+body {
+    background: radial-gradient(circle at center, #162447 0%, #0A192F 100%);
+    overflow-x: hidden;
+}
+
+/* Prediction Buttons */
+.predict-btn.active {
+    background-color: rgba(3, 218, 198, 0.15);
+    border-color: var(--secondary);
+    box-shadow: 0 0 20px rgba(3, 218, 198, 0.2);
+    transform: scale(1.05);
+}
+
+/* Coin Container */
+.coin-container {
+    perspective: 1000px;
+    width: var(--coin-size);
+    height: var(--coin-size);
+    z-index: 10;
+}
+
+.coin {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.1s linear;
+}
+
+.side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    backface-visibility: hidden;
+    border: 8px solid #B8860B;
+    background: linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #8B6508 100%);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.2), 0 0 15px rgba(255,215,0,0.3);
+}
+
+.front {
+    z-index: 2;
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+/* Coin Edge (Thickness) */
+.coin::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #8B6508;
+    transform: translateZ(-4px);
+}
+
+/* Flipping Animation */
+@keyframes coin-flip-animation {
+    0% { transform: translateY(0) rotateY(0) rotateX(0); }
+    30% { transform: translateY(-150px) rotateY(720deg) rotateX(180deg); }
+    70% { transform: translateY(-150px) rotateY(1440deg) rotateX(360deg); }
+    100% { transform: translateY(0); }
+}
+
+.is-flipping {
+    animation: coin-flip-animation 1.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+/* Win Badge Animation */
+@keyframes badge-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+#win-badge {
+    animation: badge-bounce 0.5s ease-in-out infinite;
+}
+
+/* Language Button Active State */
+.lang-btn.active {
+    background-color: var(--secondary);
+    color: #0A192F;
+    border-color: var(--secondary);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 640px) {
+    :root {
+        --coin-size: 120px;
+    }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="app_title">3D 동전 던지기 - Zeze Hub</title>
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="coinflip.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6200EE',
+                        primaryLight: '#BB86FC',
+                        secondary: '#03DAC6',
+                        surface: '#FFFFFF',
+                        background: '#0A192F', // Dark Slate Blue
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-white font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/5 backdrop-blur-md border-b border-white/10 z-50">
+        <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-white/10 focus:outline-none flex items-center text-secondary">
+                    <span class="material-icons">arrow_back</span>
+                </a>
+                <span class="text-xl font-bold text-secondary" data-key="app_name">3D Coin Flip</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button id="sound-toggle" class="p-2 rounded-full hover:bg-white/10 focus:outline-none transition-colors">
+                    <span class="material-icons text-white" id="sound-icon">volume_up</span>
+                </button>
+                <button id="menu-toggle" class="p-2 rounded-full hover:bg-white/10 focus:outline-none">
+                    <span class="material-icons text-white">menu</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="fixed top-0 right-0 h-full w-64 bg-[#050c1d] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-white/5">
+        <div class="flex items-center justify-between p-4 border-b border-white/10">
+            <span class="text-lg font-medium" data-key="menu_sidebar_title">메뉴</span>
+            <button id="close-menu" class="p-2 rounded-full hover:bg-white/10">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        <ul class="p-4 space-y-2 text-sm text-gray-300">
+            <li><a href="../magiclamp/guide.html" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="guide_title">사용 가이드</a></li>
+            <li><a href="../magiclamp/privacy.html" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="privacy_policy">개인정보처리방침</a></li>
+            <li><a href="../magiclamp/terms.html" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="terms_of_service">서비스 약관</a></li>
+            <li class="py-2"><hr class="border-white/10"></li>
+            <li>
+                <span class="block text-[10px] text-gray-500 mb-2 uppercase tracking-widest" data-key="language_select_label">Language</span>
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="lang-btn p-2 rounded-md bg-secondary text-[#0A192F] font-bold" data-lang="ko">한국어</button>
+                    <button class="lang-btn p-2 rounded-md bg-white/5 border border-white/10" data-lang="en">English</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
+
+    <!-- Main Content -->
+    <main class="max-w-md mx-auto py-24 px-4 w-full flex-grow flex flex-col">
+        <!-- Hero Section -->
+        <section class="text-center mb-10">
+            <h1 class="text-3xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-b from-teal-200 to-secondary" data-key="main_title">3D 동전 던지기</h1>
+            <p class="text-sm text-gray-400" data-key="main_description">운명은 앞면일까요, 뒷면일까요?</p>
+        </section>
+
+        <!-- Prediction Mode -->
+        <section class="bg-white/5 p-4 rounded-2xl border border-white/10 mb-8 text-center">
+            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4" data-key="prediction_label">결과를 예측해보세요</h2>
+            <div class="flex justify-center gap-4">
+                <button class="predict-btn flex-1 py-3 rounded-xl border border-white/10 hover:bg-secondary/10 transition-all flex flex-col items-center gap-1" data-predict="heads">
+                    <span class="material-icons text-secondary">face</span>
+                    <span class="text-xs font-bold" data-key="heads_label">앞면</span>
+                </button>
+                <button class="predict-btn flex-1 py-3 rounded-xl border border-white/10 hover:bg-secondary/10 transition-all flex flex-col items-center gap-1" data-predict="tails">
+                    <span class="material-icons text-teal-400">toll</span>
+                    <span class="text-xs font-bold" data-key="tails_label">뒷면</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Coin Stage -->
+        <section class="relative flex flex-col items-center justify-center min-h-[300px]">
+            <div id="coin-container" class="coin-container">
+                <div id="coin" class="coin">
+                    <div class="side front flex items-center justify-center">
+                        <span class="material-icons text-6xl text-[#8B6508]">face</span>
+                    </div>
+                    <div class="side back flex items-center justify-center">
+                        <span class="material-icons text-6xl text-[#8B6508]">toll</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Overlay -->
+            <div id="coin-result-overlay" class="absolute inset-0 flex items-center justify-center pointer-events-none z-20 opacity-0 scale-50 transition-all duration-500">
+                <div class="bg-[#050c1d]/90 backdrop-blur-xl p-6 rounded-3xl border border-secondary/30 shadow-[0_0_40px_rgba(3,218,198,0.3)] text-center">
+                    <div id="win-badge" class="hidden inline-block px-3 py-1 bg-yellow-500 text-[#050c1d] text-[10px] font-black rounded-full mb-3 uppercase tracking-tighter" data-key="win_label">예측 성공!</div>
+                    <div id="result-text" class="text-4xl font-black text-secondary tracking-tighter mb-2">HEADS</div>
+                    <div id="result-advice" class="text-xs text-gray-400 max-w-[200px]">운명적인 결과가 나왔습니다.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flip Button -->
+        <button id="flip-button" class="mt-10 w-full bg-gradient-to-r from-secondary to-teal-600 text-[#0A192F] py-4 rounded-full text-xl font-black shadow-[0_0_20px_rgba(3,218,198,0.4)] hover:shadow-[0_0_30px_rgba(3,218,198,0.6)] transition-all duration-300 active:scale-95 group relative overflow-hidden">
+            <span class="relative z-10 flex items-center justify-center gap-2">
+                <span class="material-icons">cached</span>
+                <span data-key="flip_btn">동전 던지기</span>
+            </span>
+            <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+        </button>
+
+        <!-- Stats -->
+        <section class="grid grid-cols-3 gap-4 text-center mt-12 bg-white/5 p-6 rounded-2xl border border-white/10">
+            <div>
+                <div class="text-2xl font-bold text-secondary" id="total-flips">0</div>
+                <div class="text-[10px] text-gray-500" data-key="stat_total">Total Flips</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-white" id="heads-count">0</div>
+                <div class="text-[10px] text-gray-500" data-key="stat_heads">Heads</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-white" id="tails-count">0</div>
+                <div class="text-[10px] text-gray-500" data-key="stat_tails">Tails</div>
+            </div>
+        </section>
+
+        <!-- Share Buttons -->
+        <div class="flex gap-3 mt-6 opacity-0 transition-opacity duration-500" id="share-buttons">
+            <button id="save-img-btn" class="flex-1 flex items-center justify-center gap-2 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-white transition-all border border-white/10">
+                <span class="material-icons text-sm">download</span> <span data-key="save_img_btn">저장</span>
+            </button>
+            <button id="share-link-btn" class="flex-1 flex items-center justify-center gap-2 py-3 bg-secondary/10 hover:bg-secondary/20 rounded-xl text-xs font-bold text-secondary transition-all border border-secondary/20">
+                <span class="material-icons text-sm">share</span> <span data-key="copy_link_btn">공유</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-[10px] text-gray-600">
+        <p data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="coinflip.js" defer></script>
+
+</body>
+</html>
