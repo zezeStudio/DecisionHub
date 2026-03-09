@@ -80,6 +80,25 @@
             <p class="text-sm text-gray-400" data-key="main_description">운명은 앞면일까요, 뒷면일까요?</p>
         </section>
 
+        <!-- Scenario Selection -->
+        <section class="mb-6 px-1">
+            <h2 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 text-center" data-key="scenario_label">고민 테마 선택</h2>
+            <div id="scenario-container" class="flex justify-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+                <button class="scenario-btn flex-shrink-0 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold transition-all active" data-scenario="daily">
+                    <span class="flex items-center gap-1"><span class="material-icons text-[14px]">today</span> <span data-key="sc_daily">일상</span></span>
+                </button>
+                <button class="scenario-btn flex-shrink-0 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold transition-all" data-scenario="love">
+                    <span class="flex items-center gap-1"><span class="material-icons text-[14px] text-pink-500">favorite</span> <span data-key="sc_love">연애</span></span>
+                </button>
+                <button class="scenario-btn flex-shrink-0 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold transition-all" data-scenario="adventure">
+                    <span class="flex items-center gap-1"><span class="material-icons text-[14px] text-yellow-500">explore</span> <span data-key="sc_adventure">모험</span></span>
+                </button>
+                <button class="scenario-btn flex-shrink-0 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold transition-all" data-scenario="food">
+                    <span class="flex items-center gap-1"><span class="material-icons text-[14px] text-orange-500">restaurant</span> <span data-key="sc_food">메뉴</span></span>
+                </button>
+            </div>
+        </section>
+
         <!-- Prediction Mode -->
         <section class="bg-white/5 p-4 rounded-2xl border border-white/10 mb-6 text-center">
             <h2 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4" data-key="prediction_label">결과를 예측해보세요</h2>
@@ -95,7 +114,7 @@
             </div>
         </section>
 
-        <!-- Coin Skin Selector (New) -->
+        <!-- Coin Skin Selector -->
         <section class="mb-8 px-1">
             <h2 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 text-center" data-key="skin_label">동전 스킨 선택</h2>
             <div id="skin-container" class="flex justify-center gap-3">
@@ -116,7 +135,7 @@
 
         <!-- Coin Stage -->
         <section class="relative flex flex-col items-center justify-center min-h-[300px]">
-            <!-- Streak Counter (New) -->
+            <!-- Streak Counter -->
             <div id="streak-counter" class="absolute top-0 right-4 flex flex-col items-center opacity-0 transition-opacity duration-500">
                 <span class="text-[10px] font-bold text-yellow-500 uppercase" data-key="streak_label">STREAK</span>
                 <span id="streak-value" class="text-3xl font-black text-white italic">0</span>
@@ -153,18 +172,46 @@
         </button>
 
         <!-- Stats -->
-        <section class="grid grid-cols-3 gap-4 text-center mt-12 bg-white/5 p-6 rounded-2xl border border-white/10">
-            <div>
-                <div class="text-2xl font-bold text-secondary" id="total-flips">0</div>
-                <div class="text-[10px] text-gray-500" data-key="stat_total">Total Flips</div>
+        <section class="mt-12">
+            <div class="flex justify-between items-end mb-2 px-1">
+                <h2 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest" data-key="stat_label">Statistics</h2>
+                <button id="clear-history-btn" class="text-[10px] font-bold text-red-400/60 hover:text-red-400 transition-colors uppercase tracking-widest flex items-center gap-1" data-key="clear_history_btn">
+                    <span class="material-icons text-[12px]">delete_sweep</span>
+                    <span>기록 지우기</span>
+                </button>
             </div>
-            <div>
-                <div class="text-2xl font-bold text-white" id="heads-count">0</div>
-                <div class="text-[10px] text-gray-500" data-key="stat_heads">Heads</div>
+            <div class="grid grid-cols-3 gap-4 text-center bg-white/5 p-6 rounded-2xl border border-white/10">
+                <div>
+                    <div class="text-2xl font-bold text-secondary" id="total-flips">0</div>
+                    <div class="text-[10px] text-gray-500" data-key="stat_total">Total Flips</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-white" id="heads-count">0</div>
+                    <div class="text-[10px] text-gray-500" data-key="stat_heads">Heads</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-white" id="tails-count">0</div>
+                    <div class="text-[10px] text-gray-500" data-key="stat_tails">Tails</div>
+                </div>
             </div>
-            <div>
-                <div class="text-2xl font-bold text-white" id="tails-count">0</div>
-                <div class="text-[10px] text-gray-500" data-key="stat_tails">Tails</div>
+        </section>
+
+        <!-- Destiny Story Section -->
+        <section id="destiny-section" class="mt-6 opacity-0 transition-all duration-700 transform translate-y-4">
+            <div class="bg-gradient-to-br from-secondary/20 to-primary/20 p-[1px] rounded-3xl">
+                <div class="bg-[#0A192F] p-6 rounded-[23px] border border-white/5 relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center">
+                            <span class="material-icons text-secondary" id="story-icon">auto_awesome</span>
+                        </div>
+                        <div>
+                            <h3 class="text-[10px] font-black text-secondary uppercase tracking-[0.2em]" data-key="destiny_title">Current Destiny</h3>
+                            <div class="text-lg font-bold text-white" id="story-theme-name">운명의 기록</div>
+                        </div>
+                    </div>
+                    <p id="story-display-text" class="text-gray-300 leading-relaxed text-sm italic break-keep">동전을 던져 당신의 운명을 확인해보세요...</p>
+                </div>
             </div>
         </section>
 

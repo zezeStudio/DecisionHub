@@ -22,13 +22,18 @@ const translations = {
         "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
         "heads_text": "HEADS",
         "tails_text": "TAILS",
-        "advice_heads": "A positive sign! Luck is on your side.",
-        "advice_tails": "The flip says tails. Maybe wait a bit?",
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
         "skin_label": "Choose Coin Skin",
-        "streak_label": "Streak"
+        "streak_label": "Streak",
+        "scenario_label": "Choose Theme",
+        "sc_daily": "Daily",
+        "sc_love": "Love",
+        "sc_adventure": "Adventure",
+        "sc_food": "Menu",
+        "destiny_title": "Current Destiny",
+        "clear_history_btn": "Clear History"
     },
     "ko": {
         "app_title": "3D 동전 던지기 - Zeze Hub",
@@ -46,24 +51,77 @@ const translations = {
         "stat_total": "총 던진 횟수",
         "stat_heads": "앞면",
         "stat_tails": "뒷면",
-        "save_img_btn": "저장",
+        "save_img_btn": "기록 저장",
         "copy_link_btn": "복사",
         "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
         "heads_text": "앞면 (Heads)",
         "tails_text": "뒷면 (Tails)",
-        "advice_heads": "긍정적인 신호입니다! 행운이 따르겠네요.",
-        "advice_tails": "뒷면이 나왔습니다. 조금 더 신중해볼까요?",
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
         "terms_of_service": "서비스 약관",
         "skin_label": "동전 스킨 선택",
-        "streak_label": "연승 기록"
+        "streak_label": "연승 기록",
+        "scenario_label": "고민 테마 선택",
+        "sc_daily": "일상",
+        "sc_love": "연애",
+        "sc_adventure": "모험",
+        "sc_food": "메뉴",
+        "destiny_title": "오늘의 운명 기록",
+        "clear_history_btn": "기록 지우기"
+    }
+};
+
+const storyData = {
+    "daily": {
+        "icon": "today",
+        "heads": { 
+            "ko": "오늘 당신의 에너지가 최고조에 달해 있습니다! 우주는 당신이 망설이던 그 일을 시작하라는 강력한 신호를 보내고 있네요. 뒤돌아보지 말고 첫발을 내디뎌 보세요. 행동하는 사람에게만 승리의 여신이 미소 지을 것입니다.", 
+            "en": "Your energy is at its peak today! The universe is sending a strong signal to start what you've been hesitating about. Take the first step without looking back. The goddess of victory smiles only on those who act." 
+        },
+        "tails": { 
+            "ko": "아무리 바쁜 여행자라도 때로는 휴식이 필요한 법입니다. 오늘만큼은 무거운 짐을 내려놓고 잠시 하늘을 바라보는 여유를 가져보세요. 오늘 취하는 짧은 휴식이 내일 더 큰 도약을 위한 소중한 원동력이 될 것입니다.", 
+            "en": "Even the busiest traveler needs a rest sometimes. For today, put down your heavy burdens and take a moment to look at the sky. A short break today will be a valuable driving force for a bigger leap tomorrow." 
+        }
+    },
+    "love": {
+        "icon": "favorite",
+        "heads": { 
+            "ko": "진심은 언제나 마음을 움직이는 가장 강력한 마법입니다. 지금 머릿속에 떠오르는 그 사람이 있다면, 용기를 내어 먼저 손을 내밀어 보세요. 짧은 안부 인사 하나가 두 사람의 인생을 바꿀 아름다운 이야기의 시작이 될 수 있습니다.", 
+            "en": "Sincerity is always the most powerful magic that moves the heart. If there is someone who comes to mind right now, gather your courage and reach out first. A short greeting can be the beginning of a beautiful story." 
+        },
+        "tails": { 
+            "ko": "서두를 필요 없습니다. 인연의 시간은 자연스럽게 다가올 거예요. 지금은 타인이 아닌, 당신 자신을 먼저 사랑하고 돌볼 시간입니다. 당신의 매력이 충분히 빛을 발할 때, 가장 아름다운 사랑이 당신 곁에 머물게 될 것입니다.", 
+            "en": "No need to rush. The right time for love will come naturally. Now is the time to love and care for yourself first. When your charm shines enough, the most beautiful love will stay by your side." 
+        }
+    },
+    "adventure": {
+        "icon": "explore",
+        "heads": { 
+            "ko": "축하합니다! 당신은 숨겨진 황금 보물 상자를 발견했습니다. 험난한 길 너머에는 상상을 초월하는 보상이 기다리고 있을 것입니다. 당신의 검과 용기를 단단히 챙기고, 미지의 세계를 향해 과감하게 전진하세요!", 
+            "en": "Congratulations! You've discovered a hidden golden treasure chest. Beyond the rugged path, rewards beyond your imagination await. Pack your sword and courage tightly, and advance boldly into the unknown world!" 
+        },
+        "tails": { 
+            "ko": "짙은 안개가 앞길을 가리고 있습니다. 무모하게 전진하는 것은 위험한 함정에 빠지는 지름길이 될 수 있습니다. 지금은 칼을 갈고 지도를 다시 점검하며 때를 기다려야 합니다. 인내심 또한 위대한 모험가가 갖춰야 할 최고의 기술입니다.", 
+            "en": "A thick fog is blocking the path ahead. Advancing recklessly could be a shortcut to a dangerous trap. Now is the time to sharpen your sword, re-check the map, and wait for the right moment. Patience is also the best skill a great adventurer should have." 
+        }
+    },
+    "food": {
+        "icon": "restaurant",
+        "heads": { 
+            "ko": "오늘은 짜릿하고 강렬한 매운맛이 당신의 운명을 깨울 메뉴입니다! 입안 가득 퍼지는 강렬한 자극이 오늘 하루의 모든 스트레스를 시원하게 날려버릴 것입니다. 고민하지 말고 당신의 미각을 자극하는 화끈한 선택을 하세요.", 
+            "en": "Today, a thrilling and intense spicy flavor is the menu that will wake up your destiny! The intense stimulation will refreshingly blow away all the stress of the day. Don't hesitate and make a bold choice that stimulates your taste buds." 
+        },
+        "tails": { 
+            "ko": "부드럽고 담백한 한 끼 식사가 지친 당신의 영혼을 포근하게 감싸줄 것입니다. 자극적인 것보다는 속을 편안하게 해주고 마음을 안정시키는 메뉴를 선택해 보세요. 평온한 식사 시간이 당신의 하루를 치유해 줄 것입니다.", 
+            "en": "A soft and warm meal will cozily wrap around your tired soul. Choose a menu that comforts your stomach and stabilizes your mind rather than something stimulating. A peaceful mealtime will heal your day." 
+        }
     }
 };
 
 let currentLang = localStorage.getItem('lang') || 'ko';
 let selectedPrediction = null;
 let currentSkin = localStorage.getItem('coin_skin') || 'gold';
+let currentScenario = 'daily';
 
 // State
 let totalFlips = parseInt(localStorage.getItem('coin_total')) || 0;
@@ -73,6 +131,7 @@ let currentStreak = 0;
 
 // DOM
 const coin = document.getElementById('coin');
+const coinContainer = document.getElementById('coin-container');
 const flipButton = document.getElementById('flip-button');
 const resultOverlay = document.getElementById('coin-result-overlay');
 const resultText = document.getElementById('result-text');
@@ -81,6 +140,11 @@ const winBadge = document.getElementById('win-badge');
 const shareButtons = document.getElementById('share-buttons');
 const streakCounter = document.getElementById('streak-counter');
 const streakValue = document.getElementById('streak-value');
+
+const destinySection = document.getElementById('destiny-section');
+const storyDisplayText = document.getElementById('story-display-text');
+const storyIcon = document.getElementById('story-icon');
+const storyThemeName = document.getElementById('story-theme-name');
 
 const totalFlipsDisplay = document.getElementById('total-flips');
 const headsCountDisplay = document.getElementById('heads-count');
@@ -166,73 +230,61 @@ function updateDisplay() {
 function applySkin(skin) {
     currentSkin = skin;
     localStorage.setItem('coin_skin', skin);
-    
-    // Update coin class
     coin.className = `coin skin-${skin}`;
-    
-    // Update icons based on skin
     const frontIcon = coin.querySelector('.front .coin-icon');
     const backIcon = coin.querySelector('.back .coin-icon');
     
-    if (skin === 'gold') {
-        frontIcon.textContent = 'face';
-        backIcon.textContent = 'toll';
-    } else if (skin === 'bitcoin') {
-        frontIcon.textContent = 'currency_bitcoin';
-        backIcon.textContent = 'savings';
-    } else if (skin === 'heart') {
-        frontIcon.textContent = 'favorite';
-        backIcon.textContent = 'favorite_border';
-    } else if (skin === 'cat') {
-        frontIcon.textContent = 'pets';
-        backIcon.textContent = 'catching_pokemon';
-    }
+    if (skin === 'gold') { frontIcon.textContent = 'face'; backIcon.textContent = 'toll'; }
+    else if (skin === 'bitcoin') { frontIcon.textContent = 'currency_bitcoin'; backIcon.textContent = 'savings'; }
+    else if (skin === 'heart') { frontIcon.textContent = 'favorite'; backIcon.textContent = 'favorite_border'; }
+    else if (skin === 'cat') { frontIcon.textContent = 'pets'; backIcon.textContent = 'catching_pokemon'; }
 
-    // Update active button
-    document.querySelectorAll('.skin-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.skin === skin);
-    });
+    document.querySelectorAll('.skin-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.skin === skin));
 }
 
 function flipCoin() {
     if (flipButton.disabled) return;
     
-    const coinContainer = document.getElementById('coin-container');
     flipButton.disabled = true;
     resultOverlay.classList.remove('answer-visible');
     resultOverlay.classList.add('opacity-0', 'scale-50');
     shareButtons.classList.add('opacity-0');
     
-    // Random Result
+    // Animate destiny section exit
+    destinySection.classList.add('opacity-0', 'translate-y-4');
+    
     const isHeads = Math.random() < 0.5;
     
-    // Animation Logic
     coinContainer.classList.remove('is-jumping');
-    void coinContainer.offsetWidth; // reflow
+    void coinContainer.offsetWidth;
     coinContainer.classList.add('is-jumping');
 
-    // Rotation Logic
     const currentRotationY = getRotationY(coin);
     const extraSpins = (Math.floor(Math.random() * 5) + 5) * 360;
     const targetRotationY = isHeads ? 0 : 180;
     const finalRotationY = currentRotationY + extraSpins + (targetRotationY - (currentRotationY % 360));
-    
-    // Add some random X rotation for variety, but ensure it ends at a multiple of 360
     const finalRotationX = (Math.floor(Math.random() * 5) + 5) * 360;
     
     coin.style.transform = `rotateY(${finalRotationY}deg) rotateX(${finalRotationX}deg)`;
     SoundManager.playFlip();
 
     setTimeout(() => {
-        // Show Results
         const t = translations[currentLang];
+        const scenarioData = storyData[currentScenario];
+        const scenarioText = scenarioData[isHeads ? 'heads' : 'tails'][currentLang];
+        
         resultText.textContent = isHeads ? t.heads_text : t.tails_text;
-        resultAdvice.textContent = isHeads ? t.advice_heads : t.advice_tails;
+        resultAdvice.textContent = isHeads ? "Positive Sign" : "Wait a moment";
+        
+        // Update Bottom Story Card
+        storyDisplayText.textContent = scenarioText;
+        storyIcon.textContent = scenarioData.icon;
+        storyThemeName.textContent = t[`sc_${currentScenario}`];
+        destinySection.classList.remove('opacity-0', 'translate-y-4');
         
         totalFlips++;
         if (isHeads) headsCount++; else tailsCount++;
         
-        // Check Prediction
         if (selectedPrediction) {
             const isWin = selectedPrediction === (isHeads ? 'heads' : 'tails');
             if (isWin) {
@@ -249,9 +301,7 @@ function flipCoin() {
                 winBadge.classList.remove('hidden');
                 SoundManager.playLose();
             }
-        } else {
-            winBadge.classList.add('hidden');
-        }
+        } else { winBadge.classList.add('hidden'); }
 
         resultOverlay.classList.remove('opacity-0', 'scale-50');
         resultOverlay.classList.add('answer-visible');
@@ -264,18 +314,6 @@ function flipCoin() {
 }
 
 function getRotationY(el) {
-    const st = window.getComputedStyle(el, null);
-    const tr = st.getPropertyValue("transform");
-    if (tr === "none") return 0;
-    
-    const values = tr.split('(')[1].split(')')[0].split(',');
-    const a = values[0];
-    const b = values[1];
-    const c = values[2];
-    const d = values[3];
-    
-    // This is for 2D matrix. For 3D matrix (matrix3d), it's more complex.
-    // However, since we only use rotateY, we can just track it in a variable or parse style.transform
     const transformStr = el.style.transform;
     if (transformStr && transformStr.includes('rotateY')) {
         const match = transformStr.match(/rotateY\((.+?)deg\)/);
@@ -290,13 +328,31 @@ function saveState() {
     localStorage.setItem('coin_tails', tailsCount);
 }
 
+function clearHistory() {
+    if (confirm(currentLang === 'ko' ? "모든 기록을 초기화할까요?" : "Are you sure you want to clear all history?")) {
+        totalFlips = 0;
+        headsCount = 0;
+        tailsCount = 0;
+        currentStreak = 0;
+        saveState();
+        updateDisplay();
+        
+        // Hide destiny section
+        destinySection.classList.add('opacity-0', 'translate-y-4');
+        resultOverlay.classList.remove('answer-visible');
+        resultOverlay.classList.add('opacity-0');
+        shareButtons.classList.add('opacity-0');
+        
+        // Close Sidebar
+        document.getElementById('sidebar-menu').classList.add('translate-x-full');
+        document.getElementById('sidebar-overlay').classList.add('hidden');
+    }
+}
+
 function applyLanguage() {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.dataset.key;
         if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
-    });
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === currentLang);
     });
 }
 
@@ -306,13 +362,17 @@ function setLanguage(lang) {
     applyLanguage();
 }
 
-// Image Capture
 async function saveImage() {
-    const card = document.querySelector('#coin-result-overlay > div');
-    const canvas = await html2canvas(card, { backgroundColor: '#050c1d', scale: 2 });
+    const target = document.querySelector('#destiny-section > div');
+    const canvas = await html2canvas(target, { 
+        backgroundColor: '#0A192F', 
+        scale: 2,
+        useCORS: true,
+        borderRadius: 24
+    });
     const link = document.createElement('a');
-    link.download = `Zeze_CoinFlip_${Date.now()}.png`;
-    link.href = canvas.toDataURL();
+    link.download = `Zeze_Destiny_${Date.now()}.png`;
+    link.href = canvas.toDataURL('image/png');
     link.click();
 }
 
@@ -320,6 +380,7 @@ function setupEventListeners() {
     flipButton.addEventListener('click', flipCoin);
     document.getElementById('sound-toggle').addEventListener('click', () => SoundManager.toggleMute());
     document.getElementById('save-img-btn').addEventListener('click', saveImage);
+    document.getElementById('clear-history-btn').addEventListener('click', clearHistory);
     
     document.querySelectorAll('.predict-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -330,8 +391,14 @@ function setupEventListeners() {
     });
 
     document.querySelectorAll('.skin-btn').forEach(btn => {
+        btn.addEventListener('click', () => applySkin(btn.dataset.skin));
+    });
+
+    document.querySelectorAll('.scenario-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            applySkin(btn.dataset.skin);
+            document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentScenario = btn.dataset.scenario;
         });
     });
 
@@ -339,7 +406,6 @@ function setupEventListeners() {
         btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
     });
 
-    // Sidebar
     const sidebarMenu = document.getElementById('sidebar-menu');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
     document.getElementById('menu-toggle').addEventListener('click', () => {
