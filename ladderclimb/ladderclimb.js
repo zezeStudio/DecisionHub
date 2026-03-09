@@ -188,9 +188,9 @@ function drawLadder() {
         ctx.lineTo(x, height - padding);
         ctx.stroke();
 
-        // Names and placeholders
+        // Names and placeholders - Adjusted position to be closer to the line
         ctx.fillStyle = playerColors[i % playerColors.length];
-        ctx.fillText(players[i], x, padding - 20);
+        ctx.fillText(players[i], x, padding - 15); 
         ctx.fillStyle = '#D1D5DB';
         ctx.fillText('???', x, height - padding + 20);
     }
@@ -227,11 +227,15 @@ function addClickZones(padding, colWidth, width, height) {
     for (let i = 0; i < playerCount; i++) {
         const x = padding + i * colWidth;
         const zone = document.createElement('div');
-        zone.className = 'click-zone absolute cursor-pointer hover:bg-primary/10 rounded-full transition-colors';
+        zone.className = 'click-zone absolute cursor-pointer hover:bg-primary/5 rounded-xl border border-transparent hover:border-primary/20 transition-all flex items-center justify-center group';
         zone.style.left = `${x - 25}px`;
-        zone.style.top = `${padding - 35}px`;
+        zone.style.top = `${padding - 30}px`; // Better alignment with name
         zone.style.width = '50px';
-        zone.style.height = '35px';
+        zone.style.height = '30px';
+        
+        // Add a small indicator dot on hover
+        zone.innerHTML = '<div class="w-1 h-1 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity mt-4"></div>';
+        
         zone.addEventListener('click', () => startClimb(i));
         container.appendChild(zone);
     }
