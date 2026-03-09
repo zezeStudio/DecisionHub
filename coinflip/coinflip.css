@@ -123,11 +123,20 @@ body {
     animation: badge-bounce 0.5s ease-in-out infinite;
 }
 
-/* Language Button Active State */
-.lang-btn.active {
+/* Scenario Selector Buttons */
+.scenario-btn.active {
     background-color: var(--secondary);
     color: #0A192F;
     border-color: var(--secondary);
+    box-shadow: 0 0 15px rgba(3, 218, 198, 0.4);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 /* Mobile Adjustments */
