@@ -6,7 +6,7 @@
     <title>Zeze's Decision Hub - 선택의 순간</title>
     <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
@@ -63,7 +63,7 @@
             <p class="text-lg text-gray-600" data-key="hub_desc">당신의 고민에 맞는 도구를 선택해 보세요. 앞으로 더 많은 기능이 추가될 예정입니다.</p>
         </section>
 
-        <!-- Daily Fortune Section (New) -->
+        <!-- Daily Fortune Section -->
         <section class="mb-16">
             <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-3xl p-1 shadow-xl">
                 <div class="bg-surface rounded-[22px] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -82,6 +82,7 @@
                     <button id="draw-fortune-btn" class="bg-gray-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-black transition-all shrink-0 shadow-lg active:scale-95" onclick="drawFortune()" data-key="draw_fortune_btn">운세 뽑기</button>
                 </div>
             </div>
+            <p class="mt-4 text-center text-xs text-gray-400" data-key="fortune_disclaimer">※ 본 서비스의 운세 결과는 재미로만 즐겨주시기 바랍니다.</p>
         </section>
 
         <!-- Tools Grid -->
@@ -140,7 +141,7 @@
 
         </section>
 
-        <!-- Information Articles Section (For SEO & AdSense) -->
+        <!-- Information Articles Section -->
         <section class="border-t border-gray-200 pt-16">
             <div class="flex items-center gap-2 mb-8 justify-center">
                 <span class="material-icons text-primary">psychology</span>
@@ -154,11 +155,11 @@
                 </article>
                 <article class="space-y-3">
                     <h3 class="text-lg font-bold text-gray-800" data-key="art2_title">운과 확률의 심리학</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed" data-key="art2_desc">동전 던지기나 요술 램프는 사실 정답을 알려주는 것이 아니라, 결과가 나왔을 때 당신의 마음이 어느 쪽으로 기우는지(안도감 혹은 아쉬움)를 확인시켜주는 훌륭한 심리 도구입니다.</p>
+                    <p class="text-sm text-gray-600 leading-relaxed" data-key="art2_desc">동전 던지기나 요술 램프는 사실 정답을 알려주는 것이 아니라, 결과가 나왔을 때 당신의 마음이 어느 쪽으로 기우는지 확인시켜주는 훌륭한 심리 도구입니다.</p>
                 </article>
                 <article class="space-y-3">
                     <h3 class="text-lg font-bold text-gray-800" data-key="art3_title">암호학적 무작위성이란?</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed" data-key="art3_desc">저희 램프는 단순한 가짜 난수가 아닌 Web Crypto API를 사용합니다. 이는 보안 통신에 쓰이는 수준의 무작위성을 보장하며, 그 어떤 편향도 없는 진정한 운명을 결과로 보여줍니다.</p>
+                    <p class="text-sm text-gray-600 leading-relaxed" data-key="art3_desc">저희 램프는 단순한 가짜 난수가 아닌 Web Crypto API를 사용합니다. 이는 보안 통신에 쓰이는 수준의 무작위성을 보장하며, 진정한 운명을 보여줍니다.</p>
                 </article>
             </div>
         </section>
@@ -184,6 +185,7 @@
                 "daily_fortune_title": "Daily Word of Wisdom",
                 "daily_fortune_desc": "Check your special advice once a day.",
                 "draw_fortune_btn": "Draw Fortune",
+                "fortune_disclaimer": "※ Please enjoy the fortune results for entertainment purposes only.",
                 "card1_title": "Magic Lamp (Yes or No)",
                 "card1_desc": "Ask any question on your mind. The genie will predict your destiny and give fun advice.",
                 "use_it": "Try it now",
@@ -191,7 +193,6 @@
                 "card2_desc": "Heads or Tails? Flip with real 3D physics. Special effects appear on correct predictions.",
                 "card3_title": "Dice of Destiny",
                 "card3_desc": "Custom roulette and dice tools for when you need to pick one from many options.",
-                "coming_soon": "Coming soon...",
                 "article_section_title": "Decision Insights",
                 "art1_title": "Overcoming Decision Fatigue",
                 "art1_desc": "Know as 'Hamlet Syndrome'. Sometimes a 'fast decision' is better than a perfect one for reducing brain stress. Start light with our tools.",
@@ -202,16 +203,7 @@
                 "footer_guide": "User Guide",
                 "footer_privacy": "Privacy Policy",
                 "footer_terms": "Terms of Service",
-                "footer_copyright": "© 2024 ZezeStudio Decision Hub. All rights reserved.",
-                "fortune_list": [
-                    "Today is a great day to start something new!",
-                    "Trust your intuition, it's sharper than usual today.",
-                    "A small act of kindness will return to you tenfold.",
-                    "Focus on the process, not just the result.",
-                    "Good news is coming from an unexpected place.",
-                    "Silence is sometimes the best answer.",
-                    "Don't be afraid to change your mind today."
-                ]
+                "footer_copyright": "© 2024 ZezeStudio Decision Hub. All rights reserved."
             },
             "ko": {
                 "hub_title": "선택이 어려울 때,<br>Zeze Hub가 도와드릴게요.",
@@ -219,6 +211,7 @@
                 "daily_fortune_title": "오늘의 한마디 운세",
                 "daily_fortune_desc": "매일 한 번, 당신을 위한 특별한 조언을 확인하세요.",
                 "draw_fortune_btn": "운세 뽑기",
+                "fortune_disclaimer": "※ 본 서비스의 운세 결과는 재미로만 즐겨주시기 바랍니다.",
                 "card1_title": "요술 램프 (Yes or No)",
                 "card1_desc": "\"할까 말까?\" 고민되는 질문을 던져보세요. 램프의 요정이 당신의 운명을 점치고 재미있는 조언을 해줍니다.",
                 "use_it": "사용해보기",
@@ -226,7 +219,6 @@
                 "card2_desc": "앞면일까, 뒷면일까? 실제 같은 3D 물리 효과와 함께 운명에 맡겨보세요. 예측 성공 시 특별한 효과가 나타납니다.",
                 "card3_title": "운명의 주사위",
                 "card3_desc": "여러 개의 선택지 중 하나를 골라야 할 때 사용하는 커스텀 룰렛과 주사위 도구입니다.",
-                "coming_soon": "곧 추가됩니다...",
                 "article_section_title": "의사결정 인사이트",
                 "art1_title": "선택 장애를 극복하는 법",
                 "art1_desc": "결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여준다는 사실을 알고 계셨나요?",
@@ -237,20 +229,23 @@
                 "footer_guide": "사용 가이드",
                 "footer_privacy": "개인정보처리방침",
                 "footer_terms": "서비스 약관",
-                "footer_copyright": "© 2024 ZezeStudio Decision Hub. All rights reserved.",
-                "fortune_list": [
-                    "오늘은 새로운 일을 시작하기에 아주 좋은 날입니다!",
-                    "자신의 직관을 믿으세요. 오늘 당신의 감은 평소보다 날카롭습니다.",
-                    "작은 친절이 생각지도 못한 큰 행운으로 돌아올 것입니다.",
-                    "결과보다는 과정에 집중할 때 더 큰 보람을 느낄 수 있습니다.",
-                    "생각지 못한 곳에서 반가운 소식이 들려올 예정입니다.",
-                    "가끔은 침묵이 가장 강력한 대답이 될 수 있습니다.",
-                    "오늘만큼은 생각을 바꾸는 것을 두려워하지 마세요."
-                ]
+                "footer_copyright": "© 2024 ZezeStudio Decision Hub. All rights reserved."
             }
         };
 
         let currentLang = localStorage.getItem('lang') || 'ko';
+        let fortunesData = null;
+
+        async function fetchFortunes() {
+            try {
+                // Ensure correct relative path even in subdirectories if needed
+                const response = await fetch('fortunes.json');
+                fortunesData = await response.json();
+                checkDailyFortuneState();
+            } catch (error) {
+                console.error('Failed to load fortunes:', error);
+            }
+        }
 
         function setLanguage(lang) {
             currentLang = lang;
@@ -264,8 +259,13 @@
         }
 
         function drawFortune() {
+            if (!fortunesData) return;
+            
             const btn = document.getElementById('draw-fortune-btn');
             const display = document.getElementById('fortune-display');
+            const todayStr = new Date().toDateString();
+            
+            localStorage.setItem('last_fortune_date', todayStr);
             
             btn.classList.add('hidden');
             display.classList.remove('hidden');
@@ -276,12 +276,34 @@
         }
 
         function showFortuneText() {
-            const list = translations[currentLang].fortune_list;
+            if (!fortunesData) return;
+            
+            const list = fortunesData[currentLang];
             const today = new Date();
-            // Seed based on year, month, day to keep it same for 24h
-            const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-            const index = seed % list.length;
+            
+            const y = today.getFullYear();
+            const m = today.getMonth() + 1;
+            const d = today.getDate();
+            
+            // Professional hash logic for better distribution
+            let seed = (y * 31) + (m * 7) + d;
+            seed = (seed ^ (seed << 13)) ^ (seed >> 17);
+            
+            const index = Math.abs(seed) % list.length;
             document.getElementById('fortune-text').textContent = list[index];
+        }
+
+        function checkDailyFortuneState() {
+            const lastDate = localStorage.getItem('last_fortune_date');
+            const todayStr = new Date().toDateString();
+            const btn = document.getElementById('draw-fortune-btn');
+            const display = document.getElementById('fortune-display');
+
+            if (lastDate === todayStr) {
+                btn.classList.add('hidden');
+                display.classList.remove('hidden');
+                showFortuneText();
+            }
         }
 
         function applyLanguage() {
@@ -307,7 +329,10 @@
             document.documentElement.lang = currentLang;
         }
 
-        document.addEventListener('DOMContentLoaded', applyLanguage);
+        document.addEventListener('DOMContentLoaded', () => {
+            applyLanguage();
+            fetchFortunes();
+        });
     </script>
 </body>
 </html>

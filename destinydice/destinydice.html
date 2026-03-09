@@ -183,6 +183,17 @@
             </div>
         </section>
 
+        <!-- History Log Section (New) -->
+        <section class="mt-8 bg-white/5 p-6 rounded-3xl border border-white/10">
+            <div class="flex justify-between items-center mb-4 px-1">
+                <h2 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest" data-key="history_title">최근 기록 (History)</h2>
+                <button id="clear-history-log-btn" class="text-[10px] text-gray-600 hover:text-white transition-colors" data-key="clear_log">기록 지우기</button>
+            </div>
+            <div id="history-list" class="space-y-2 max-h-48 overflow-y-auto no-scrollbar">
+                <p class="text-xs text-gray-600 italic text-center py-4" data-key="no_history">아직 기록이 없습니다.</p>
+            </div>
+        </section>
+
         <!-- Share Buttons -->
         <div class="flex gap-3 mt-6 opacity-0 transition-opacity duration-500" id="share-buttons">
             <button id="save-img-btn" class="flex-1 flex items-center justify-center gap-2 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-white transition-all border border-white/10">
@@ -196,8 +207,9 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-8 text-center text-[10px] text-gray-600">
-        <p data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
+    <footer class="py-8 text-center">
+        <p class="text-[10px] text-gray-600 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
+        <p class="text-[10px] text-gray-600" data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
     </footer>
 
     <!-- JavaScript -->

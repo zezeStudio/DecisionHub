@@ -15,20 +15,25 @@ const translations = {
         "result_title": "Dice's Choice",
         "save_img_btn": "Save Record",
         "copy_link_btn": "Copy",
+        "fortune_disclaimer": "※ Please enjoy the results for entertainment purposes only.",
         "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
-        "clear_history_btn": "Clear History",
+        "clear_history_btn": "Reset Options",
         "dice_result_prefix": "The dice has chosen: ",
         "option_placeholder": "Option ",
-        "confirm_clear": "Clear all history?",
+        "confirm_clear": "Reset all options to default?",
         "help_title": "How to Use",
         "help_desc1": "Dice of Destiny is a tool to help you decide.",
-        "help_step1": "Enter <strong>2 to 6 options</strong> in the settings section.",
+        "help_step1": "Enter <strong>2 to 6 options</strong> in the settings section (Max 20 chars each).",
         "help_step2": "The dice faces will update in real-time as you type.",
         "help_step3": "Press the roll button to <strong>randomly select</strong> one option!",
-        "help_ok": "Got it!"
+        "help_ok": "Got it!",
+        "history_title": "Recent History",
+        "clear_log": "Clear Log",
+        "no_history": "No history yet.",
+        "confirm_clear_log": "Clear all history log?"
     },
     "ko": {
         "app_title": "운명의 주사위 - Zeze Hub",
@@ -44,20 +49,25 @@ const translations = {
         "result_title": "주사위의 선택",
         "save_img_btn": "기록 저장",
         "copy_link_btn": "복사",
+        "fortune_disclaimer": "※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.",
         "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
         "terms_of_service": "서비스 약관",
-        "clear_history_btn": "기록 지우기",
+        "clear_history_btn": "옵션 초기화",
         "dice_result_prefix": "주사위가 선택한 운명: ",
         "option_placeholder": "선택지 ",
-        "confirm_clear": "모든 기록을 초기화할까요?",
+        "confirm_clear": "모든 선택지를 초기 상태로 되돌릴까요?",
         "help_title": "사용 방법",
         "help_desc1": "운명의 주사위는 결정을 돕는 도구입니다.",
-        "help_step1": "주사위 면 설정 섹션에서 <strong>최소 2개~최대 6개</strong>의 선택지를 입력하세요.",
-        "help_step2": "입력한 내용은 실시간으로 주사위에 반영됩니다.",
+        "help_step1": "설정 섹션에서 <strong>최소 2개~최대 6개</strong>의 선택지를 입력하세요. (최대 20자)",
+        "help_step2": "입력한 내용은 실시간으로 주사위 면에 반영됩니다.",
         "help_step3": "굴리기 버튼을 누르면 하나가 <strong>랜덤으로 당첨</strong>됩니다!",
-        "help_ok": "확인했습니다"
+        "help_ok": "확인했습니다",
+        "history_title": "최근 기록 (History)",
+        "clear_log": "기록 비우기",
+        "no_history": "아직 기록이 없습니다.",
+        "confirm_clear_log": "모든 결과 기록을 삭제할까요?"
     }
 };
 
@@ -71,7 +81,8 @@ const diceRotations = [
 ];
 
 let currentLang = localStorage.getItem('lang') || 'ko';
-let options = ["Yes", "No"];
+let options = JSON.parse(localStorage.getItem('dice_options')) || ["Yes", "No"];
+let historyLog = JSON.parse(localStorage.getItem('dice_history')) || [];
 
 // DOM Elements
 const dice = document.getElementById('dice');
@@ -83,6 +94,7 @@ const destinySection = document.getElementById('destiny-section');
 const resultText = document.getElementById('result-text');
 const storyDisplayText = document.getElementById('story-display-text');
 const shareButtons = document.getElementById('share-buttons');
+const historyList = document.getElementById('history-list');
 
 // Help Modal Elements
 const helpModal = document.getElementById('help-modal');
@@ -109,17 +121,18 @@ const SoundManager = {
         const gain = this.ctx.createGain();
         osc.type = 'square';
         osc.frequency.setValueAtTime(150, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 1);
+        osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 1.5);
         gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 1);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 1.5);
         osc.connect(gain); gain.connect(this.ctx.destination);
-        osc.start(); osc.stop(this.ctx.currentTime + 1);
+        osc.start(); osc.stop(this.ctx.currentTime + 1.5);
     }
 };
 
 function init() {
     applyLanguage();
     renderOptions();
+    renderHistory();
     setupEventListeners();
 }
 
@@ -131,28 +144,55 @@ function renderOptions() {
         div.innerHTML = `
             <div class="w-8 h-10 flex items-center justify-center font-black text-gray-500">${index + 1}</div>
             <input type="text" class="flex-grow bg-white/5 border border-white/10 rounded-xl px-4 text-sm focus:border-secondary outline-none transition-all" 
-                placeholder="${translations[currentLang].option_placeholder} ${index + 1}" value="${opt}" data-index="${index}">
+                placeholder="${translations[currentLang].option_placeholder} ${index + 1}" value="${opt}" data-index="${index}" maxlength="20">
             ${options.length > 2 ? `<button class="remove-btn p-2 text-gray-600 hover:text-red-400 transition-colors" data-index="${index}"><span class="material-icons text-sm">remove_circle</span></button>` : ''}
         `;
         optionsList.appendChild(div);
     });
     optionsCount.textContent = `${options.length}/6`;
     addOptionBtn.style.display = options.length < 6 ? 'flex' : 'none';
-    
-    // Update Dice faces
+    updateDiceFaces();
+}
+
+function updateDiceFaces() {
     const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
     const diceFaces = document.querySelectorAll('.dice .face');
     diceFaces.forEach((face, i) => {
-        face.textContent = options[i] || (i + 1);
+        const text = options[i] || (i + 1);
+        face.textContent = text;
         face.style.opacity = options[i] ? '1' : '0.3';
+        
+        // Dynamic Font Sizing to prevent UI breakage
+        if (text.toString().length > 12) face.style.fontSize = '12px';
+        else if (text.toString().length > 8) face.style.fontSize = '16px';
+        else face.style.fontSize = '24px';
+    });
+}
+
+function renderHistory() {
+    if (historyLog.length === 0) {
+        historyList.innerHTML = `<p class="text-xs text-gray-600 italic text-center py-4" data-key="no_history">${translations[currentLang].no_history}</p>`;
+        return;
+    }
+    historyList.innerHTML = '';
+    historyLog.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5 text-xs';
+        div.innerHTML = `
+            <span class="text-gray-400">${item.time}</span>
+            <span class="font-bold text-secondary">${item.result}</span>
+        `;
+        historyList.prepend(div); // Newest on top
     });
 }
 
 function rollDice() {
     if (rollButton.disabled) return;
     
+    // Final sync of options before rolling
     const inputs = document.querySelectorAll('.option-item input');
-    options = Array.from(inputs).map(input => input.value || `${translations[currentLang].option_placeholder} ${parseInt(input.dataset.index) + 1}`);
+    options = Array.from(inputs).map(input => input.value.trim() || `${translations[currentLang].option_placeholder} ${parseInt(input.dataset.index) + 1}`);
+    localStorage.setItem('dice_options', JSON.stringify(options));
     
     rollButton.disabled = true;
     destinySection.classList.remove('result-visible');
@@ -168,9 +208,17 @@ function rollDice() {
     SoundManager.playRoll();
 
     setTimeout(() => {
-        const t = translations[currentLang];
-        resultText.textContent = options[resultIndex];
+        const result = options[resultIndex];
+        resultText.textContent = result;
         
+        // Save to History
+        const now = new Date();
+        const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        historyLog.push({ time: timeStr, result: result });
+        if (historyLog.length > 5) historyLog.shift();
+        localStorage.setItem('dice_history', JSON.stringify(historyLog));
+        renderHistory();
+
         const funStories = {
             "ko": [
                 "주사위의 눈이 당신의 진심을 꿰뚫어 보았습니다. 이 선택이 당신을 빛나는 미래로 안내할 것입니다.",
@@ -210,6 +258,7 @@ function setLanguage(lang) {
     localStorage.setItem('lang', lang);
     applyLanguage();
     renderOptions();
+    renderHistory();
 }
 
 async function saveImage() {
@@ -250,7 +299,7 @@ function setupEventListeners() {
     rollButton.addEventListener('click', rollDice);
     addOptionBtn.addEventListener('click', () => {
         if (options.length < 6) {
-            options.push(`${translations[currentLang].option_placeholder} ${options.length + 1}`);
+            options.push("");
             renderOptions();
         }
     });
@@ -259,6 +308,7 @@ function setupEventListeners() {
         if (e.target.closest('.remove-btn')) {
             const index = parseInt(e.target.closest('.remove-btn').dataset.index);
             options.splice(index, 1);
+            localStorage.setItem('dice_options', JSON.stringify(options));
             renderOptions();
         }
     });
@@ -267,22 +317,33 @@ function setupEventListeners() {
         if (e.target.tagName === 'INPUT') {
             const index = parseInt(e.target.dataset.index);
             options[index] = e.target.value;
-            const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
-            document.querySelector(`.dice .${faces[index]}`).textContent = e.target.value || (index + 1);
+            localStorage.setItem('dice_options', JSON.stringify(options));
+            updateDiceFaces();
         }
     });
 
     document.getElementById('save-img-btn').addEventListener('click', saveImage);
+    
+    // Clear Options
     document.getElementById('clear-history-btn').addEventListener('click', () => {
         if (confirm(translations[currentLang].confirm_clear)) {
             options = ["Yes", "No"];
+            localStorage.setItem('dice_options', JSON.stringify(options));
             renderOptions();
             destinySection.classList.remove('result-visible');
             destinySection.style.opacity = '0';
         }
     });
 
-    // Help Modal Events
+    // Clear History Log
+    document.getElementById('clear-history-log-btn').addEventListener('click', () => {
+        if (confirm(translations[currentLang].confirm_clear_log)) {
+            historyLog = [];
+            localStorage.setItem('dice_history', JSON.stringify(historyLog));
+            renderHistory();
+        }
+    });
+
     helpToggle.addEventListener('click', () => toggleHelp(true));
     closeHelp.addEventListener('click', () => toggleHelp(false));
     helpOverlay.addEventListener('click', () => toggleHelp(false));

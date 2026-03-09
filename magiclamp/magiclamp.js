@@ -14,6 +14,7 @@ const translations = {
         "log_title": "Answer Log",
         "clear_log_btn": "Clear Log",
         "view_history_menu": "View History",
+        "fortune_disclaimer": "※ Please enjoy the results for entertainment purposes only.",
         "footer_copyright": "© 2024 MagicLamp Decision Hub.",
         "cat_food": "Food",
         "cat_love": "Love",
