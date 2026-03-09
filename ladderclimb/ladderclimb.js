@@ -11,7 +11,8 @@ const translations = {
         "setup_title": "Participant Settings",
         "start_btn": "Create Ladder",
         "reset_btn": "Reset",
-        "all_results_btn": "All Results",
+        "sequential_btn": "Sequential Results",
+        "all_results_btn": "Show All",
         "result_title": "Result",
         "fortune_disclaimer": "※ Please enjoy the results for entertainment purposes only.",
         "footer_copyright": "© 2024 Zeze Decision Hub.",
@@ -34,6 +35,7 @@ const translations = {
         "setup_title": "참가자 설정",
         "start_btn": "사다리 만들기",
         "reset_btn": "다시 설정",
+        "sequential_btn": "순차 결과 보기",
         "all_results_btn": "전체 결과",
         "result_title": "결과 확인",
         "fortune_disclaimer": "※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.",
@@ -241,7 +243,7 @@ function addClickZones(padding, colWidth, width, height) {
     }
 }
 
-async function startClimb(playerIndex) {
+async function startClimb(playerIndex, isSequential = false) {
     if (isAnimating || completedPlayers.has(playerIndex)) return;
     isAnimating = true;
     SoundManager.init();
@@ -272,7 +274,7 @@ async function startClimb(playerIndex) {
         ctx.lineTo(startX, endY);
         ctx.stroke();
         SoundManager.playTick();
-        await sleep(40);
+        await sleep(isSequential ? 20 : 40);
 
         // Check for Horizontal bridge
         if (currentCol > 0 && ladderData[currentCol - 1][currentRow]) {
@@ -282,7 +284,7 @@ async function startClimb(playerIndex) {
             ctx.lineTo(endX, endY);
             ctx.stroke();
             currentCol--;
-            await sleep(60);
+            await sleep(isSequential ? 30 : 60);
         } else if (currentCol < playerCount - 1 && ladderData[currentCol][currentRow]) {
             const endX = padding + (currentCol + 1) * colWidth;
             ctx.beginPath();
@@ -290,7 +292,7 @@ async function startClimb(playerIndex) {
             ctx.lineTo(endX, endY);
             ctx.stroke();
             currentCol++;
-            await sleep(60);
+            await sleep(isSequential ? 30 : 60);
         }
     }
 
@@ -308,6 +310,38 @@ async function startClimb(playerIndex) {
     }
 
     isAnimating = false;
+}
+
+async function startSequentialClimb() {
+    if (isAnimating) return;
+    
+    // Reset if everything was already completed
+    if (completedPlayers.size >= playerCount) {
+        drawLadder();
+        completedPlayers.clear();
+        resultSection.classList.add('hidden');
+    }
+
+    const sequentialBtn = document.getElementById('sequential-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const allResultsBtn = document.getElementById('all-results-btn');
+    
+    sequentialBtn.disabled = true;
+    resetBtn.disabled = true;
+    allResultsBtn.disabled = true;
+    sequentialBtn.style.opacity = '0.5';
+
+    for (let i = 0; i < playerCount; i++) {
+        if (!completedPlayers.has(i)) {
+            await startClimb(i, true);
+            await sleep(500); // Small pause between players
+        }
+    }
+
+    sequentialBtn.disabled = false;
+    resetBtn.disabled = false;
+    allResultsBtn.disabled = false;
+    sequentialBtn.style.opacity = '1';
 }
 
 function revealLadderResult(colIndex, text, color = '#1F2937') {
@@ -373,6 +407,7 @@ function setupEventListeners() {
         resultSection.classList.add('hidden');
     });
 
+    document.getElementById('sequential-btn').addEventListener('click', startSequentialClimb);
     document.getElementById('all-results-btn').addEventListener('click', revealAllResults);
 
     document.getElementById('sound-toggle').addEventListener('click', () => {

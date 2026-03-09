@@ -112,12 +112,16 @@
                 </div>
             </div>
 
-            <div class="flex gap-3 w-full">
-                <button id="reset-btn" class="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-bold hover:bg-gray-200 transition-all active:scale-95 flex items-center justify-center gap-2">
+            <div class="flex flex-wrap gap-3 w-full">
+                <button id="reset-btn" class="flex-1 min-w-[140px] bg-gray-100 text-gray-600 py-4 rounded-2xl font-bold hover:bg-gray-200 transition-all active:scale-95 flex items-center justify-center gap-2">
                     <span class="material-icons text-lg">refresh</span>
                     <span data-key="reset_btn">다시 설정</span>
                 </button>
-                <button id="all-results-btn" class="flex-1 bg-secondary text-white py-4 rounded-2xl font-bold shadow-lg shadow-secondary/20 hover:opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2">
+                <button id="sequential-btn" class="flex-1 min-w-[140px] bg-primary text-white py-4 rounded-2xl font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <span class="material-icons text-lg">play_circle</span>
+                    <span data-key="sequential_btn">순차 결과</span>
+                </button>
+                <button id="all-results-btn" class="flex-1 min-w-[140px] bg-secondary text-white py-4 rounded-2xl font-bold shadow-lg shadow-secondary/20 hover:opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2">
                     <span class="material-icons text-lg">visibility</span>
                     <span data-key="all_results_btn">전체 결과</span>
                 </button>
