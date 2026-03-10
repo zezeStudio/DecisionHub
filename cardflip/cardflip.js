@@ -32,7 +32,13 @@ const translations = {
         "winner_text": "WINNER!",
         "fail_text": "FAIL",
         "fortune_disclaimer": "※ Please enjoy the results of this service for fun only.",
-        "footer_copyright": "© 2024 Zeze Decision Hub."
+        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "info_title1": "History and Symbolism of Cards",
+        "info_desc1": "Card-based divination and decision-making have existed in various civilizations, including ancient China and India, long before the Tarot cards of medieval Europe. Cards symbolize 'unknown destiny' through the duality of a hidden back and a revealed front. The process of shuffling is an act of creating new order out of chaos, and choosing one is a psychological projection of deciding your own path among countless possibilities. Today, card flipping is widely used as a tool for self-reflection and awakening intuition beyond a simple game.",
+        "info_title2": "Psychological Effects of Images and Language",
+        "info_desc2": "Zeze Hub's Card Flip offers not just numbers but also Icon and Advice modes. Psychologically, visual images (icons) and short texts stimulate both the right and left brain simultaneously, helping you find creative answers that are hard to reach through logical thinking alone. The process of thinking 'What is this card trying to tell me?' serves as meditation that focuses you on your inner voice. Meet the message you need through a cryptographically protected random shuffle.",
+        "info_title3": "Card Flip Usage Tips",
+        "info_desc3": "<li>Deciding Order: Use 'Number Mode' to determine presentation orders or pick penalty-takers at gatherings.</li><li>Daily Guide: Get a positive message for your day through 'Advice Mode.'</li><li>Custom Mode: Create your own unique deck by entering bets or options directly.</li><li>Data Security: All custom text entered by the user is not stored on a server and is processed safely only on the device.</li>"
     },
     "ko": {
         "app_title": "카드 뒤집기 - Zeze Hub",
@@ -65,7 +71,13 @@ const translations = {
         "winner_text": "당첨!",
         "fail_text": "꽝",
         "fortune_disclaimer": "※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.",
-        "footer_copyright": "© 2024 Zeze Decision Hub."
+        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "info_title1": "카드의 역사와 상징성",
+        "info_desc1": "카드를 이용한 점술과 결정은 중세 유럽의 타로 카드 이전부터 고대 중국과 인도 등 다양한 문명권에서 존재해왔습니다. 카드는 보이지 않는 뒷면과 드러나는 앞면이라는 이중성을 통해 '미지의 운명'을 상징합니다. 셔플(Shuffle) 과정은 혼돈 속에서 새로운 질서를 만드는 행위이며, 그중 하나를 선택하는 것은 수많은 가능성 중에서 자신만의 길을 결정하는 심리적 투영입니다. 오늘날 카드 뒤집기는 단순한 게임을 넘어 자아 성찰과 직관을 깨우는 도구로 널리 쓰이고 있습니다.",
+        "info_title2": "이미지와 언어가 주는 심리적 효과",
+        "info_desc2": "Zeze Hub의 카드 뒤집기는 단순한 숫자뿐만 아니라 아이콘과 조언(Advice) 모드를 제공합니다. 심리학적으로 시각적 이미지(아이콘)와 짧은 텍스트는 뇌의 우뇌와 좌뇌를 동시에 자극하여, 논리적인 생각만으로는 도달하기 힘든 창의적인 해답을 찾도록 돕습니다. \"이 카드가 나에게 무엇을 말하려 하는가?\"를 생각하는 과정 자체가 내면의 목소리에 집중하게 만드는 명상의 역할을 합니다. 암호학적으로 보호된 무작위 셔플을 통해 당신에게 꼭 필요한 메시지를 만나보세요.",
+        "info_title3": "카드 뒤집기 활용 팁",
+        "info_desc3": "<li>순서 정하기: 친구들과 모임에서 발표 순서나 벌칙자를 정할 때 '숫자 모드'를 사용하세요.</li><li>오늘의 가이드: '심리/조언 모드'를 통해 오늘 하루를 살아갈 긍정적인 메시지를 받아보세요.</li><li>커스텀 모드: 내기 내용이나 선택지를 직접 입력하여 당신만의 독특한 카드 덱을 만들 수 있습니다.</li><li>데이터 보안: 사용자가 입력한 모든 커스텀 텍스트는 서버에 저장되지 않으며 기기 내에서만 안전하게 처리됩니다.</li>"
     }
 };
 
@@ -93,105 +105,185 @@ async function init() {
     setupEventListeners();
     renderCustomInputs();
     updateModeDescription();
+    SoundManager.updateMuteUI();
 }
 
 async function loadStorytellingData() {
     try {
         const response = await fetch('cardflip_data.json');
         storytellingData = await response.json();
-    } catch (e) {
-        console.error("Failed to load storytelling data:", e);
+    } catch (err) {
+        console.error('Failed to load card data:', err);
     }
 }
 
-function applyTranslations() {
-    document.querySelectorAll('[data-key]').forEach(el => {
-        const key = el.dataset.key;
-        if (translations[currentLang] && translations[currentLang][key]) {
-            el.innerHTML = translations[currentLang][key];
+// Sound Manager
+const SoundManager = {
+    ctx: null,
+    muted: localStorage.getItem('zeze_muted') === 'true',
+    init() {
+        if (!this.ctx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
         }
-    });
-    updateModeDescription();
-    updateInstructionText();
-    refreshVisibleResults();
-}
-
-function updateInstructionText() {
-    const instructionBar = document.getElementById('instruction-bar');
-    if (!instructionText || !instructionBar) return;
-
-    const isLimited = currentMode === 'icon' || currentMode === 'advice';
-    
-    if (isLimited) {
-        if (lastFlippedCardIndex !== null) {
-            // Already flipped one card in limited mode, hide instruction
-            instructionBar.classList.add('hidden');
-        } else {
-            instructionBar.classList.remove('hidden');
-            instructionText.innerHTML = translations[currentLang].instruction_limit_1;
+    },
+    updateMuteUI() {
+        const icon = document.getElementById('sound-icon');
+        if (icon) {
+            icon.textContent = this.muted ? 'volume_off' : 'volume_up';
+            if (this.muted) icon.classList.add('text-red-500');
+            else icon.classList.remove('text-red-500');
         }
-    } else {
-        instructionBar.classList.remove('hidden');
-        instructionText.textContent = translations[currentLang].game_instruction;
+    },
+    toggleMute() {
+        this.muted = !this.muted;
+        localStorage.setItem('zeze_muted', this.muted);
+        this.updateMuteUI();
+    },
+    playFlip() {
+        if (this.muted) return;
+        this.init();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.1);
+    }
+};
+
+function renderCustomInputs() {
+    customInputsList.innerHTML = '';
+    for (let i = 0; i < cardCount; i++) {
+        const div = document.createElement('div');
+        div.className = 'flex gap-2';
+        div.innerHTML = `
+            <div class="w-8 h-10 flex items-center justify-center font-black text-gray-400 text-xs">${i + 1}</div>
+            <input type="text" class="custom-card-input flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:border-primary outline-none transition-all" 
+                placeholder="내용 입력" maxlength="20">
+        `;
+        customInputsList.appendChild(div);
     }
 }
 
 function updateModeDescription() {
     const key = `mode_desc_${currentMode}`;
-    if (modeDescription && translations[currentLang][key]) {
-        modeDescription.textContent = translations[currentLang][key];
-    }
+    modeDescription.innerHTML = translations[currentLang][key] || "";
 }
 
-function refreshVisibleResults() {
-    // 1. Update Card Backs
-    const cardItems = document.querySelectorAll('.card-item');
-    cardItems.forEach((item, idx) => {
-        const card = cards[idx];
-        if (!card) return;
-
-        const backText = item.querySelector('.card-back-text');
-        const backIcon = item.querySelector('.material-icons');
-        
-        if (currentMode === 'number') {
-            // No change for numbers
-        } else if (currentMode === 'custom') {
-            // User input stays same
-        } else {
-            // Icon/Advice: Get title and icon from pool
-            const dataKey = currentMode === 'icon' ? 'icon_fortune' : 'advice';
-            const itemData = storytellingData[dataKey][currentLang][card.originalPoolIndex];
-            if (itemData) {
-                if (backText) backText.textContent = itemData.title;
-                if (backIcon) backIcon.textContent = itemData.icon;
-            }
-        }
+function applyTranslations() {
+    document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.dataset.key;
+        if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
-
-    // 2. Update Story Result Section
-    if (lastFlippedCardIndex !== null && !storyResultSection.classList.contains('hidden')) {
-        const card = cards[lastFlippedCardIndex];
-        const dataKey = currentMode === 'icon' ? 'icon_fortune' : 'advice';
-        const itemData = storytellingData[dataKey][currentLang][card.originalPoolIndex];
-        if (itemData) {
-            document.getElementById('story-icon').textContent = itemData.icon;
-            document.getElementById('story-title').textContent = itemData.title;
-            document.getElementById('story-desc').textContent = itemData.desc;
-        }
-    }
 }
 
 function setLanguage(lang) {
     currentLang = lang;
-    localStorage.setItem('lang', currentLang);
+    localStorage.setItem('lang', lang);
     applyTranslations();
-    renderCustomInputs();
+    updateModeDescription();
+}
+
+function shuffleCards() {
+    const inputs = document.querySelectorAll('.custom-card-input');
+    const customContents = Array.from(inputs).map(i => i.value.trim());
+
+    if (currentMode === 'custom' && customContents.some(c => c === "")) {
+        alert(translations[currentLang].error_empty_custom);
+        return;
+    }
+
+    cards = [];
+    let pool = [];
+
+    if (currentMode === 'number') {
+        pool = Array.from({ length: cardCount }, (_, i) => ({ content: (i + 1).toString(), isWinner: false }));
+    } else if (currentMode === 'custom') {
+        pool = customContents.map(c => ({ content: c, isWinner: false }));
+    } else if (currentMode === 'icon' || currentMode === 'advice') {
+        const source = storytellingData[currentMode][currentLang];
+        // Cryptographically random pick from source
+        const randomValues = new Uint32Array(cardCount);
+        window.crypto.getRandomValues(randomValues);
+        pool = Array.from(randomValues).map(v => {
+            const idx = v % source.length;
+            return { content: source[idx].title, originalPoolIndex: idx, isWinner: false };
+        });
+    }
+
+    // Fisher-Yates Shuffle
+    for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    cards = pool.map(p => ({ ...p, isRevealed: false }));
+
+    renderCards();
+    setupSection.classList.add('hidden');
+    gameStage.classList.remove('hidden');
+    storyResultSection.classList.add('hidden');
+    instructionText.innerHTML = translations[currentLang].game_instruction;
+}
+
+function renderCards() {
+    cardsContainer.innerHTML = '';
+    cards.forEach((card, index) => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'card-wrapper aspect-[3/4] perspective-1000';
+        cardEl.innerHTML = `
+            <div class="card-inner relative w-full h-full transition-transform duration-500 transform-style-3d cursor-pointer">
+                <div class="card-front absolute inset-0 bg-primary rounded-2xl flex items-center justify-center border-4 border-white/20 shadow-lg backface-hidden">
+                    <span class="material-icons text-white text-4xl opacity-40">style</span>
+                </div>
+                <div class="card-back absolute inset-0 bg-white rounded-2xl flex flex-col items-center justify-center border-2 border-primary/20 shadow-xl backface-hidden rotate-y-180 overflow-hidden p-2">
+                    ${currentMode === 'icon' ? `<span class="material-icons text-primary text-3xl mb-1">${storytellingData.icon[currentLang][card.originalPoolIndex]?.icon || 'stars'}</span>` : ''}
+                    <span class="card-content-text font-black text-gray-800 text-center break-keep leading-tight ${card.content.length > 6 ? 'text-xs' : 'text-lg'}">${card.content}</span>
+                </div>
+            </div>
+        `;
+        cardEl.addEventListener('click', () => flipCard(index, cardEl));
+        cardsContainer.appendChild(cardEl);
+    });
+}
+
+function flipCard(index, element) {
+    if (cards[index].isRevealed) return;
+
+    // Limit check for icon/advice mode (only 1 pick allowed)
+    if ((currentMode === 'icon' || currentMode === 'advice') && cards.some(c => c.isRevealed)) {
+        instructionText.innerHTML = translations[currentLang].instruction_limit_1;
+        return;
+    }
+
+    cards[index].isRevealed = true;
+    const inner = element.querySelector('.card-inner');
+    inner.classList.add('rotate-y-180');
+    SoundManager.playFlip();
+
+    if (currentMode === 'icon' || currentMode === 'advice') {
+        showStoryResult(index);
+    }
+}
+
+function showStoryResult(index) {
+    const card = cards[index];
+    const data = storytellingData[currentMode][currentLang][card.originalPoolIndex];
+    
+    document.getElementById('story-icon').textContent = (currentMode === 'icon' ? storytellingData.icon[currentLang][card.originalPoolIndex]?.icon : 'auto_fix_high') || 'auto_fix_high';
+    document.getElementById('story-title').textContent = data.title;
+    document.getElementById('story-desc').textContent = data.desc;
+    
+    storyResultSection.classList.remove('hidden');
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 }, colors: ['#6200EE', '#FF0266', '#FFFFFF'] });
 }
 
 function setupEventListeners() {
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            currentMode = btn.dataset.mode;
             document.querySelectorAll('.mode-btn').forEach(b => {
                 b.classList.remove('bg-white', 'shadow-sm', 'text-primary');
                 b.classList.add('text-gray-500');
@@ -199,25 +291,20 @@ function setupEventListeners() {
             btn.classList.add('bg-white', 'shadow-sm', 'text-primary');
             btn.classList.remove('text-gray-500');
             
-            updateModeDescription();
+            currentMode = btn.dataset.mode;
             customInputsArea.classList.toggle('hidden', currentMode !== 'custom');
-            
-            const maxAvailable = (currentMode === 'icon' || currentMode === 'advice') ? 6 : 12;
-            if (cardCount > maxAvailable) {
-                cardCount = maxAvailable;
-                cardCountDisplay.textContent = cardCount;
-            }
+            updateModeDescription();
         });
     });
 
     document.getElementById('count-plus').addEventListener('click', () => {
-        const maxLimit = (currentMode === 'icon' || currentMode === 'advice') ? 6 : 12;
-        if (cardCount < maxLimit) {
+        if (cardCount < 12) {
             cardCount++;
             cardCountDisplay.textContent = cardCount;
             renderCustomInputs();
         }
     });
+
     document.getElementById('count-minus').addEventListener('click', () => {
         if (cardCount > 2) {
             cardCount--;
@@ -226,150 +313,41 @@ function setupEventListeners() {
         }
     });
 
-    document.getElementById('start-btn').addEventListener('click', startGame);
+    document.getElementById('start-btn').addEventListener('click', shuffleCards);
+    
     document.getElementById('reset-btn').addEventListener('click', () => {
-        gameStage.classList.add('hidden');
         setupSection.classList.remove('hidden');
+        gameStage.classList.add('hidden');
         storyResultSection.classList.add('hidden');
-        lastFlippedCardIndex = null;
     });
-    document.getElementById('reveal-all-btn').addEventListener('click', revealAll);
 
-    document.getElementById('menu-toggle').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.remove('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.remove('hidden');
+    document.getElementById('reveal-all-btn').addEventListener('click', () => {
+        document.querySelectorAll('.card-inner').forEach((el, i) => {
+            if (!cards[i].isRevealed) {
+                cards[i].isRevealed = true;
+                el.classList.add('rotate-y-180');
+            }
+        });
     });
-    document.getElementById('close-menu').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.add('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.add('hidden');
-    });
+
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle) {
+        soundToggle.addEventListener('click', () => SoundManager.toggleMute());
+    }
+
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
     });
-}
 
-function renderCustomInputs() {
-    customInputsList.innerHTML = '';
-    for (let i = 0; i < cardCount; i++) {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'custom-text-input w-full p-3 rounded-xl bg-gray-50 border border-gray-100 focus:border-primary outline-none text-sm transition-all';
-        input.placeholder = `${translations[currentLang].mode_custom} ${i + 1}`;
-        customInputsList.appendChild(input);
-    }
-}
-
-function startGame() {
-    lastFlippedCardIndex = null;
-    const isLimited = currentMode === 'icon' || currentMode === 'advice';
-    
-    if (currentMode === 'custom') {
-        const inputs = document.querySelectorAll('.custom-text-input');
-        const vals = Array.from(inputs).map(i => i.value.trim());
-        if (vals.some(v => v === '')) {
-            alert(translations[currentLang].error_empty_custom);
-            return;
-        }
-        cards = vals.map(v => ({ content: v, isRevealed: false, originalPoolIndex: null }));
-    } else if (currentMode === 'number') {
-        cards = Array.from({ length: cardCount }, (_, i) => ({ content: (i + 1).toString(), isRevealed: false, originalPoolIndex: null }));
-    } else {
-        const dataKey = currentMode === 'icon' ? 'icon_fortune' : 'advice';
-        // Use a generic range to pick items from the pool
-        let poolIndices = Array.from({ length: storytellingData[dataKey]['ko'].length }, (_, i) => i);
-        // Shuffle indices
-        for (let i = poolIndices.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [poolIndices[i], poolIndices[j]] = [poolIndices[j], poolIndices[i]];
-        }
-        
-        cards = poolIndices.slice(0, cardCount).map(idx => ({
-            originalPoolIndex: idx,
-            isRevealed: false,
-            content: storytellingData[dataKey][currentLang][idx].title,
-            icon: storytellingData[dataKey][currentLang][idx].icon
-        }));
-    }
-
-    // Shuffle card positions
-    for (let i = cards.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [cards[i], cards[j]] = [cards[j], cards[i]];
-    }
-
-    renderCards();
-    setupSection.classList.add('hidden');
-    gameStage.classList.remove('hidden');
-    storyResultSection.classList.add('hidden');
-    
-    updateInstructionText();
-    
-    if (isLimited) {
-        document.getElementById('reveal-all-btn').classList.add('hidden');
-    } else {
-        document.getElementById('reveal-all-btn').classList.remove('hidden');
-    }
-}
-
-function renderCards() {
-    cardsContainer.innerHTML = '';
-    const cols = cardCount <= 4 ? 'grid-cols-2' : (cardCount <= 9 ? 'grid-cols-3' : 'grid-cols-4');
-    cardsContainer.className = `grid ${cols} gap-3 w-full p-4 bg-white rounded-3xl shadow-inner border border-gray-100`;
-
-    cards.forEach((card, index) => {
-        const div = document.createElement('div');
-        div.className = 'card-item animate-pop';
-        div.innerHTML = `
-            <div class="card-inner w-full h-full">
-                <div class="card-front"></div>
-                <div class="card-back flex flex-col items-center justify-center p-2">
-                    ${card.icon ? `<span class="material-icons text-primary mb-1">${card.icon}</span>` : ''}
-                    <span class="card-back-text text-[10px] font-black text-gray-800 leading-tight">${card.content}</span>
-                </div>
-            </div>
-        `;
-        div.addEventListener('click', () => handleCardClick(index, div));
-        cardsContainer.appendChild(div);
+    const sidebarMenu = document.getElementById('sidebar-menu');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+        sidebarMenu.classList.remove('translate-x-full');
+        sidebarOverlay.classList.remove('hidden');
     });
-}
-
-function handleCardClick(index, element) {
-    const isLimited = currentMode === 'icon' || currentMode === 'advice';
-    if (cards[index].isRevealed || (isLimited && lastFlippedCardIndex !== null)) return;
-
-    cards[index].isRevealed = true;
-    lastFlippedCardIndex = index;
-    element.classList.add('flipped');
-
-    updateInstructionText();
-
-    if (cards[index].originalPoolIndex !== null) {
-        const dataKey = currentMode === 'icon' ? 'icon_fortune' : 'advice';
-        showStoryResult(storytellingData[dataKey][currentLang][cards[index].originalPoolIndex]);
-    }
-
-    if (currentMode === 'icon') {
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    }
-}
-
-function showStoryResult(data) {
-    storyResultSection.classList.remove('hidden');
-    document.getElementById('story-icon').textContent = data.icon;
-    document.getElementById('story-title').textContent = data.title;
-    document.getElementById('story-desc').textContent = data.desc;
-    setTimeout(() => {
-        storyResultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 300);
-}
-
-function revealAll() {
-    const items = document.querySelectorAll('.card-item');
-    items.forEach((item, index) => {
-        if (!cards[index].isRevealed) {
-            cards[index].isRevealed = true;
-            item.classList.add('flipped');
-        }
+    document.getElementById('close-menu').addEventListener('click', () => {
+        sidebarMenu.classList.add('translate-x-full');
+        sidebarOverlay.classList.add('hidden');
     });
 }
 

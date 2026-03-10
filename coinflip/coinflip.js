@@ -34,7 +34,13 @@ const translations = {
         "sc_adventure": "Adventure",
         "sc_food": "Menu",
         "destiny_title": "Current Destiny",
-        "clear_history_btn": "Clear History"
+        "clear_history_btn": "Clear History",
+        "info_title1": "History of Coin Flipping: From Rome to Now",
+        "info_desc1": "Coin flipping is one of the oldest random decision-making methods in human history. Ancient Romans called it 'Navia aut Caput' (Ship or Head), as coins of the time featured a ship on one side and the emperor's head on the other. Beyond games, it was often used as a solemn procedure to settle legal disputes or seek divine will. Today, it remains a beloved tool worldwide for everything from starting football matches to making small daily choices.",
+        "info_title2": "The Truth of Probability: Is 50/50 Perfect?",
+        "info_desc2": "While mathematically 50%, research by Stanford statistician Persi Diaconis suggests that physical coin tosses are actually about 51:49, favoring the side facing up before the toss. This is due to the center of mass, air resistance, and subtle finger movements. However, Zeze Hub's coin flip uses a Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) to ensure absolute fairness. While our 3D effects recreate physical reality, the results are based on pure, unbiased mathematical probability.",
+        "info_title3": "Enjoying Coin Flip to the Max",
+        "info_desc3": "<li>Notice which way your heart leans before the result appears. That's your true desire.</li><li>Use the 'Predict' feature to challenge your win streak records. See how strong your intuition and luck really are.</li><li>Try different coin skins like Bitcoin or Heart to match your current mood or situation.</li><li>Zeze Hub never sends your data to a server, so feel free to trust us with your most private concerns.</li>"
     },
     "ko": {
         "app_title": "3D 동전 던지기 - Zeze Hub",
@@ -69,7 +75,13 @@ const translations = {
         "sc_adventure": "모험",
         "sc_food": "메뉴",
         "destiny_title": "오늘의 운명 기록",
-        "clear_history_btn": "기록 지우기"
+        "clear_history_btn": "기록 지우기",
+        "info_title1": "동전 던지기의 역사: 로마에서 현재까지",
+        "info_desc1": "동전 던지기는 인류 역사상 가장 오래된 무작위 결정 방법 중 하나입니다. 고대 로마인들은 이를 '나비아 아우트 카푸트(Navia aut Caput)', 즉 '배냐 머리냐'라고 불렀습니다. 당시 동전의 한쪽 면에는 배(Ship)가, 다른 쪽 면에는 황제의 머리(Head)가 새겨져 있었기 때문입니다. 로마 시대에 동전 던지기는 단순한 놀이를 넘어 법적 분쟁을 해결하거나 신의 뜻을 묻는 엄숙한 절차로 사용되기도 했습니다. 오늘날에도 축구 경기의 선축을 정하거나 일상의 소소한 선택을 내릴 때 전 세계적으로 가장 사랑받는 도구입니다.",
+        "info_title2": "확률의 진실: 50대 50은 완벽할까?",
+        "info_desc2": "수학적으로 동전 던지기의 확률은 50%로 알려져 있지만, 스탠퍼드 대학의 통계학자 퍼시 다이아코니스(Persi Diaconis)의 연구에 따르면 실제 물리적 동전 던지기는 약 51:49로 던지기 전 위를 향하고 있던 면이 나올 확률이 미세하게 높다고 합니다. 이는 동전의 무게 중심과 공기 저항, 그리고 손가락의 미세한 움직임 때문입니다. 하지만 Zeze Hub의 동전 던지기는 이러한 물리적 편향을 제거하고 완벽한 공정성을 보장하기 위해 암호학적 난수 생성기(CSPRNG)를 사용합니다. 당신이 보는 3D 효과는 물리적 현실을 재현하지만, 결과는 절대적으로 공정한 수학적 확률에 기반합니다.",
+        "info_title3": "동전 던지기 백배 즐기기",
+        "info_desc3": "<li>결과가 나오기 전, 당신의 심장이 반응하는 쪽이 어디인지 확인해 보세요. 그것이 당신의 진심입니다.</li><li>'예측(Predict)' 기능을 사용해 연승 기록(Streak)에 도전해 보세요. 당신의 직감과 운이 얼마나 강력한지 알 수 있습니다.</li><li>비트코인, 하트 등 다양한 코인 스킨을 활용해 상황에 맞는 분위기를 연출해 보세요.</li><li>Zeze Hub는 어떤 데이터도 서버로 전송하지 않으므로, 지극히 개인적인 고민도 안심하고 맡기실 수 있습니다.</li>"
     }
 };
 
@@ -127,8 +139,8 @@ let currentScenario = 'daily';
 
 // State
 let totalFlips = parseInt(localStorage.getItem('coin_total')) || 0;
-let headsCount = parseInt(localStorage.getItem('coin_heads')) || 0;
-let tailsCount = parseInt(localStorage.getItem('coin_tails')) || 0;
+let headsCount = parseInt(localStorage.getItem('coin_heads')) || 0; 
+let tailsCount = parseInt(localStorage.getItem('coin_tails')) || 0; 
 let currentStreak = 0;
 
 // DOM
@@ -155,7 +167,7 @@ const tailsCountDisplay = document.getElementById('tails-count');
 // 🎵 Sound Manager
 const SoundManager = {
     ctx: null,
-    muted: false,
+    muted: localStorage.getItem('zeze_muted') === 'true',
     init() {
         if (!this.ctx) {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -163,9 +175,18 @@ const SoundManager = {
         }
         if (this.ctx.state === 'suspended') this.ctx.resume();
     },
+    updateMuteUI() {
+        const icon = document.getElementById('sound-icon');
+        if (icon) {
+            icon.textContent = this.muted ? 'volume_off' : 'volume_up';
+            if (this.muted) icon.classList.add('text-red-500');
+            else icon.classList.remove('text-red-500');
+        }
+    },
     toggleMute() {
         this.muted = !this.muted;
-        document.getElementById('sound-icon').textContent = this.muted ? 'volume_off' : 'volume_up';
+        localStorage.setItem('zeze_muted', this.muted);
+        this.updateMuteUI();
     },
     playFlip() {
         if (this.muted) return;
@@ -214,6 +235,7 @@ function init() {
     updateDisplay();
     applySkin(currentSkin);
     setupEventListeners();
+    SoundManager.updateMuteUI();
 }
 
 function updateDisplay() {
@@ -380,8 +402,15 @@ async function saveImage() {
 
 function setupEventListeners() {
     flipButton.addEventListener('click', flipCoin);
-    document.getElementById('sound-toggle').addEventListener('click', () => SoundManager.toggleMute());
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle) {
+        soundToggle.addEventListener('click', () => SoundManager.toggleMute());
+    }
     document.getElementById('save-img-btn').addEventListener('click', saveImage);
+    document.getElementById('share-link-btn').addEventListener('click', () => {
+        const text = `🔮 Zeze Hub 3D Coin Flip Result!\n\nCheck your destiny too: ${window.location.href}`;
+        navigator.clipboard.writeText(text).then(() => alert(currentLang === 'ko' ? "링크가 복사되었습니다!" : "Link copied to clipboard!"));
+    });
     document.getElementById('clear-history-btn').addEventListener('click', clearHistory);
     
     document.querySelectorAll('.predict-btn').forEach(btn => {

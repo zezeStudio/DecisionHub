@@ -38,6 +38,9 @@
                 <span class="text-xl font-bold text-primary" data-key="app_name">Card Flip</span>
             </div>
             <div class="flex items-center gap-1">
+                <button id="sound-toggle" class="p-2 rounded-full hover:bg-gray-100 focus:outline-none transition-colors">
+                    <span class="material-icons text-gray-600" id="sound-icon">volume_up</span>
+                </button>
                 <button id="menu-toggle" class="p-2 rounded-full hover:bg-gray-100 focus:outline-none">
                     <span class="material-icons text-gray-600">menu</span>
                 </button>
@@ -47,7 +50,7 @@
 
     <!-- Sidebar Menu -->
     <div id="sidebar-menu" class="fixed top-0 right-0 h-full w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-gray-100">
-        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+        <div class="flex items-center justify-between p-4 border-b border-white/10">
             <span class="text-lg font-medium" data-key="menu_sidebar_title">메뉴</span>
             <button id="close-menu" class="p-2 rounded-full hover:bg-gray-100">
                 <span class="material-icons">close</span>
@@ -102,7 +105,6 @@
             </div>
 
             <!-- Custom Text Inputs (Shown only in 'custom' mode) -->
-            ...
             <div id="custom-inputs-area" class="hidden space-y-3">
                 <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1" data-key="custom_label">카드 내용 입력</label>
                 <div id="custom-inputs-list" class="space-y-2 max-h-[200px] overflow-y-auto pr-1 no-scrollbar">
@@ -160,8 +162,45 @@
         </section>
     </main>
 
+    <!-- Deep Dive Information Section -->
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-gray-200 text-gray-600">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <article class="space-y-4">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="material-icons">history_edu</span>
+                    <span data-key="info_title1">카드의 역사와 상징성</span>
+                </h2>
+                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc1">
+                    카드를 이용한 점술과 결정은 중세 유럽의 타로 카드 이전부터 고대 중국과 인도 등 다양한 문명권에서 존재해왔습니다. 카드는 보이지 않는 뒷면과 드러나는 앞면이라는 이중성을 통해 '미지의 운명'을 상징합니다. 셔플(Shuffle) 과정은 혼돈 속에서 새로운 질서를 만드는 행위이며, 그중 하나를 선택하는 것은 수많은 가능성 중에서 자신만의 길을 결정하는 심리적 투영입니다. 오늘날 카드 뒤집기는 단순한 게임을 넘어 자아 성찰과 직관을 깨우는 도구로 널리 쓰이고 있습니다.
+                </p>
+            </article>
+            <article class="space-y-4">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="material-icons">psychology</span>
+                    <span data-key="info_title2">이미지와 언어가 주는 심리적 효과</span>
+                </h2>
+                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc2">
+                    Zeze Hub의 카드 뒤집기는 단순한 숫자뿐만 아니라 아이콘과 조언(Advice) 모드를 제공합니다. 심리학적으로 시각적 이미지(아이콘)와 짧은 텍스트는 뇌의 우뇌와 좌뇌를 동시에 자극하여, 논리적인 생각만으로는 도달하기 힘든 창의적인 해답을 찾도록 돕습니다. "이 카드가 나에게 무엇을 말하려 하는가?"를 생각하는 과정 자체가 내면의 목소리에 집중하게 만드는 명상의 역할을 합니다. 암호학적으로 보호된 무작위 셔플을 통해 당신에게 꼭 필요한 메시지를 만나보세요.
+                </p>
+            </article>
+        </div>
+        
+        <div class="mt-12 p-6 bg-gray-50 rounded-3xl border border-gray-100">
+            <h3 class="font-bold mb-3 flex items-center gap-2 text-primary">
+                <span class="material-icons text-sm">tips_and_updates</span>
+                <span data-key="info_title3">카드 뒤집기 활용 팁</span>
+            </h3>
+            <ul class="text-xs text-gray-500 space-y-2 list-disc ml-5 leading-relaxed" data-key="info_desc3">
+                <li>순서 정하기: 친구들과 모임에서 발표 순서나 벌칙자를 정할 때 '숫자 모드'를 사용하세요.</li>
+                <li>오늘의 가이드: '심리/조언 모드'를 통해 오늘 하루를 살아갈 긍정적인 메시지를 받아보세요.</li>
+                <li>커스텀 모드: 내기 내용이나 선택지를 직접 입력하여 당신만의 독특한 카드 덱을 만들 수 있습니다.</li>
+                <li>데이터 보안: 사용자가 입력한 모든 커스텀 텍스트는 서버에 저장되지 않으며 기기 내에서만 안전하게 처리됩니다.</li>
+            </ul>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="py-8 text-center mt-auto">
+    <footer class="py-8 text-center mt-auto border-t border-gray-100">
         <p class="text-[10px] text-gray-400 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
         <p class="text-[10px] text-gray-400" data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
     </footer>

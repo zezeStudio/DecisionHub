@@ -107,7 +107,7 @@
                     </div>
                 </div>
 
-                <!-- Turn Indicator (Moved here for better focus) -->
+                <!-- Turn Indicator -->
                 <div id="turn-indicator" class="mt-10 mb-2 px-6 py-3 bg-primary/10 border border-primary/20 rounded-full flex items-center gap-3">
                     <div class="w-2 h-2 bg-primary rounded-full animate-ping"></div>
                     <span class="text-sm font-bold"><span id="current-player-name" class="text-primary text-base mr-1"></span><span data-key="turn_suffix">님 차례입니다!</span></span>
@@ -130,6 +130,43 @@
             </button>
         </section>
     </main>
+
+    <!-- Deep Dive Information Section -->
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-white/10 text-gray-400">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <article class="space-y-4">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="material-icons">history_edu</span>
+                    <span data-key="info_title1">복불복 게임의 긴장감과 매력</span>
+                </h2>
+                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc1">
+                    시한 폭탄 게임은 '러시안 룰렛'이나 '해적 룰렛'과 같은 계보를 잇는 고전적인 복불복 게임입니다. 이 게임의 핵심 매력은 '언제 터질지 모른다'는 불확실성에서 오는 강력한 몰입감입니다. 심리학적으로 이러한 고도의 긴장 상태는 뇌의 전두엽을 자극하여 일시적으로 일상의 스트레스를 잊게 만들고, 결과가 나왔을 때의 안도감을 극대화합니다. 친구들과 함께하는 술자리나 파티에서 폭탄 게임이 최고의 분위기 메이커인 이유가 바로 여기에 있습니다.
+                </p>
+            </article>
+            <article class="space-y-4">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="material-icons">psychology</span>
+                    <span data-key="info_title2">디지털로 재해석된 긴박감</span>
+                </h2>
+                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc2">
+                    Zeze Hub의 시한 폭탄은 시각적 효과와 진동(Haptic Feedback) 피드백을 통해 디지털 환경에서도 실제와 같은 긴박감을 전달합니다. 고전적인 폭탄 해체 영화의 한 장면처럼, 여러 개의 와이어 중 하나가 함정(Trap)으로 설정됩니다. 암호학적 무작위성을 사용하여 그 누구도 미리 결과를 예측할 수 없도록 설계되었으며, 남은 와이어가 줄어들수록 폭발 확률이 기하급수적으로 높아지는 구조는 참가자들에게 극한의 스릴을 제공합니다. 운명의 와이어를 선택하는 그 짧은 순간, 진정한 복불복의 묘미를 느껴보세요.
+                </p>
+            </article>
+        </div>
+        
+        <div class="mt-12 p-6 bg-white/5 rounded-3xl border border-white/10">
+            <h3 class="font-bold mb-3 flex items-center gap-2 text-primary">
+                <span class="material-icons text-sm">tips_and_updates</span>
+                <span data-key="info_title3">폭탄 게임 더 재미있게 즐기기</span>
+            </h3>
+            <ul class="text-xs text-gray-500 space-y-2 list-disc ml-5 leading-relaxed" data-key="info_desc3">
+                <li>플레이어 수 설정: 2명부터 최대 8명까지 참여 가능하며, 인원에 따라 와이어 개수가 자동으로 조절됩니다.</li>
+                <li>차례 지키기: 이름 입력 기능을 통해 누구의 차례인지 명확히 알 수 있어 공정한 게임 진행이 가능합니다.</li>
+                <li>사운드와 진동: 메인 페이지의 사운드 설정을 켜면 폭발 시 더 강력한 시각적/촉각적 타격감을 느낄 수 있습니다.</li>
+                <li>안전한 기록: 입력된 참여자 이름은 외부 서버로 전송되지 않으며 오직 현재 브라우저 세션에만 임시 보관됩니다.</li>
+            </ul>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="py-8 text-center mt-auto">

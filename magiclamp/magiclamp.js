@@ -58,7 +58,13 @@ const translations = {
             { cat: "money", q: "Buy that new gadget?" },
             { cat: "study", q: "Take a break for 1hr?" },
             { cat: "life", q: "Go to the gym today?" }
-        ]
+        ],
+        "info_title1": "History of Magic Lamp & Decision Making",
+        "info_desc1": "The story of the Magic Lamp originates from the 'Arabian Nights' (One Thousand and One Nights). The act of rubbing a lamp to summon a genie reflects humanity's long-standing desire to ask a 'transcendental being' about one's destiny. In modern society, the Magic Lamp tool is used as a great psychological tool to relieve 'Decision Fatigue,' going beyond simple superstition. The answers provided by randomness often offer a sense of relief, similar to meditation, for modern people stressed by countless choices.",
+        "info_title2": "Psychology of 'Yes or No' Questions",
+        "info_desc2": "Psychologists say that using a lamp or a coin toss when a decision is difficult is a 'process of confirming your true feelings.' If you feel good when the lamp answers 'YES,' it is evidence that you already wanted that thing in your heart. Conversely, if you are disappointed with the result, you had already decided 'NO.' Zeze Hub's Magic Lamp acts as a perfectly fair helper that awakens your subconscious using true random numbers through the Web Crypto API.",
+        "info_title3": "Effective Questioning Guide",
+        "info_desc3": "<li>Input questions as specifically as possible. (e.g., 'Should I go for a 7 AM jog tomorrow?' rather than 'Should I exercise tomorrow?')</li><li>Try using the lamp when you've already decided but want confirmation.</li><li>The 'Genie's Advice' provided with the results is designed to induce positive behavioral changes.</li><li>The lamp does not collect your data. All questions are processed only within the browser.</li>"
     },
     "ko": {
         "app_title": "요술 램프 - Zeze Hub",
@@ -120,7 +126,13 @@ const translations = {
             { cat: "money", q: "이거 지금 지를까?" },
             { cat: "study", q: "1시간만 더 잘까?" },
             { cat: "life", q: "오늘 운동 갈까?" }
-        ]
+        ],
+        "info_title1": "요술 램프와 의사결정의 역사",
+        "info_desc1": "요술 램프의 이야기는 '아라비안 나이트(천일야화)'에서 유래되었습니다. 램프를 문질러 지니를 불러내는 행위는 인류가 오랜 시간 동안 '초월적인 존재'에게 자신의 운명을 묻고 싶어 했던 심리를 반영합니다. 현대 사회에서 요술 램프 도구는 단순한 미신을 넘어, 뇌의 '결정 피로(Decision Fatigue)'를 해소해주는 훌륭한 심리학적 도구로 활용됩니다. 수많은 선택지 속에서 스트레스를 받는 현대인들에게 무작위성이 주는 해답은 때로 명상과 같은 안도감을 제공하기도 합니다.",
+        "info_title2": "'예/아니오' 질문의 심리학",
+        "info_desc2": "심리학자들은 결정이 어려울 때 램프나 동전 던지기를 사용하는 것이 '진심을 확인하는 과정'이라고 말합니다. 램프가 'YES'라고 답했을 때 당신의 기분이 좋아진다면, 그것은 당신이 이미 마음속으로 그 일을 원하고 있었다는 증거입니다. 반대로 결과에 실망한다면, 당신은 이미 'NO'라는 답을 내리고 있었던 것이죠. Zeze Hub의 요술 램프는 Web Crypto API를 통한 진정한 난수를 사용하여, 당신의 무의식을 일깨우는 완벽하게 공정한 조력자 역할을 수행합니다.",
+        "info_title3": "효과적인 질문 가이드",
+        "info_desc3": "<li>질문은 가능한 구체적으로 입력하세요. (예: \"내일 운동 갈까?\" 보다는 \"내일 아침 7시에 조깅을 갈까?\")</li><li>이미 답을 정해두고 확신을 얻고 싶을 때 램프를 사용해 보세요.</li><li>결과와 함께 제공되는 '지니의 조언'은 긍정적인 행동 변화를 유도하도록 설계되었습니다.</li><li>램프는 당신의 데이터를 수집하지 않습니다. 모든 질문은 브라우저 내에서만 처리됩니다.</li>"
     }
 };
 
@@ -377,7 +389,7 @@ function validateQuestion(q, currentCat) {
 // 🎵 Sound Manager (Web Audio API Synthesizer)
 const SoundManager = {
     ctx: null,
-    muted: false,
+    muted: localStorage.getItem('zeze_muted') === 'true',
 
     init() {
         if (!this.ctx) {
@@ -389,10 +401,19 @@ const SoundManager = {
         }
     },
 
+    updateMuteUI() {
+        const icon = document.getElementById('sound-icon');
+        if (icon) {
+            icon.textContent = this.muted ? 'volume_off' : 'volume_up';
+            if (this.muted) icon.classList.add('text-red-500');
+            else icon.classList.remove('text-red-500');
+        }
+    },
+
     toggleMute() {
         this.muted = !this.muted;
-        const icon = document.getElementById('sound-icon');
-        if (icon) icon.textContent = this.muted ? 'volume_off' : 'volume_up';
+        localStorage.setItem('zeze_muted', this.muted);
+        this.updateMuteUI();
         return this.muted;
     },
 
@@ -512,6 +533,7 @@ function init() {
     setLanguage(currentLang);
     updateDisplay();
     setupEventListeners();
+    SoundManager.updateMuteUI();
 }
 
 function setLanguage(lang) {
@@ -555,7 +577,7 @@ function setLanguage(lang) {
 function translatePage() {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.dataset.key;
-        if (translations[currentLang][key]) {
+        if (translations[currentLang] && translations[currentLang][key]) {
             el.innerHTML = translations[currentLang][key];
         }
     });

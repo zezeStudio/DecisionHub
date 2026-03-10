@@ -32,7 +32,13 @@ const translations = {
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
-        "footer_copyright": "© 2024 Zeze Decision Hub."
+        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "info_title1": "Importance of Random Team Allocation",
+        "info_desc1": "Subjective judgment or bias in team partitioning can harm group harmony. Random allocation is essential to prevent 'clustering by friendship' or 'stacking by skill.' In sports, group projects, or gaming parties, randomness creates unexpected combinations, acting as a trigger for new relationships and synergy. Zeze Hub's Team Maker maximizes this serendipity in group composition to help start fair and enjoyable cooperation.",
+        "info_title2": "Psychology of Team Building and Chance",
+        "info_desc2": "Psychologically, people tend to have higher acceptance and a sense of belonging towards 'fateful assignments' rather than their own choices. Known as the 'shared fate effect,' members grouped randomly often perceive each other as 'comrades destined by fate' and bond more quickly. Zeze Hub guarantees true random team composition without any artificial intervention through high-level random number generation using the Web Crypto API. A fair start builds the best teamwork.",
+        "info_title3": "Using Team Maker Efficiently",
+        "info_desc3": "<li>Input Convenience: Copy and paste large lists at once using newlines or commas.</li><li>Two Modes: Optimize for your situation by setting either the desired number of teams or members per team.</li><li>Custom Team Names: Add fun by entering witty team names instead of defaults (Team 1, Team 2).</li><li>Data Volatility: Zeze Hub does not store input lists on any server, ensuring safe use without privacy leaks.</li>"
     },
     "ko": {
         "app_title": "무작위 팀 나누기 - Zeze Hub",
@@ -65,7 +71,13 @@ const translations = {
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
         "terms_of_service": "서비스 약관",
-        "footer_copyright": "© 2024 Zeze Decision Hub."
+        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "info_title1": "무작위 팀 배정의 중요성",
+        "info_desc1": "팀을 나누는 과정에서 발생하는 주관적인 판단이나 편견은 조직의 화합을 해칠 수 있습니다. '친한 사람끼리', 혹은 '잘하는 사람끼리' 모이는 현상을 방지하기 위해 무작위 팀 배정은 필수적입니다. 스포츠 경기, 조별 과제, 게임 파티 등에서 무작위성은 예상치 못한 조합을 만들어내며 새로운 인간관계와 시너지를 형성하는 트리거가 됩니다. Zeze Hub의 팀 메이커는 이러한 인적 구성의 우연성을 극대화하여 공정하고 즐거운 협력의 시작을 돕습니다.",
+        "info_title2": "팀 빌딩과 우연의 심리학",
+        "info_desc2": "심리학적으로 사람들은 자신의 선택이 아닌 '운명적인 배정'에 대해 더 높은 수용성과 소속감을 느끼는 경향이 있습니다. 이를 '운명 공유 효과'라고도 하는데, 무작위로 한 팀이 된 멤버들은 서로를 '운명이 맺어준 동료'로 인식하며 더 빠르게 결속합니다. Zeze Hub는 Web Crypto API를 사용한 고도의 난수 생성을 통해, 그 어떤 인위적 개입도 없는 진정한 무작위 팀 구성을 보장합니다. 공정한 시작이 최고의 팀워크를 만듭니다.",
+        "info_title3": "팀 메이커 효율적으로 사용하기",
+        "info_desc3": "<li>입력 편의성: 줄바꿈이나 쉼표로 대량의 명단을 한 번에 복사하여 붙여넣을 수 있습니다.</li><li>두 가지 모드: 원하는 팀의 개수를 정하거나, 한 팀당 인원수를 직접 설정하여 상황에 맞게 최적화하세요.</li><li>팀 이름 커스텀: 기본 이름(팀 1, 팀 2) 대신 재치 있는 팀명들을 미리 입력하여 재미를 더해보세요.</li><li>데이터 휘발성: Zeze Hub는 입력된 명단을 별도의 서버에 저장하지 않으므로 개인정보 유출 걱정 없이 안전하게 사용할 수 있습니다.</li>"
     }
 };
 
@@ -94,190 +106,200 @@ teamNamesGuideArea.innerHTML = `
 
 function init() {
     // Insert guide area after teamNamesInput
-    teamNamesInput.parentNode.appendChild(teamNamesGuideArea);
+    if (teamNamesInput && teamNamesInput.parentNode) {
+        teamNamesInput.parentNode.appendChild(teamNamesGuideArea);
+    }
     
     applyTranslations();
     setupEventListeners();
-    updateTeamNameGuide();
+}
+
+function parseInput(text) {
+    return text.split(/[\n,]+/).map(name => name.trim()).filter(name => name !== "");
+}
+
+function updateInputCount() {
+    const list = parseInput(playerInput.value);
+    inputCountDisplay.textContent = list.length;
+    updateTeamNamesGuide();
+}
+
+function updateTeamNamesGuide() {
+    const playersList = parseInput(playerInput.value);
+    const customTeamNames = parseInput(teamNamesInput.value);
+    const t = translations[currentLang];
+    
+    let needed = 0;
+    if (currentMode === 'teamCount') {
+        needed = targetValue;
+    } else {
+        needed = playersList.length > 0 ? Math.ceil(playersList.length / targetValue) : 0;
+    }
+
+    const guideEl = document.getElementById('team-needed-guide');
+    const countEl = document.getElementById('team-entered-count');
+    
+    if (guideEl && countEl) {
+        guideEl.innerHTML = t.team_names_guide.replace('{n}', needed);
+        countEl.innerHTML = t.team_names_count.replace('{m}', customTeamNames.length);
+    }
 }
 
 function applyTranslations() {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.dataset.key;
-        if (translations[currentLang] && translations[currentLang][key]) {
-            el.innerHTML = translations[currentLang][key];
-        }
+        if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
     
-    if (playerInput) playerInput.placeholder = translations[currentLang].input_placeholder;
-    if (teamNamesInput) teamNamesInput.placeholder = translations[currentLang].team_names_placeholder;
-    
-    updateControlUI();
-    updateTeamNameGuide();
+    playerInput.placeholder = translations[currentLang].input_placeholder;
+    teamNamesInput.placeholder = translations[currentLang].team_names_placeholder;
+    controlLabel.textContent = currentMode === 'teamCount' ? translations[currentLang].label_team_count : translations[currentLang].label_member_count;
+    updateTeamNamesGuide();
 }
 
 function setLanguage(lang) {
     currentLang = lang;
-    localStorage.setItem('lang', currentLang);
+    localStorage.setItem('lang', lang);
     applyTranslations();
 }
 
-function setupEventListeners() {
-    playerInput.addEventListener('input', () => {
-        const list = parseInput(playerInput.value);
-        inputCountDisplay.textContent = list.length;
-        updateTeamNameGuide();
+function makeTeams() {
+    players = parseInput(playerInput.value);
+    const customTeamNames = parseInput(teamNamesInput.value);
+
+    if (players.length < 2) {
+        alert(translations[currentLang].error_min_players);
+        return;
+    }
+
+    if (new Set(players).size !== players.length) {
+        alert(translations[currentLang].error_duplicate_name);
+        return;
+    }
+
+    let numTeams = 0;
+    if (currentMode === 'teamCount') {
+        numTeams = targetValue;
+    } else {
+        numTeams = Math.ceil(players.length / targetValue);
+    }
+
+    if (numTeams < 1 || numTeams > players.length) {
+        alert(translations[currentLang].error_invalid_value);
+        return;
+    }
+
+    // Shuffle players
+    const shuffled = [...players];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    // Divide into teams
+    const teams = Array.from({ length: numTeams }, () => []);
+    shuffled.forEach((player, index) => {
+        teams[index % numTeams].push(player);
     });
 
-    teamNamesInput.addEventListener('input', updateTeamNameGuide);
+    renderTeams(teams, customTeamNames);
+    
+    setupSection.classList.add('hidden');
+    resultStage.classList.remove('hidden');
+    
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#6200EE', '#03DAC6', '#BB86FC']
+    });
+}
+
+function renderTeams(teams, customTeamNames) {
+    teamsContainer.innerHTML = '';
+    const t = translations[currentLang];
+
+    teams.forEach((members, index) => {
+        const teamName = customTeamNames[index] || (t.team_name_prefix + (index + 1));
+        const card = document.createElement('div');
+        card.className = 'team-card bg-white p-5 rounded-3xl border border-gray-100 shadow-sm animate-fadeIn';
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        card.innerHTML = `
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-black text-primary flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                    ${teamName}
+                </h3>
+                <span class="text-[10px] font-bold px-2 py-0.5 bg-gray-100 text-gray-400 rounded-full">${members.length} Members</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                ${members.map(m => `<span class="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-xl text-xs font-medium text-gray-600">${m}</span>`).join('')}
+            </div>
+        `;
+        teamsContainer.appendChild(card);
+    });
+}
+
+function setupEventListeners() {
+    playerInput.addEventListener('input', updateInputCount);
+    teamNamesInput.addEventListener('input', updateTeamNamesGuide);
 
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            currentMode = btn.dataset.mode;
             document.querySelectorAll('.mode-btn').forEach(b => {
                 b.classList.remove('bg-white', 'shadow-sm', 'text-primary');
                 b.classList.add('text-gray-500');
             });
             btn.classList.add('bg-white', 'shadow-sm', 'text-primary');
             btn.classList.remove('text-gray-500');
-            updateControlUI();
-            updateTeamNameGuide();
+            
+            currentMode = btn.dataset.mode;
+            targetValue = 2; // Reset
+            targetValueDisplay.textContent = targetValue;
+            applyTranslations();
         });
     });
 
     document.getElementById('val-plus').addEventListener('click', () => {
-        if (targetValue < 20) {
+        const list = parseInput(playerInput.value);
+        const max = list.length > 0 ? list.length : 20;
+        if (targetValue < max) {
             targetValue++;
             targetValueDisplay.textContent = targetValue;
-            updateTeamNameGuide();
+            updateTeamNamesGuide();
         }
     });
+
     document.getElementById('val-minus').addEventListener('click', () => {
         if (targetValue > 1) {
             targetValue--;
             targetValueDisplay.textContent = targetValue;
-            updateTeamNameGuide();
+            updateTeamNamesGuide();
         }
     });
 
-    document.getElementById('make-teams-btn').addEventListener('click', generateTeams);
+    document.getElementById('make-teams-btn').addEventListener('click', makeTeams);
+    document.getElementById('reshuffle-btn').addEventListener('click', makeTeams);
+    
     document.getElementById('reset-btn').addEventListener('click', () => {
         resultStage.classList.add('hidden');
         setupSection.classList.remove('hidden');
     });
-    document.getElementById('reshuffle-btn').addEventListener('click', generateTeams);
 
-    document.getElementById('menu-toggle').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.remove('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.remove('hidden');
-    });
-    document.getElementById('close-menu').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.add('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.add('hidden');
-    });
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
     });
-}
 
-function calculateNeededTeams() {
-    const list = parseInput(playerInput.value);
-    if (list.length < 2) return 0;
-
-    if (currentMode === 'teamCount') {
-        return Math.min(targetValue, list.length);
-    } else {
-        return Math.ceil(list.length / targetValue);
-    }
-}
-
-function updateTeamNameGuide() {
-    const needed = calculateNeededTeams();
-    const entered = parseInput(teamNamesInput.value).length;
-    
-    const guideEl = document.getElementById('team-needed-guide');
-    const countEl = document.getElementById('team-entered-count');
-    
-    if (needed > 0) {
-        guideEl.innerHTML = translations[currentLang].team_names_guide.replace('{n}', needed);
-        countEl.textContent = translations[currentLang].team_names_count.replace('{m}', entered);
-        
-        // Highlight if numbers match
-        if (entered === needed) countEl.className = 'text-[10px] text-secondary font-black';
-        else countEl.className = 'text-[10px] text-primary font-bold';
-    } else {
-        guideEl.textContent = '';
-        countEl.textContent = '';
-    }
-}
-
-function updateControlUI() {
-    const key = currentMode === 'teamCount' ? 'label_team_count' : 'label_member_count';
-    if (controlLabel) {
-        controlLabel.textContent = translations[currentLang][key];
-    }
-}
-
-function parseInput(val) {
-    return val.split(/[\n,]+/).map(name => name.trim()).filter(name => name !== '');
-}
-
-function generateTeams() {
-    const list = parseInput(playerInput.value);
-    const customTeamNames = parseInput(teamNamesInput.value);
-    
-    if (list.length < 2) {
-        alert(translations[currentLang].error_min_players);
-        return;
-    }
-    const uniqueNames = new Set(list);
-    if (uniqueNames.size !== list.length) {
-        alert(translations[currentLang].error_duplicate_name);
-        return;
-    }
-
-    const uniqueTeamNames = new Set(customTeamNames);
-    if (uniqueTeamNames.size !== customTeamNames.length) {
-        alert(translations[currentLang].error_duplicate_team);
-        return;
-    }
-
-    players = [...list];
-    for (let i = players.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [players[i], players[j]] = [players[j], players[i]];
-    }
-
-    const teamCount = calculateNeededTeams();
-
-    const teams = Array.from({ length: teamCount }, (_, i) => {
-        return {
-            name: customTeamNames[i] || `${translations[currentLang].team_name_prefix}${i + 1}`,
-            members: []
-        };
+    const sidebarMenu = document.getElementById('sidebar-menu');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+        sidebarMenu.classList.remove('translate-x-full');
+        sidebarOverlay.classList.remove('hidden');
     });
-
-    players.forEach((player, index) => {
-        teams[index % teamCount].members.push(player);
-    });
-
-    renderTeams(teams);
-    setupSection.classList.add('hidden');
-    resultStage.classList.remove('hidden');
-    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#6200EE', '#03DAC6', '#FF9800'] });
-}
-
-function renderTeams(teams) {
-    teamsContainer.innerHTML = '';
-    const colors = ['#6200EE', '#03DAC6', '#FF9800', '#FF0266', '#4CAF50', '#2196F3'];
-    teams.forEach((team, i) => {
-        const color = colors[i % colors.length];
-        const card = document.createElement('div');
-        card.className = 'team-card bg-white p-5 rounded-3xl border border-gray-100 shadow-sm overflow-hidden relative';
-        card.style.borderTop = `4px solid ${color}`;
-        let membersHtml = team.members.map(m => `<div class="member-chip px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100 text-gray-700 text-xs font-bold inline-block m-1">${m}</div>`).join('');
-        card.innerHTML = `<div class="flex justify-between items-center mb-4"><h3 class="font-black text-sm" style="color: ${color}">${team.name}</h3><span class="text-[10px] font-bold text-gray-300 uppercase">${team.members.length} Members</span></div><div class="flex flex-wrap -m-1">${membersHtml}</div>`;
-        teamsContainer.appendChild(card);
+    document.getElementById('close-menu').addEventListener('click', () => {
+        sidebarMenu.classList.add('translate-x-full');
+        sidebarOverlay.classList.add('hidden');
     });
 }
 

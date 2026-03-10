@@ -35,7 +35,13 @@ const translations = {
         "no_history": "No history yet.",
         "confirm_clear_log": "Clear all history log?",
         "error_empty_option": "Please fill in all options.",
-        "error_duplicate_option": "Duplicate options are not allowed."
+        "error_duplicate_option": "Duplicate options are not allowed.",
+        "info_title1": "Origins of Dice: From Ancient Times to Modern Day",
+        "info_desc1": "Dice are ancient tools that predate recorded history. Early dice were carved from animal ankle bones (talus), widely used for divination and gaming in ancient Egyptian and Mesopotamian civilizations. For ancient Greeks, dice were seen not just as luck but as 'responses sent by the gods to humans.' Today, dice are central components of board games and mathematical symbols that played a crucial role in laying the foundations of probability theory and statistics.",
+        "info_title2": "Psychology Behind Multiple Choices",
+        "info_desc2": "We often suffer more when faced with two or more choices, a phenomenon known as the 'Paradox of Choice.' Dice serve as an immediate 'exit' that relieves the brain's cognitive load in complex multi-choice situations. Zeze Hub's Dice of Destiny is designed to allow users to custom-input up to 6 items, solving various concerns from lunch menus to daily to-do lists. Using a cryptographically secure random number generator ensures no bias towards any side, so you can trust your decisions to the roll.",
+        "info_title3": "Custom Dice Usage Tips",
+        "info_desc3": "<li>When choosing a menu: Enter 6 candidates and roll. Decision time turns into the joy of dining.</li><li>When assigning roles: Use it fairly for chores, dishwashing, or deciding who drives.</li><li>Record keeping: Check past decisions made by the dice in the 'Recent History' section.</li><li>Security: Your input option data is stored only in your browser and never leaked externally.</li>"
     },
     "ko": {
         "app_title": "운명의 주사위 - Zeze Hub",
@@ -71,7 +77,13 @@ const translations = {
         "no_history": "아직 기록이 없습니다.",
         "confirm_clear_log": "모든 결과 기록을 삭제할까요?",
         "error_empty_option": "모든 선택지를 입력해주세요.",
-        "error_duplicate_option": "중복된 선택지가 있습니다."
+        "error_duplicate_option": "중복된 선택지가 있습니다.",
+        "info_title1": "주사위의 기원: 고대부터 현대까지",
+        "info_desc1": "주사위는 인류가 기록한 역사보다 더 오래된 유서 깊은 도구입니다. 초기 주사위는 동물의 발목뼈(복사뼈)를 깎아 만들었으며, 이는 고대 이집트와 메소포타미아 문명에서 점술과 놀이 용도로 널리 사용되었습니다. 고대 그리스인들에게 주사위는 단순한 운이 아니라 '신이 인간에게 보내는 응답'으로 여겨졌습니다. 오늘날 주사위는 보드게임의 핵심 부품일 뿐만 아니라, 확률론과 통계학의 기초를 닦는 데 결정적인 역할을 한 수학적 상징이기도 합니다.",
+        "info_title2": "다양한 선택지 앞에서의 심리학",
+        "info_desc2": "우리는 때로 2가지 이상의 선택지 사이에서 더 큰 고통을 겪습니다. 이를 '선택의 역설(Paradox of Choice)'이라고 합니다. 주사위는 이러한 복잡한 다중 선택 상황에서 뇌의 부하를 즉각적으로 덜어주는 '탈출구'가 됩니다. Zeze Hub의 운명의 주사위는 사용자가 직접 6개까지 커스텀 항목을 입력할 수 있게 설계되어, 점심 메뉴부터 오늘의 할 일까지 다양한 고민을 한 번에 해결해줍니다. 암호학적 난수 생성기를 통해 어떤 면도 치우침 없이 나올 수 있도록 보장하므로 안심하고 당신의 결정을 맡기세요.",
+        "info_title3": "커스텀 주사위 활용 팁",
+        "info_desc3": "<li>메뉴를 고를 때: 후보 6곳을 입력하고 굴려보세요. 고민의 시간이 식사의 즐거움으로 바뀝니다.</li><li>역할을 정할 때: 심부름, 설거지, 운전 등 벌칙이나 역할을 정할 때 공정하게 사용하세요.</li><li>기록 저장: '최근 기록' 섹션에서 과거에 주사위가 내린 결정들을 확인할 수 있습니다.</li><li>보안성: 입력하신 선택지 데이터는 오직 사용자의 브라우저에만 저장되며 외부로 유출되지 않습니다.</li>"
     }
 };
 
@@ -111,12 +123,25 @@ const helpOkBtn = document.getElementById('help-ok-btn');
 // 🎵 Sound Manager
 const SoundManager = {
     ctx: null,
-    muted: false,
+    muted: localStorage.getItem('zeze_muted') === 'true',
     init() {
         if (!this.ctx) {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioContext();
         }
+    },
+    updateMuteUI() {
+        const icon = document.getElementById('sound-icon');
+        if (icon) {
+            icon.textContent = this.muted ? 'volume_off' : 'volume_up';
+            if (this.muted) icon.classList.add('text-red-500');
+            else icon.classList.remove('text-red-500');
+        }
+    },
+    toggleMute() {
+        this.muted = !this.muted;
+        localStorage.setItem('zeze_muted', this.muted);
+        this.updateMuteUI();
     },
     playRoll() {
         if (this.muted) return;
@@ -138,6 +163,7 @@ function init() {
     renderOptions();
     renderHistory();
     setupEventListeners();
+    SoundManager.updateMuteUI();
 }
 
 function renderOptions() {
@@ -342,6 +368,10 @@ function setupEventListeners() {
     });
 
     document.getElementById('save-img-btn').addEventListener('click', saveImage);
+    document.getElementById('share-link-btn').addEventListener('click', () => {
+        const text = `🔮 Zeze Hub Dice of Destiny Result!\n\nCheck your destiny too: ${window.location.href}`;
+        navigator.clipboard.writeText(text).then(() => alert(currentLang === 'ko' ? "링크가 복사되었습니다!" : "Link copied to clipboard!"));
+    });
     
     const clearOptionsLogic = () => {
         if (confirm(translations[currentLang].confirm_clear)) {
@@ -384,6 +414,12 @@ function setupEventListeners() {
         sidebarMenu.classList.add('translate-x-full');
         sidebarOverlay.classList.add('hidden');
     });
+
+    // Sound Toggle
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle) {
+        soundToggle.addEventListener('click', () => SoundManager.toggleMute());
+    }
 }
 
 document.addEventListener('DOMContentLoaded', init);
