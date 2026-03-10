@@ -50,7 +50,7 @@
 
     <!-- Sidebar Menu -->
     <div id="sidebar-menu" class="fixed top-0 right-0 h-full w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-gray-100">
-        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+        <div class="flex items-center justify-between p-4 border-b border-white/10">
             <span class="text-lg font-medium" data-key="menu_sidebar_title">메뉴</span>
             <button id="close-menu" class="p-2 rounded-full hover:bg-gray-100">
                 <span class="material-icons">close</span>
@@ -70,7 +70,7 @@
             </li>
         </ul>
     </div>
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/20 z-40 hidden"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
 
     <!-- Main Content -->
     <main class="max-w-md mx-auto py-24 px-4 w-full flex-grow flex flex-col">
@@ -144,8 +144,45 @@
         </section>
     </main>
 
+    <!-- Deep Dive Information Section -->
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-gray-200 text-gray-600">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <article class="space-y-4">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="material-icons">history_edu</span>
+                    <span data-key="info_title1">제비뽑기의 역사: 인류의 가장 평등한 결정</span>
+                </h2>
+                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc1">
+                    제비뽑기는 성경이나 고대 문헌에서도 찾아볼 수 있을 만큼 인류가 오랫동안 사용해온 결정 방식입니다. '제비'라는 말의 어원은 확실치 않으나, 아주 작은 조각을 뜻하는 한자어 '제(弟)'나 '절(切)'에서 유래했다는 설이 있습니다. 고대 그리스의 아테네에서는 공직자를 선출할 때 투표가 아닌 제비뽑기를 사용했는데, 이는 모든 시민에게 평등한 기회를 제공하고 특정 권력의 독점을 막기 위한 고도의 민주적 장치였습니다. 오늘날에도 제비뽑기는 가장 직관적이고 다툼 없는 공정한 결정 도구로 사랑받고 있습니다.
+                </p>
+            </article>
+            <article class="space-y-4">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="material-icons">psychology</span>
+                    <span data-key="info_title2">순서와 확률: 먼저 뽑는 것이 유리할까?</span>
+                </h2>
+                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc2">
+                    제비뽑기를 할 때 흔히 "먼저 뽑는 것이 유리한가, 나중에 뽑는 것이 유리한가?"를 고민하곤 합니다. 하지만 수학적으로 제비뽑기는 뽑는 순서와 상관없이 당첨 확률이 완벽하게 동일합니다. 예를 들어 10개의 제비 중 1개가 당첨일 때, 첫 번째 사람이 뽑을 확률은 1/10입니다. 두 번째 사람이 당첨될 확률은 첫 번째 사람이 꽝을 뽑고(9/10) 두 번째 사람이 당첨될 확률(1/9)을 곱한 것으로, 결국 똑같은 1/10이 됩니다. Zeze Hub의 제비뽑기는 이 수학적 공정성을 암호학적 무작위성으로 구현하여 누구에게나 평등한 행운을 제공합니다.
+                </p>
+            </article>
+        </div>
+        
+        <div class="mt-12 p-6 bg-gray-50 rounded-3xl border border-gray-100">
+            <h3 class="font-bold mb-3 flex items-center gap-2 text-primary">
+                <span class="material-icons text-sm">tips_and_updates</span>
+                <span data-key="info_title3">제비뽑기 백배 활용하기</span>
+            </h3>
+            <ul class="text-xs text-gray-500 space-y-2 list-disc ml-5 leading-relaxed" data-key="info_desc3">
+                <li>당첨 인원 설정: 단순한 1명 뽑기부터 여러 명의 당첨자를 동시에 가려낼 수 있습니다.</li>
+                <li>실시간 확인: 제비를 하나씩 뒤집을 때마다 느껴지는 짜릿한 긴장감을 친구들과 공유해 보세요.</li>
+                <li>투명한 결과: 게임 종료 후 제공되는 '전체 결과 요약'을 통해 모든 참가자의 운명을 투명하게 공개할 수 있습니다.</li>
+                <li>안전한 기록: 입력한 참가자 정보는 서버에 저장되지 않으며, 브라우저 종료 시 안전하게 관리됩니다.</li>
+            </ul>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="py-8 text-center mt-auto">
+    <footer class="py-8 text-center mt-auto border-t border-gray-100">
         <p class="text-[10px] text-gray-400 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
         <p class="text-[10px] text-gray-400" data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
     </footer>

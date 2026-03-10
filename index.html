@@ -3,7 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeze's Decision Hub - 선택의 순간</title>
+    <title>Zeze's Decision Hub - 당신의 선택을 돕는 스마트 도구</title>
+    
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6200EE">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="결정이 어려울 때 사용하세요! 요술 램프, 주사위, 동전 던지기, 팀 나누기 등 8가지 스마트한 결정 도구를 제공합니다.">
+    <meta name="keywords" content="결정 도구, 복불복, 주사위 굴리기, 동전 던지기, 사다리 타기, 제비뽑기, 팀 나누기, 시한 폭탄, Zeze Hub">
+    
+    <!-- Open Graph (Facebook, KakaoTalk, etc.) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Zeze's Decision Hub - 선택의 순간">
+    <meta property="og:description" content="인생의 사소한 고민부터 내기까지! 8가지 스마트 도구로 쉽고 재미있게 결정하세요.">
+    <meta property="og:image" content="https://zezehub.netlify.app/favicon.png">
+    <meta property="og:url" content="https://zezehub.netlify.app/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zeze's Decision Hub">
+    <meta name="twitter:description" content="결정 장애를 한 번에 해결해줄 스마트 결정 도구 모음">
+    <meta name="twitter:image" content="https://zezehub.netlify.app/favicon.png">
+
     <link rel="icon" type="image/png" href="favicon.png">
     <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -50,8 +73,18 @@
                 <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Decision Hub</span>
             </div>
             <div class="flex items-center gap-2">
-                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">한국어</button>
-                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">English</button>
+                <!-- Global Sound Toggle -->
+                <button id="global-sound-toggle" class="p-2 rounded-full hover:bg-gray-100 transition-colors mr-2">
+                    <span class="material-icons text-gray-600" id="global-sound-icon">volume_up</span>
+                </button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">
+                    <span class="md:hidden">KO</span>
+                    <span class="hidden md:inline">한국어</span>
+                </button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">
+                    <span class="md:hidden">EN</span>
+                    <span class="hidden md:inline">English</span>
+                </button>
             </div>
         </div>
     </nav>
@@ -225,7 +258,6 @@
                 </div>
             </a>
 
-
         </section>
 
         <!-- Information Articles Section -->
@@ -235,18 +267,54 @@
                 <h2 class="text-2xl font-bold" data-key="article_section_title">의사결정 인사이트</h2>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <article class="space-y-3">
-                    <h3 class="text-lg font-bold text-gray-800" data-key="art1_title">선택 장애를 극복하는 법</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed" data-key="art1_desc">결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여준다는 사실을 알고 계셨나요? Zeze Hub의 도구들로 가볍게 시작해보세요.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Column 1 -->
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art1_title">선택 장애를 극복하는 법</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art1_desc">결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여준다는 사실을 알고 계셨나요?</p>
+                    <a href="insights/decision-fatigue.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
                 </article>
-                <article class="space-y-3">
-                    <h3 class="text-lg font-bold text-gray-800" data-key="art2_title">운과 확률의 심리학</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed" data-key="art2_desc">동전 던지기나 요술 램프는 사실 정답을 알려주는 것이 아니라, 결과가 나왔을 때 당신의 마음이 어느 쪽으로 기우는지 확인시켜주는 훌륭한 심리 도구입니다.</p>
+                <!-- Column 2 -->
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art2_title">운과 확률의 심리학</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art2_desc">동전 던지기나 요술 램프는 사실 정답을 알려주는 것이 아니라, 결과가 나왔을 때 당신의 마음이 어느 쪽으로 기우는지 확인시켜주는 도구입니다.</p>
+                    <a href="insights/psychology-of-luck.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
                 </article>
-                <article class="space-y-3">
-                    <h3 class="text-lg font-bold text-gray-800" data-key="art3_title">암호학적 무작위성이란?</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed" data-key="art3_desc">저희 램프는 단순한 가짜 난수가 아닌 Web Crypto API를 사용합니다. 이는 보안 통신에 쓰이는 수준의 무작위성을 보장하며, 진정한 운명을 보여줍니다.</p>
+                <!-- Column 3 -->
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art3_title">암호학적 무작위성이란?</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art3_desc">저희 램프는 단순한 가짜 난수가 아닌 Web Crypto API를 사용합니다. 보안 통신에 쓰이는 수준의 무작위성을 보장합니다.</p>
+                    <a href="insights/crypto-randomness.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+                <!-- Column 4 -->
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art4_title">MBTI별 결정 스타일</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art4_desc">계획적인 J와 즉흥적인 P, 논리의 T와 감정의 F는 어떻게 결정을 내릴까요? 성격 유형별 의사결정 방식을 분석해 봅니다.</p>
+                    <a href="insights/mbti-decisions.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+                <!-- Column 5 -->
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art5_title">오늘 점심 뭐 먹지?</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art5_desc">매일 반복되는 지긋지긋한 점심 메뉴 고민! 결정 피로를 줄이고 행복한 식사 시간을 만드는 5가지 팁을 소개합니다.</p>
+                    <a href="insights/lunch-menu-tips.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+                <!-- Column 6 -->
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art6_title">공정한 팀 구성의 과학</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art6_desc">다수결이 항상 정답일까요? 갈등 없는 모임을 위해 무작위 추첨이 필요한 이유를 사회 심리학적 관점에서 살펴봅니다.</p>
+                    <a href="insights/fairness-science.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
                 </article>
             </div>
         </section>
@@ -290,8 +358,6 @@
                 "card7_desc": "A simple game of picking one from many cards. Flip to decide the order or find your luck.",
                 "card8_title": "Time Bomb",
                 "card8_desc": "High-tension wire cutting game! Carefully choose which wire to cut before it's too late.",
-                "card9_title": "3D Pirate Roulette",
-                "card9_desc": "Rotate the 3D barrel and insert swords! Who will be the one to trigger the pirate?",
                 "article_section_title": "Decision Insights",
                 "art1_title": "Overcoming Decision Fatigue",
                 "art1_desc": "Know as 'Hamlet Syndrome'. Sometimes a 'fast decision' is better than a perfect one for reducing brain stress. Start light with our tools.",
@@ -299,6 +365,13 @@
                 "art2_desc": "Tools like the lamp don't just give answers; they reveal your true preference by showing you if you feel relieved or disappointed by the result.",
                 "art3_title": "What is Crypto Randomness?",
                 "art3_desc": "Our genie uses Web Crypto API for true randomness, ensuring zero bias. It's the same security standard used in global communications.",
+                "art4_title": "MBTI Decision Styles",
+                "art4_desc": "How do J vs P, or T vs F types make choices? We analyze decision-making mechanisms by personality type and offer tailored advice.",
+                "art5_title": "What's for Lunch?",
+                "art5_desc": "Tired of the daily lunch menu struggle? Here are 5 smart tips to reduce decision fatigue and make your mealtime happier.",
+                "art6_title": "Science of Fair Grouping",
+                "art6_desc": "Is majority rule always the best? Explore why random selection is necessary for conflict-free meetings from a social psychology perspective.",
+                "read_more": "Read more",
                 "footer_guide": "User Guide",
                 "footer_privacy": "Privacy Policy",
                 "footer_terms": "Terms of Service",
@@ -326,6 +399,8 @@
                 "card6_desc": "명단을 입력하면 무작위로 팀을 구성해줍니다. 팀 개수나 팀별 인원수를 설정하여 공정하게 조를 편성하세요.",
                 "card7_title": "행운의 카드 뒤집기",
                 "card7_desc": "여러 장의 카드 중 하나를 선택하는 게임입니다. 순서 정하기나 행운 확인을 위해 카드를 뒤집어보세요.",
+                "card8_title": "공포의 시한 폭탄",
+                "card8_desc": "심장이 쫄깃한 와이어 끊기 게임! 언제 터질지 모르는 폭탄의 와이어를 신중하게 선택하세요.",
                 "article_section_title": "의사결정 인사이트",
                 "art1_title": "선택 장애를 극복하는 법",
                 "art1_desc": "결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여준다는 사실을 알고 계셨나요?",
@@ -333,6 +408,13 @@
                 "art2_desc": "동전 던지기나 요술 램프는 사실 정답을 알려주는 것이 아니라, 결과가 나왔을 때 당신의 마음이 어느 쪽으로 기우는지 확인시켜주는 훌륭한 도구입니다.",
                 "art3_title": "암호학적 무작위성이란?",
                 "art3_desc": "저희 램프는 단순한 가짜 난수가 아닌 Web Crypto API를 사용합니다. 이는 보안 통신에 쓰이는 수준의 무작위성을 보장하며, 진정한 운명을 보여줍니다.",
+                "art4_title": "MBTI별 결정 스타일",
+                "art4_desc": "계획적인 J와 즉흥적인 P, 논리의 T와 감정의 F는 어떻게 결정을 내릴까요? 성격 유형별 의사결정 방식을 분석해 봅니다.",
+                "art5_title": "오늘 점심 뭐 먹지?",
+                "art5_desc": "매일 반복되는 지긋지긋한 점심 메뉴 고민! 결정 피로를 줄이고 행복한 식사 시간을 만드는 5가지 팁을 소개합니다.",
+                "art6_title": "공정한 팀 구성의 과학",
+                "art6_desc": "다수결이 항상 정답일까요? 갈등 없는 모임을 위해 무작위 추첨이 필요한 이유를 사회 심리학적 관점에서 살펴봅니다.",
+                "read_more": "자세히 보기",
                 "footer_guide": "사용 가이드",
                 "footer_privacy": "개인정보처리방침",
                 "footer_terms": "서비스 약관",
@@ -345,7 +427,6 @@
 
         async function fetchFortunes() {
             try {
-                // Ensure correct relative path even in subdirectories if needed
                 const response = await fetch('fortunes.json');
                 fortunesData = await response.json();
                 checkDailyFortuneState();
@@ -358,7 +439,6 @@
             currentLang = lang;
             localStorage.setItem('lang', lang);
             applyLanguage();
-            // Refresh fortune if visible
             const display = document.getElementById('fortune-display');
             if (!display.classList.contains('hidden')) {
                 showFortuneText();
@@ -367,35 +447,26 @@
 
         function drawFortune() {
             if (!fortunesData) return;
-            
             const btn = document.getElementById('draw-fortune-btn');
             const display = document.getElementById('fortune-display');
             const todayStr = new Date().toDateString();
-            
             localStorage.setItem('last_fortune_date', todayStr);
-            
             btn.classList.add('hidden');
             display.classList.remove('hidden');
             display.classList.add('animate-bounce');
             setTimeout(() => display.classList.remove('animate-bounce'), 1000);
-            
             showFortuneText();
         }
 
         function showFortuneText() {
             if (!fortunesData) return;
-            
             const list = fortunesData[currentLang];
             const today = new Date();
-            
             const y = today.getFullYear();
             const m = today.getMonth() + 1;
             const d = today.getDate();
-            
-            // Professional hash logic for better distribution
             let seed = (y * 31) + (m * 7) + d;
             seed = (seed ^ (seed << 13)) ^ (seed >> 17);
-            
             const index = Math.abs(seed) % list.length;
             document.getElementById('fortune-text').textContent = list[index];
         }
@@ -405,7 +476,6 @@
             const todayStr = new Date().toDateString();
             const btn = document.getElementById('draw-fortune-btn');
             const display = document.getElementById('fortune-display');
-
             if (lastDate === todayStr) {
                 btn.classList.add('hidden');
                 display.classList.remove('hidden');
@@ -420,8 +490,6 @@
                     el.innerHTML = translations[currentLang][key];
                 }
             });
-            
-            // Update button styles
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 const btnLang = btn.id.split('-')[1];
                 if (btnLang === currentLang) {
@@ -432,13 +500,40 @@
                     btn.classList.add('bg-transparent', 'text-gray-600');
                 }
             });
-            
             document.documentElement.lang = currentLang;
+        }
+
+        // Global Sound Logic
+        let isMuted = localStorage.getItem('zeze_muted') === 'true';
+        const soundIcon = document.getElementById('global-sound-icon');
+        function updateSoundUI() {
+            if (!soundIcon) return;
+            soundIcon.textContent = isMuted ? 'volume_off' : 'volume_up';
+            if (isMuted) {
+                soundIcon.classList.add('text-red-500');
+            } else {
+                soundIcon.classList.remove('text-red-500');
+            }
+        }
+        document.getElementById('global-sound-toggle').addEventListener('click', () => {
+            isMuted = !isMuted;
+            localStorage.setItem('zeze_muted', isMuted);
+            updateSoundUI();
+        });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered', reg))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             applyLanguage();
             fetchFortunes();
+            updateSoundUI();
         });
     </script>
 </body>

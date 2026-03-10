@@ -45,9 +45,9 @@
         </div>
     </nav>
 
-    <!-- Sidebar Menu (Omitted for brevity, standard Zeze Hub sidebar) -->
+    <!-- Sidebar Menu -->
     <div id="sidebar-menu" class="fixed top-0 right-0 h-full w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-gray-100">
-        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+        <div class="flex items-center justify-between p-4 border-b border-white/10">
             <span class="text-lg font-medium" data-key="menu_sidebar_title">메뉴</span>
             <button id="close-menu" class="p-2 rounded-full hover:bg-gray-100">
                 <span class="material-icons">close</span>
@@ -148,8 +148,45 @@
         </section>
     </main>
 
+    <!-- Deep Dive Information Section -->
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-gray-200 text-gray-600">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <article class="space-y-4">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="material-icons">history_edu</span>
+                    <span data-key="info_title1">무작위 팀 배정의 중요성</span>
+                </h2>
+                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc1">
+                    팀을 나누는 과정에서 발생하는 주관적인 판단이나 편견은 조직의 화합을 해칠 수 있습니다. '친한 사람끼리', 혹은 '잘하는 사람끼리' 모이는 현상을 방지하기 위해 무작위 팀 배정은 필수적입니다. 스포츠 경기, 조별 과제, 게임 파티 등에서 무작위성은 예상치 못한 조합을 만들어내며 새로운 인간관계와 시너지를 형성하는 트리거가 됩니다. Zeze Hub의 팀 메이커는 이러한 인적 구성의 우연성을 극대화하여 공정하고 즐거운 협력의 시작을 돕습니다.
+                </p>
+            </article>
+            <article class="space-y-4">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="material-icons">psychology</span>
+                    <span data-key="info_title2">팀 빌딩과 우연의 심리학</span>
+                </h2>
+                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc2">
+                    심리학적으로 사람들은 자신의 선택이 아닌 '운명적인 배정'에 대해 더 높은 수용성과 소속감을 느끼는 경향이 있습니다. 이를 '운명 공유 효과'라고도 하는데, 무작위로 한 팀이 된 멤버들은 서로를 '운명이 맺어준 동료'로 인식하며 더 빠르게 결속합니다. Zeze Hub는 Web Crypto API를 사용한 고도의 난수 생성을 통해, 그 어떤 인위적 개입도 없는 진정한 무작위 팀 구성을 보장합니다. 공정한 시작이 최고의 팀워크를 만듭니다.
+                </p>
+            </article>
+        </div>
+        
+        <div class="mt-12 p-6 bg-gray-50 rounded-3xl border border-gray-100">
+            <h3 class="font-bold mb-3 flex items-center gap-2 text-primary">
+                <span class="material-icons text-sm">tips_and_updates</span>
+                <span data-key="info_title3">팀 메이커 효율적으로 사용하기</span>
+            </h3>
+            <ul class="text-xs text-gray-500 space-y-2 list-disc ml-5 leading-relaxed" data-key="info_desc3">
+                <li>입력 편의성: 줄바꿈이나 쉼표로 대량의 명단을 한 번에 복사하여 붙여넣을 수 있습니다.</li>
+                <li>두 가지 모드: 원하는 팀의 개수를 정하거나, 한 팀당 인원수를 직접 설정하여 상황에 맞게 최적화하세요.</li>
+                <li>팀 이름 커스텀: 기본 이름(팀 1, 팀 2) 대신 재치 있는 팀명들을 미리 입력하여 재미를 더해보세요.</li>
+                <li>데이터 휘발성: Zeze Hub는 입력된 명단을 별도의 서버에 저장하지 않으므로 개인정보 유출 걱정 없이 안전하게 사용할 수 있습니다.</li>
+            </ul>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="py-8 text-center mt-auto">
+    <footer class="py-8 text-center mt-auto border-t border-gray-100">
         <p class="text-[10px] text-gray-400" data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
     </footer>
 

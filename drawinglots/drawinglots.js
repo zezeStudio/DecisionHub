@@ -26,7 +26,13 @@ const translations = {
         "footer_copyright": "© 2024 Zeze Decision Hub.",
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
-        "terms_of_service": "Terms of Service"
+        "terms_of_service": "Terms of Service",
+        "info_title1": "History of Drawing Lots: Mankind's Most Equal Decision",
+        "info_desc1": "Drawing lots is a decision-making method used for ages, documented even in the Bible and ancient texts. In ancient Athens, public officials were often chosen by lot rather than election—a highly democratic device intended to give every citizen an equal chance and prevent the monopoly of power. Today, it remains loved as the most intuitive, fair, and dispute-free tool for making decisions.",
+        "info_title2": "Order and Probability: Is it better to go first?",
+        "info_desc2": "People often wonder, 'Is it better to draw first or last?' Mathematically, drawing lots yields identical winning probabilities regardless of the order. For example, if there is 1 winner among 10 slips, the first person's chance is 1/10. The second person's chance is the probability of the first person losing (9/10) multiplied by the second person winning from the remaining slips (1/9), which equals 1/10. Zeze Hub implements this mathematical fairness with cryptographic randomness for truly equal luck.",
+        "info_title3": "Getting the Most Out of Drawing Lots",
+        "info_desc3": "<li>Set Winner Count: From picking a single winner to multiple people at once.</li><li>Real-time Suspense: Share the thrill with friends as you flip slips one by one.</li><li>Transparent Results: Review the 'Full Results Summary' after the game to openly reveal everyone's fate.</li><li>Secure Data: Participant info is never sent to a server and stays only on your current device.</li>"
     },
     "ko": {
         "app_title": "제비뽑기 - Zeze Hub",
@@ -53,7 +59,13 @@ const translations = {
         "footer_copyright": "© 2024 Zeze Decision Hub.",
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
-        "terms_of_service": "서비스 약관"
+        "terms_of_service": "서비스 약관",
+        "info_title1": "제비뽑기의 역사: 인류의 가장 평등한 결정",
+        "info_desc1": "제비뽑기는 성경이나 고대 문헌에서도 찾아볼 수 있을 만큼 인류가 오랫동안 사용해온 결정 방식입니다. 고대 그리스의 아테네에서는 공직자를 선출할 때 투표가 아닌 제비뽑기를 사용했는데, 이는 모든 시민에게 평등한 기회를 제공하고 특정 권력의 독점을 막기 위한 고도의 민주적 장치였습니다. 오늘날에도 제비뽑기는 가장 직관적이고 다툼 없는 공정한 결정 도구로 사랑받고 있습니다.",
+        "info_title2": "순서와 확률: 먼저 뽑는 것이 유리할까?",
+        "info_desc2": "제비뽑기를 할 때 흔히 \"먼저 뽑는 것이 유리한가, 나중에 뽑는 것이 유리한가?\"를 고민하곤 합니다. 하지만 수학적으로 제비뽑기는 뽑는 순서와 상관없이 당첨 확률이 완벽하게 동일합니다. 예를 들어 10개의 제비 중 1개가 당첨일 때, 첫 번째 사람이 뽑을 확률은 1/10입니다. 두 번째 사람이 당첨될 확률은 첫 번째 사람이 꽝을 뽑고(9/10) 두 번째 사람이 당첨될 확률(1/9)을 곱한 것으로, 결국 똑같은 1/10이 됩니다. Zeze Hub의 제비뽑기는 이 수학적 공정성을 암호학적 무작위성으로 구현하여 누구에게나 평등한 행운을 제공합니다.",
+        "info_title3": "제비뽑기 백배 활용하기",
+        "info_desc3": "<li>당첨 인원 설정: 단순한 1명 뽑기부터 여러 명의 당첨자를 동시에 가려낼 수 있습니다.</li><li>실시간 확인: 제비를 하나씩 뒤집을 때마다 느껴지는 짜릿한 긴장감을 친구들과 공유해 보세요.</li><li>투명한 결과: 게임 종료 후 제공되는 '전체 결과 요약'을 통해 모든 참가자의 운명을 투명하게 공개할 수 있습니다.</li><li>안전한 기록: 입력한 참가자 정보는 서버에 저장되지 않으며, 브라우저 종료 시 안전하게 관리됩니다.</li>"
     }
 };
 
@@ -100,23 +112,176 @@ function renderInputs() {
     winnerCountDisplay.textContent = winnerCount;
 }
 
-function applyTranslations() {
-    document.querySelectorAll('[data-key]').forEach(el => {
-        const key = el.dataset.key;
-        if (translations[currentLang] && translations[currentLang][key]) {
-            el.innerHTML = translations[currentLang][key];
-        }
+function shuffleLots() {
+    lots = [];
+    // Initialize with winners and losers
+    for (let i = 0; i < playerCount; i++) {
+        lots.push({
+            isWinner: i < winnerCount,
+            playerIndex: null,
+            isRevealed: false
+        });
+    }
+    
+    // Fisher-Yates Shuffle
+    for (let i = lots.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [lots[i], lots[j]] = [lots[j], lots[i]];
+    }
+}
+
+function startGame() {
+    const inputs = document.querySelectorAll('.player-name-input');
+    players = Array.from(inputs).map(input => input.value.trim());
+    
+    if (players.some(p => p === "")) {
+        alert(translations[currentLang].error_empty_name);
+        return;
+    }
+    
+    if (new Set(players).size !== players.length) {
+        alert(translations[currentLang].error_duplicate_name);
+        return;
+    }
+    
+    shuffleLots();
+    currentTurnIndex = 0;
+    isAnimating = false;
+    
+    setupSection.classList.add('hidden');
+    gameStage.classList.remove('hidden');
+    finalResultSection.classList.add('hidden');
+    revealBtn.classList.add('hidden');
+    
+    renderLots();
+    updateTurnIndicator();
+}
+
+function renderLots() {
+    lotsContainer.innerHTML = '';
+    lots.forEach((lot, index) => {
+        const div = document.createElement('div');
+        div.className = 'lot-slip bg-gray-50 border border-gray-200 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary/5 hover:border-primary transition-all active:scale-95 shadow-sm';
+        div.innerHTML = `
+            <span class="material-icons text-gray-300 text-3xl slip-icon">help_outline</span>
+        `;
+        div.addEventListener('click', () => handleLotClick(index, div));
+        lotsContainer.appendChild(div);
     });
 }
 
+function handleLotClick(index, element) {
+    if (isAnimating || lots[index].playerIndex !== null) return;
+    
+    isAnimating = true;
+    lots[index].playerIndex = currentTurnIndex;
+    
+    element.classList.add('picked');
+    const icon = element.querySelector('.slip-icon');
+    icon.textContent = 'person';
+    icon.classList.remove('text-gray-300');
+    icon.classList.add('text-primary');
+    
+    const nameLabel = document.createElement('span');
+    nameLabel.className = 'absolute bottom-2 text-[9px] font-bold text-primary truncate w-full px-2 text-center';
+    nameLabel.textContent = players[currentTurnIndex];
+    element.appendChild(nameLabel);
+    
+    currentTurnIndex++;
+    
+    if (currentTurnIndex < playerCount) {
+        setTimeout(() => {
+            updateTurnIndicator();
+            isAnimating = false;
+        }, 300);
+    } else {
+        setTimeout(() => {
+            turnIndicator.innerHTML = translations[currentLang].all_picked_text;
+            turnIndicatorContainer.classList.remove('animate-pulse');
+            revealBtn.classList.remove('hidden');
+            isAnimating = false;
+        }, 300);
+    }
+}
+
+function updateTurnIndicator() {
+    turnIndicator.innerHTML = translations[currentLang].turn_text.replace('{name}', players[currentTurnIndex]);
+}
+
+function revealAll() {
+    revealBtn.classList.add('hidden');
+    finalResultSection.classList.remove('hidden');
+    
+    const slips = document.querySelectorAll('.lot-slip');
+    const winners = [];
+    
+    lots.forEach((lot, index) => {
+        const slip = slips[index];
+        const icon = slip.querySelector('.slip-icon');
+        
+        if (lot.isWinner) {
+            slip.classList.add('bg-secondary/10', 'border-secondary');
+            icon.textContent = 'stars';
+            icon.classList.add('text-secondary');
+            winners.push(players[lot.playerIndex]);
+        } else {
+            slip.classList.add('opacity-50');
+            icon.textContent = 'close';
+            icon.classList.add('text-gray-400');
+        }
+    });
+    
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#6200EE', '#FF9800', '#BB86FC']
+    });
+    
+    renderResultList();
+}
+
+function renderResultList() {
+    resultList.innerHTML = '';
+    
+    // Sort lots by player index to show chronological result
+    const sortedLots = [...lots].sort((a, b) => a.playerIndex - b.playerIndex);
+    
+    sortedLots.forEach(lot => {
+        const div = document.createElement('div');
+        div.className = `flex justify-between items-center p-4 rounded-2xl border ${lot.isWinner ? 'bg-secondary/5 border-secondary/20' : 'bg-gray-50 border-gray-100'}`;
+        div.innerHTML = `
+            <span class="font-bold text-sm ${lot.isWinner ? 'text-secondary' : 'text-gray-600'}">${players[lot.playerIndex]}</span>
+            <span class="text-xs font-black uppercase tracking-tighter ${lot.isWinner ? 'text-secondary' : 'text-gray-400'}">
+                ${lot.isWinner ? translations[currentLang].winner_text : translations[currentLang].fail_text}
+            </span>
+        `;
+        resultList.appendChild(div);
+    });
+}
+
+function applyTranslations() {
+    document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.dataset.key;
+        if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+    });
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    applyTranslations();
+    renderInputs();
+}
+
 function setupEventListeners() {
-    // Player Count
     document.getElementById('player-plus').addEventListener('click', () => {
-        if (playerCount < 24) {
+        if (playerCount < 12) {
             playerCount++;
             renderInputs();
         }
     });
+    
     document.getElementById('player-minus').addEventListener('click', () => {
         if (playerCount > 2) {
             playerCount--;
@@ -124,14 +289,14 @@ function setupEventListeners() {
             renderInputs();
         }
     });
-
-    // Winner Count
+    
     document.getElementById('winner-plus').addEventListener('click', () => {
         if (winnerCount < playerCount - 1) {
             winnerCount++;
             winnerCountDisplay.textContent = winnerCount;
         }
     });
+    
     document.getElementById('winner-minus').addEventListener('click', () => {
         if (winnerCount > 1) {
             winnerCount--;
@@ -139,189 +304,53 @@ function setupEventListeners() {
         }
     });
 
-    document.getElementById('start-btn').addEventListener('click', setupGame);
+    document.getElementById('start-btn').addEventListener('click', startGame);
+    
     document.getElementById('reset-btn').addEventListener('click', () => {
         setupSection.classList.remove('hidden');
         gameStage.classList.add('hidden');
         finalResultSection.classList.add('hidden');
     });
-    revealBtn.addEventListener('click', revealAllResults);
+    
+    revealBtn.addEventListener('click', revealAll);
 
-    // Sidebar & Language
+    // Global Sound & Sidebar
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle) {
+        soundToggle.addEventListener('click', () => {
+            const icon = document.getElementById('sound-icon');
+            const isMuted = localStorage.getItem('zeze_muted') === 'true';
+            localStorage.setItem('zeze_muted', !isMuted);
+            icon.textContent = !isMuted ? 'volume_off' : 'volume_up';
+            if (!isMuted) icon.classList.add('text-red-500');
+            else icon.classList.remove('text-red-500');
+        });
+        
+        // Initial UI
+        const isMuted = localStorage.getItem('zeze_muted') === 'true';
+        const icon = document.getElementById('sound-icon');
+        icon.textContent = isMuted ? 'volume_off' : 'volume_up';
+        if (isMuted) icon.classList.add('text-red-500');
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+
+    const sidebarMenu = document.getElementById('sidebar-menu');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
     document.getElementById('menu-toggle').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.remove('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.remove('hidden');
+        sidebarMenu.classList.remove('translate-x-full');
+        sidebarOverlay.classList.remove('hidden');
     });
     document.getElementById('close-menu').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.add('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.add('hidden');
+        sidebarMenu.classList.add('translate-x-full');
+        sidebarOverlay.classList.add('hidden');
     });
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            currentLang = btn.dataset.lang;
-            localStorage.setItem('lang', currentLang);
-            applyTranslations();
-            renderInputs();
-        });
+    sidebarOverlay.addEventListener('click', () => {
+        sidebarMenu.classList.add('translate-x-full');
+        sidebarOverlay.classList.add('hidden');
     });
-}
-
-function setupGame() {
-    const inputs = document.querySelectorAll('.player-name-input');
-    const nameValues = Array.from(inputs).map(input => input.value.trim());
-    
-    // Validation: Check if any name is empty
-    if (nameValues.some(name => name === '')) {
-        alert(translations[currentLang].error_empty_name);
-        return;
-    }
-
-    // Validation: Check for duplicates
-    const uniqueNames = new Set(nameValues);
-    if (uniqueNames.size !== nameValues.length) {
-        alert(translations[currentLang].error_duplicate_name);
-        return;
-    }
-
-    players = nameValues;
-    
-    lots = [];
-    for (let i = 0; i < playerCount; i++) {
-        lots.push({ isWinner: i < winnerCount, playerIndex: null, isRevealed: false });
-    }
-    
-    // Shuffle hidden values
-    for (let i = lots.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [lots[i].isWinner, lots[j].isWinner] = [lots[j].isWinner, lots[i].isWinner];
-    }
-
-    currentTurnIndex = 0;
-    renderSlips();
-    updateTurnIndicator();
-    
-    setupSection.classList.add('hidden');
-    gameStage.classList.remove('hidden');
-    revealBtn.classList.add('hidden');
-    finalResultSection.classList.add('hidden');
-    turnIndicatorContainer.classList.add('bg-primary', 'animate-pulse');
-    turnIndicatorContainer.classList.remove('bg-secondary');
-}
-
-function renderSlips() {
-    lotsContainer.innerHTML = '';
-    // Adjust columns
-    if (playerCount <= 6) lotsContainer.className = 'grid grid-cols-2 gap-4 w-full p-4 bg-white rounded-3xl shadow-inner border border-gray-100';
-    else if (playerCount <= 12) lotsContainer.className = 'grid grid-cols-3 gap-3 w-full p-4 bg-white rounded-3xl shadow-inner border border-gray-100';
-    else lotsContainer.className = 'grid grid-cols-4 gap-2 w-full p-4 bg-white rounded-3xl shadow-inner border border-gray-100';
-
-    lots.forEach((_, index) => {
-        const div = document.createElement('div');
-        div.className = 'lot-item';
-        div.innerHTML = `
-            <div class="lot-inner">
-                <div class="lot-front"></div>
-                <div class="lot-back flex flex-col items-center justify-center p-2 text-center">
-                    <span class="player-name text-xs text-primary font-bold mb-1 leading-tight break-all"></span>
-                    <span class="result-text font-black text-lg hidden leading-none"></span>
-                </div>
-            </div>
-        `;
-        div.addEventListener('click', () => handleSlipClick(index, div));
-        lotsContainer.appendChild(div);
-    });
-}
-
-function handleSlipClick(index, element) {
-    if (lots[index].playerIndex !== null || currentTurnIndex >= players.length || isAnimating) return;
-
-    lots[index].playerIndex = currentTurnIndex;
-    const player = players[currentTurnIndex];
-    
-    const backName = element.querySelector('.player-name');
-    backName.textContent = player;
-    
-    element.classList.add('flipped');
-    
-    currentTurnIndex++;
-    updateTurnIndicator();
-
-    if (currentTurnIndex >= players.length) {
-        revealBtn.classList.remove('hidden');
-        turnIndicatorContainer.classList.remove('animate-pulse');
-    }
-}
-
-function updateTurnIndicator() {
-    if (currentTurnIndex < players.length) {
-        turnIndicator.innerHTML = translations[currentLang].turn_text.replace('{name}', players[currentTurnIndex]);
-    } else {
-        turnIndicator.textContent = translations[currentLang].all_picked_text;
-    }
-}
-
-async function revealAllResults() {
-    revealBtn.disabled = true;
-    revealBtn.style.opacity = '0.5';
-    
-    const items = document.querySelectorAll('.lot-item');
-    const winners = [];
-
-    for (let i = 0; i < lots.length; i++) {
-        const slip = items[i];
-        const lotData = lots[i];
-        const resText = slip.querySelector('.result-text');
-        
-        lotData.isRevealed = true;
-        resText.classList.remove('hidden');
-        resText.textContent = lotData.isWinner ? translations[currentLang].winner_text : translations[currentLang].fail_text;
-        
-        const back = slip.querySelector('.lot-back');
-        if (lotData.isWinner) {
-            back.classList.add('winner');
-            winners.push(players[lotData.playerIndex]);
-        } else {
-            back.classList.add('fail');
-        }
-        
-        await sleep(100);
-    }
-
-    // Update Top Indicator with Winners
-    turnIndicatorContainer.classList.remove('bg-primary');
-    turnIndicatorContainer.classList.add('bg-secondary');
-    turnIndicator.innerHTML = translations[currentLang].winner_reveal_msg.replace('{names}', winners.join(', '));
-
-    confetti({ particleCount: 150, spread: 100, origin: { y: 0.7 } });
-    renderFinalSummary();
-    revealBtn.disabled = false;
-    revealBtn.style.opacity = '1';
-    revealBtn.classList.add('hidden'); // Hide after showing results
-}
-
-function renderFinalSummary() {
-    finalResultSection.classList.remove('hidden');
-    resultList.innerHTML = '';
-    
-    const playerResults = lots
-        .filter(l => l.playerIndex !== null)
-        .sort((a, b) => a.playerIndex - b.playerIndex);
-
-    playerResults.forEach(res => {
-        const div = document.createElement('div');
-        div.className = `flex justify-between items-center p-4 rounded-2xl border ${res.isWinner ? 'bg-secondary/5 border-secondary/20' : 'bg-white border-gray-100'}`;
-        div.innerHTML = `
-            <span class="font-bold ${res.isWinner ? 'text-secondary' : 'text-gray-700'}">${players[res.playerIndex]}</span>
-            <span class="text-xs font-black ${res.isWinner ? 'text-secondary' : 'text-gray-300'}">${res.isWinner ? translations[currentLang].winner_text : translations[currentLang].fail_text}</span>
-        `;
-        resultList.appendChild(div);
-    });
-    
-    finalResultSection.scrollIntoView({ behavior: 'smooth' });
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 document.addEventListener('DOMContentLoaded', init);
