@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="guide_title">Team Maker Guide - Zeze Hub</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased min-h-screen">
+    <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
+        <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="teammaker.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-indigo-600">
+                    <span class="material-icons">arrow_back</span>
+                </a>
+                <span class="text-xl font-bold text-indigo-600" data-key="guide_nav_title">User Guide</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-md mx-auto py-24 px-6 space-y-12">
+        <section class="text-center">
+            <div class="w-20 h-20 bg-indigo-100 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <span class="material-icons text-5xl text-indigo-600">groups</span>
+            </div>
+            <h1 class="text-3xl font-black mb-4" data-key="guide_main_title">무작위 팀 나누기</h1>
+            <p class="text-gray-500 text-sm leading-relaxed" data-key="guide_main_desc">명단 입력부터 팀명 지정까지! 공정한 팀 구성을 위한 가이드입니다.</p>
+        </section>
+
+        <section class="space-y-8">
+            <!-- Step 1 -->
+            <div class="flex gap-5">
+                <div class="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold shrink-0">1</div>
+                <div>
+                    <h2 class="font-bold text-lg mb-2" data-key="step1_title">참가자 명단 입력</h2>
+                    <p class="text-gray-600 text-sm" data-key="step1_desc">이름을 <b>줄바꿈</b>이나 <b>쉼표(,)</b>로 구분하여 입력하세요. 입력창 하단에서 실시간으로 인원수를 확인할 수 있습니다.</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex gap-5">
+                <div class="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold shrink-0">2</div>
+                <div>
+                    <h2 class="font-bold text-lg mb-2" data-key="step2_title">팀 이름 지정 (선택)</h2>
+                    <p class="text-gray-600 text-sm" data-key="step2_desc">팀 이름을 직접 정하고 싶다면 입력창에 순서대로 적어주세요. 시스템이 설정에 필요한 팀 개수를 실시간으로 알려드립니다.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex gap-5">
+                <div class="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold shrink-0">3</div>
+                <div>
+                    <h2 class="font-bold text-lg mb-2" data-key="step3_title">팀 구성 방식 선택</h2>
+                    <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                        <li data-key="mode_desc_1"><b>팀 개수 기준:</b> 원하는 팀의 총 개수를 설정합니다.</li>
+                        <li data-key="mode_desc_2"><b>팀원 수 기준:</b> 각 팀에 배정될 인원수를 설정합니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="flex gap-5">
+                <div class="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold shrink-0">4</div>
+                <div>
+                    <h2 class="font-bold text-lg mb-2" data-key="step4_title">결과 확인 및 다시 나누기</h2>
+                    <p class="text-gray-600 text-sm" data-key="step4_desc">생성된 팀 카드에서 멤버를 확인하세요. <b>'다시 나누기'</b>를 눌러 새로운 조합을 즉시 만들 수 있습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-indigo-50 p-6 rounded-3xl border border-indigo-100">
+            <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
+                <span class="material-icons text-sm">info</span> <span data-key="tip_title">Tip</span>
+            </h3>
+            <p class="text-indigo-700 text-xs leading-relaxed" data-key="tip_desc">
+                팀 이름을 적게 입력하면 나머지 팀은 기본 이름(Team 3...)으로 채워집니다. 이름이 중복되면 경고 알림이 뜨니 고유한 이름을 사용해주세요!
+            </p>
+        </section>
+
+        <div class="pt-10 pb-20">
+            <a href="teammaker.html" class="block w-full bg-indigo-600 text-white py-4 rounded-2xl text-center font-bold shadow-lg shadow-indigo-200" data-key="go_back_btn">
+                팀 나누러 가기
+            </a>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center text-gray-400 text-xs">
+        <p data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            "en": {
+                "guide_title": "Team Maker Guide - Zeze Hub",
+                "guide_nav_title": "User Guide",
+                "guide_main_title": "Random Team Maker",
+                "guide_main_desc": "From player lists to custom team names! Your guide to fair grouping.",
+                "step1_title": "Enter Participants",
+                "step1_desc": "Separate names by <b>newline</b> or <b>comma (,)</b>. You can see the real-time count below the input field.",
+                "step2_title": "Custom Team Names (Optional)",
+                "step2_desc": "If you want specific team names, enter them in order. The system will guide you on how many names are needed.",
+                "step3_title": "Choose Division Mode",
+                "mode_desc_1": "<b>By Team Count:</b> Set the total number of teams you want.",
+                "mode_desc_2": "<b>By Members per Team:</b> Set the number of people per group.",
+                "step4_title": "Results & Reshuffle",
+                "step4_desc": "Check your teams in cards. Click <b>'Reshuffle'</b> to instantly try a different random combination.",
+                "tip_title": "Tip",
+                "tip_desc": "If you enter fewer team names than required, the rest will be auto-filled (Team 3, etc.). Ensure all names are unique to avoid errors!",
+                "go_back_btn": "Start Making Teams",
+                "footer_copyright": "© 2024 Zeze Decision Hub."
+            },
+            "ko": {
+                "guide_title": "사용 가이드 - Zeze Hub",
+                "guide_nav_title": "사용 가이드",
+                "guide_main_title": "무작위 팀 나누기",
+                "guide_main_desc": "명단 입력부터 팀명 지정까지! 공정한 팀 구성을 위한 가이드입니다.",
+                "step1_title": "참가자 명단 입력",
+                "step1_desc": "이름을 <b>줄바꿈</b>이나 <b>쉼표(,)</b>로 구분하여 입력하세요. 입력창 하단에서 실시간으로 인원수를 확인할 수 있습니다.",
+                "step2_title": "팀 이름 지정 (선택)",
+                "step2_desc": "팀 이름을 직접 정하고 싶다면 입력창에 순서대로 적어주세요. 시스템이 설정에 필요한 팀 개수를 실시간으로 알려드립니다.",
+                "step3_title": "팀 구성 방식 선택",
+                "mode_desc_1": "<b>팀 개수 기준:</b> 원하는 팀의 총 개수를 설정합니다.",
+                "mode_desc_2": "<b>팀원 수 기준:</b> 각 팀에 배정될 인원수를 설정합니다.",
+                "step4_title": "결과 확인 및 다시 나누기",
+                "step4_desc": "생성된 팀 카드에서 멤버를 확인하세요. <b>'다시 나누기'</b>를 눌러 새로운 조합을 즉시 만들 수 있습니다.",
+                "tip_title": "Tip",
+                "tip_desc": "팀 이름을 적게 입력하면 나머지 팀은 기본 이름(Team 3...)으로 채워집니다. 이름이 중복되면 경고 알림이 뜨니 고유한 이름을 사용해주세요!",
+                "go_back_btn": "팀 나누러 가기",
+                "footer_copyright": "© 2024 Zeze Decision Hub."
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'ko';
+
+        function applyLanguage() {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+            document.documentElement.lang = currentLang;
+        }
+
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
+</body>
+</html>

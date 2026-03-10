@@ -1,0 +1,39 @@
+/* Team Maker Specific Styles */
+
+#player-list-input::placeholder {
+    color: #D1D5DB;
+    font-size: 0.8rem;
+}
+
+.team-card {
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.member-chip {
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    from { opacity: 0; scale: 0.8; }
+    to { opacity: 1; scale: 1; }
+}
+
+/* Delay for chip animations */
+.member-chip:nth-child(1) { animation-delay: 0.05s; }
+.member-chip:nth-child(2) { animation-delay: 0.1s; }
+.member-chip:nth-child(3) { animation-delay: 0.15s; }
+.member-chip:nth-child(4) { animation-delay: 0.2s; }
+.member-chip:nth-child(5) { animation-delay: 0.25s; }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
