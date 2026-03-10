@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-key="app_title">요술 램프 - Zeze Hub</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
     <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -29,7 +30,7 @@
 <body class="bg-background text-white font-sans antialiased min-h-screen flex flex-col">
 
     <!-- Navigation Bar -->
-    <nav class="fixed top-0 left-0 right-0 bg-white/5 backdrop-blur-md border-b border-white/10 z-50">
+    <nav class="fixed top-0 left-0 right-0 bg-[#0F0524] border-b border-white/10 z-50">
         <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-2">
                 <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-white/10 focus:outline-none flex items-center text-primaryLight">
@@ -49,7 +50,7 @@
     </nav>
 
     <!-- Sidebar Menu -->
-    <div id="sidebar-menu" class="fixed top-0 right-0 h-full w-64 bg-[#120a2e] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-white/5">
+    <div id="sidebar-menu" class="fixed top-0 right-0 h-full w-64 bg-[#120a2e] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-white/10">
         <div class="flex items-center justify-between p-4 border-b border-white/10">
             <span class="text-lg font-medium" data-key="menu_sidebar_title">Menu</span>
             <button id="close-menu" class="p-2 rounded-full hover:bg-white/10">
@@ -132,7 +133,7 @@
         </section>
 
         <!-- Magic Lamp Stage (Optimized Layout to prevent clipping) -->
-        <section class="relative flex flex-col items-center justify-start min-h-[550px] mt-2 overflow-visible">
+        <section class="relative flex flex-col items-center justify-start min-h-[680px] mt-2 overflow-visible">
             
             <!-- Answer Reveal Card (Positioned higher and clearer) -->
             <div id="answer-reveal" class="absolute top-0 left-1/2 -translate-x-1/2 w-[92%] max-w-[320px] flex flex-col items-center justify-center opacity-0 scale-50 transition-all duration-700 z-50 pointer-events-none">
@@ -153,13 +154,13 @@
                         <span class="material-icons text-[16px]">download</span> <span data-key="save_img_btn">결과 이미지로 저장</span>
                     </button>
                     <div class="flex gap-2 w-full">
-                        <button id="share-twitter-btn" class="flex items-center justify-center flex-1 py-2 bg-[#1DA1F2]/20 hover:bg-[#1DA1F2]/40 rounded-full text-xs font-medium text-[#1DA1F2] border border-[#1DA1F2]/30 transition-colors">
+                        <button id="share-twitter-btn" class="flex items-center justify-center flex-1 py-2 bg-[#1DA1F2]/20 hover:bg-[#1DA1F2]/40 rounded-full text-[10px] font-medium text-[#1DA1F2] border border-[#1DA1F2]/30 transition-colors">
                             <span data-key="share_twitter">X (Twitter)</span>
                         </button>
-                        <button id="share-fb-btn" class="flex items-center justify-center flex-1 py-2 bg-[#1877F2]/20 hover:bg-[#1877F2]/40 rounded-full text-xs font-medium text-[#1877F2] border border-[#1877F2]/30 transition-colors">
+                        <button id="share-fb-btn" class="flex items-center justify-center flex-1 py-2 bg-[#1877F2]/20 hover:bg-[#1877F2]/40 rounded-full text-[10px] font-medium text-[#1877F2] border border-[#1877F2]/30 transition-colors">
                             <span data-key="share_fb">Facebook</span>
                         </button>
-                        <button id="share-link-btn" class="flex items-center justify-center flex-1 py-2 bg-primary/20 hover:bg-primary/40 rounded-full text-xs font-medium text-primaryLight border border-primary/30 transition-colors">
+                        <button id="share-link-btn" class="flex items-center justify-center flex-1 py-2 bg-primary/20 hover:bg-primary/40 rounded-full text-[10px] font-medium text-primaryLight border border-primary/30 transition-colors">
                             <span data-key="copy_link_btn">복사하기</span>
                         </button>
                     </div>
@@ -167,7 +168,7 @@
             </div>
 
             <!-- The Real Magic Lamp (SVG) -->
-            <div id="magic-lamp-container" class="relative z-10 transition-all duration-700 flex flex-col items-center mt-36">
+            <div id="magic-lamp-container" class="relative z-10 transition-all duration-700 flex flex-col items-center mt-48">
                 <!-- Smoke Origin Point -->
                 <div id="smoke-origin" class="absolute top-[30px] left-[-15px] w-1 h-1 z-20 overflow-visible">
                     <div class="smoke-puff hidden" id="smoke-1"></div>
@@ -203,7 +204,7 @@
                 </svg>
             </div>
             
-            <button id="ask-button" class="mt-auto mb-2 z-30 bg-gradient-to-r from-primary to-primaryLight text-white py-4 px-12 rounded-full text-lg font-bold shadow-[0_0_20px_rgba(98,0,238,0.5)] hover:shadow-[0_0_30px_rgba(98,0,238,0.8)] transition-all duration-300 active:scale-95 group relative overflow-hidden">
+            <button id="ask-button" class="mt-auto mb-8 z-30 bg-gradient-to-r from-primary to-primaryLight text-white py-4 px-12 rounded-full text-lg font-bold shadow-[0_0_20px_rgba(98,0,238,0.5)] hover:shadow-[0_0_30px_rgba(98,0,238,0.8)] transition-all duration-300 active:scale-95 group relative overflow-hidden">
                 <span class="relative z-10 flex items-center gap-2">
                     <span class="material-icons group-hover:rotate-12 transition-transform">auto_fix_high</span>
                     <span data-key="ask_lamp">램프 문지르기</span>
