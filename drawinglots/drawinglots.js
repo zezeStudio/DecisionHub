@@ -32,7 +32,7 @@ const translations = {
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
         "info_title1": "History of Drawing Lots: Mankind's Most Equal Decision",
-        "info_desc1": "Drawing lots is a decision-making method used for ages, documented even in the Bible and ancient texts. In ancient Athens, public officials were often chosen by lot rather than election—a highly democratic device intended to give every citizen an equal chance and prevent the monopoly of power. Today, it remains loved as the most intuitive, fair, and dispute-free tool for making decisions.",
+        "info_desc1": "Drawing lots is a decision-making method used for ages, documented even in the Bible and ancient texts. In ancient Athens, public officials were often chosen by lot rather than election—a highly democratic device intended to give every citizen an equal chance and prevent the monopoly of power. Today, it remains a loved as the most intuitive, fair, and dispute-free tool for making decisions.",
         "info_title2": "Order and Probability: Is it better to go first?",
         "info_desc2": "People often wonder, 'Is it better to draw first or last?' Mathematically, drawing lots yields identical winning probabilities regardless of the order. For example, if there is 1 winner among 10 slips, the first person's chance is 1/10. The second person's chance is the probability of the first person losing (9/10) multiplied by the second person winning from the remaining slips (1/9), which equals 1/10. Zeze Hub implements this mathematical fairness with cryptographic randomness for truly equal luck.",
         "info_title3": "Drawing Lots Usage Guide (Various Applications)",
@@ -98,6 +98,7 @@ const turnIndicator = document.getElementById('current-turn-text');
 const revealBtn = document.getElementById('reveal-btn');
 const finalResultSection = document.getElementById('final-result-section');
 const resultList = document.getElementById('result-list');
+const missionInput = document.getElementById('mission-input');
 
 // 🎵 Sound Manager
 const SoundManager = {
@@ -108,6 +109,7 @@ const SoundManager = {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioContext();
         }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
     },
     updateMuteUI() {
         const icon = document.getElementById('sound-icon');
@@ -152,15 +154,94 @@ const SoundManager = {
     }
 };
 
+// 💾 Session State Persistence
+function saveSessionState() {
+    const session = {
+        playerCount,
+        winnerCount,
+        players,
+        lots,
+        currentTurnIndex,
+        missionText: missionInput.value,
+        setupVisible: !setupSection.classList.contains('hidden'),
+        isFinalResultVisible: !finalResultSection.classList.contains('hidden')
+    };
+    localStorage.setItem('zeze_drawinglots_session', JSON.stringify(session));
+}
+
+function loadSessionState() {
+    const saved = localStorage.getItem('zeze_drawinglots_session');
+    if (!saved) return;
+
+    const state = JSON.parse(saved);
+    playerCount = state.playerCount;
+    winnerCount = state.winnerCount;
+    players = state.players;
+    lots = state.lots;
+    currentTurnIndex = state.currentTurnIndex;
+    missionInput.value = state.missionText || "";
+
+    renderInputs(); // 텍스트 필드 값들 복구
+
+    if (!state.setupVisible) {
+        setupSection.classList.add('hidden');
+        missionSection.classList.add('hidden');
+        gameStage.classList.remove('hidden');
+        
+        // Mission Display
+        let missionDisplay = document.getElementById('game-mission-display');
+        if (!missionDisplay) {
+            missionDisplay = document.createElement('div');
+            missionDisplay.id = 'game-mission-display';
+            missionDisplay.className = 'w-full mb-4 bg-white p-4 rounded-2xl border border-primary/20 text-center shadow-sm';
+            gameStage.prepend(missionDisplay);
+        }
+        if (state.missionText) {
+            missionDisplay.innerHTML = `<span class="text-[10px] text-primary font-black uppercase tracking-widest block mb-1">Current Mission</span><span class="text-lg font-bold text-gray-800">${state.missionText}</span>`;
+            missionDisplay.classList.remove('hidden');
+        } else {
+            missionDisplay.classList.add('hidden');
+        }
+
+        renderLots();
+        updateTurnIndicator();
+
+        if (currentTurnIndex >= playerCount) {
+            revealBtn.classList.remove('hidden');
+            turnIndicatorContainer.classList.remove('animate-pulse');
+        }
+
+        if (state.isFinalResultVisible) {
+            revealAll(true); // true means no extra confetti/sound if already done
+        }
+    }
+}
+
+function clearSessionState() {
+    localStorage.removeItem('zeze_drawinglots_session');
+}
+
 function init() {
-    renderInputs();
     applyTranslations();
+    
+    // Check if Reload
+    const perfEntries = performance.getEntriesByType('navigation');
+    const isReload = perfEntries.length > 0 && perfEntries[0].type === 'reload';
+    
+    if (isReload) {
+        loadSessionState();
+    } else {
+        clearSessionState();
+        renderInputs();
+    }
+    
     setupEventListeners();
     SoundManager.updateMuteUI();
 }
 
 function renderInputs() {
-    const currentValues = Array.from(document.querySelectorAll('.player-name-input')).map(i => i.value);
+    const inputs = document.querySelectorAll('.player-name-input');
+    const currentValues = Array.from(inputs).map(i => i.value);
     
     playerInputsContainer.innerHTML = '';
     for (let i = 0; i < playerCount; i++) {
@@ -169,7 +250,7 @@ function renderInputs() {
         div.innerHTML = `
             <span class="w-6 h-6 rounded-full bg-primary/10 text-primary text-[10px] flex items-center justify-center font-bold">${i + 1}</span>
             <input type="text" class="player-name-input flex-1 p-3 rounded-xl border border-gray-200 focus:border-primary outline-none transition-all text-sm" 
-                placeholder="${translations[currentLang].player_placeholder} ${i + 1}" value="${currentValues[i] || ''}">
+                placeholder="${translations[currentLang].player_placeholder} ${i + 1}" value="${players[i] || currentValues[i] || ''}">
         `;
         playerInputsContainer.appendChild(div);
     }
@@ -210,7 +291,6 @@ function startGame() {
     currentTurnIndex = 0;
     isAnimating = false;
     
-    const missionInput = document.getElementById('mission-input');
     const missionText = missionInput.value.trim();
 
     missionSection.classList.add('hidden');
@@ -237,6 +317,7 @@ function startGame() {
     
     renderLots();
     updateTurnIndicator();
+    saveSessionState();
 }
 
 function renderLots() {
@@ -247,9 +328,17 @@ function renderLots() {
     lots.forEach((lot, index) => {
         const div = document.createElement('div');
         div.className = 'lot-slip bg-gray-50 border border-gray-200 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary/5 hover:border-primary transition-all active:scale-95 shadow-sm relative overflow-hidden h-24';
-        div.innerHTML = `
-            <span class="material-icons text-gray-300 text-3xl slip-icon">help_outline</span>
-        `;
+        
+        if (lot.playerIndex !== null) {
+            div.classList.add('picked', 'bg-primary/5', 'border-primary');
+            div.innerHTML = `
+                <span class="material-icons slip-icon text-primary text-3xl">person</span>
+                <span class="absolute bottom-2 left-0 right-0 text-[10px] font-bold text-primary truncate px-2 text-center bg-white/80 py-0.5">${players[lot.playerIndex]}</span>
+            `;
+        } else {
+            div.innerHTML = `<span class="material-icons text-gray-300 text-3xl slip-icon">help_outline</span>`;
+        }
+        
         div.addEventListener('click', () => handleLotClick(index, div));
         lotsContainer.appendChild(div);
     });
@@ -257,11 +346,11 @@ function renderLots() {
 
 function handleLotClick(index, element) {
     if (isAnimating) return;
-    
     if (lots[index].playerIndex !== null) {
         alert(translations[currentLang].error_already_picked);
         return;
     }
+    if (currentTurnIndex >= playerCount) return;
     
     isAnimating = true;
     lots[index].playerIndex = currentTurnIndex;
@@ -284,14 +373,15 @@ function handleLotClick(index, element) {
         setTimeout(() => {
             updateTurnIndicator();
             isAnimating = false;
+            saveSessionState();
         }, 300);
     } else {
         setTimeout(() => {
-            // 모두 골랐을 때 문구 업데이트
             turnIndicator.innerHTML = translations[currentLang].all_picked_text;
             turnIndicatorContainer.classList.remove('animate-pulse');
             revealBtn.classList.remove('hidden');
             isAnimating = false;
+            saveSessionState();
         }, 300);
     }
 }
@@ -304,24 +394,26 @@ function updateTurnIndicator() {
     }
 }
 
-function revealAll() {
+function revealAll(noAnim = false) {
     revealBtn.classList.add('hidden');
     finalResultSection.classList.remove('hidden');
-    SoundManager.playReveal();
+    if (!noAnim) SoundManager.playReveal();
     
     const slips = document.querySelectorAll('.lot-slip');
     
     lots.forEach((lot, index) => {
         const slip = slips[index];
+        if (!slip) return;
         const icon = slip.querySelector('.slip-icon');
         
         if (lot.isWinner) {
             slip.classList.add('bg-secondary/10', 'border-secondary');
             slip.classList.remove('bg-primary/5', 'border-primary');
-            icon.textContent = 'stars';
-            icon.classList.add('text-secondary');
-            icon.classList.remove('text-primary');
-            
+            if (icon) {
+                icon.textContent = 'stars';
+                icon.classList.add('text-secondary');
+                icon.classList.remove('text-primary');
+            }
             const label = slip.querySelector('span:not(.slip-icon)');
             if (label) {
                 label.classList.add('text-secondary');
@@ -329,38 +421,42 @@ function revealAll() {
             }
         } else {
             slip.classList.add('opacity-50');
-            icon.textContent = 'close';
-            icon.classList.add('text-gray-400');
-            icon.classList.remove('text-primary');
+            if (icon) {
+                icon.textContent = 'close';
+                icon.classList.add('text-gray-400');
+                icon.classList.remove('text-primary');
+            }
         }
     });
     
-    confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#6200EE', '#FF9800', '#BB86FC']
-    });
+    if (!noAnim) {
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#6200EE', '#FF9800', '#BB86FC']
+        });
+    }
     
     renderResultList();
+    saveSessionState();
 }
 
 function renderResultList() {
     resultList.innerHTML = '';
+    const mText = missionInput.value.trim();
     
-    const missionInput = document.getElementById('mission-input');
-    const missionText = missionInput ? missionInput.value.trim() : "";
-    
-    if (missionText) {
+    if (mText) {
         const missionHeader = document.createElement('div');
         missionHeader.className = 'bg-primary/5 p-4 rounded-2xl border border-primary/10 mb-4 text-center';
-        missionHeader.innerHTML = `<span class="text-[10px] text-primary font-black uppercase tracking-widest block mb-1">Mission</span><span class="text-gray-800 font-bold">${missionText}</span>`;
+        missionHeader.innerHTML = `<span class="text-[10px] text-primary font-black uppercase tracking-widest block mb-1">Mission</span><span class="text-gray-800 font-bold">${mText}</span>`;
         resultList.appendChild(missionHeader);
     }
 
     const sortedLots = [...lots].sort((a, b) => a.playerIndex - b.playerIndex);
     
     sortedLots.forEach(lot => {
+        if (lot.playerIndex === null) return;
         const div = document.createElement('div');
         div.className = `flex justify-between items-center p-4 rounded-2xl border ${lot.isWinner ? 'bg-secondary/5 border-secondary/20' : 'bg-gray-50 border-gray-100'}`;
         
@@ -382,12 +478,10 @@ function applyTranslations() {
         if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
 
-    const missionInput = document.getElementById('mission-input');
     if (missionInput && translations[currentLang].mission_placeholder) {
         missionInput.placeholder = translations[currentLang].mission_placeholder;
     }
 
-    // 게임 중인 경우 turnIndicator 내용 실시간 번역
     if (!gameStage.classList.contains('hidden')) {
         updateTurnIndicator();
     }
@@ -405,7 +499,7 @@ function applyTranslations() {
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
-    applyTranslations();
+    applyLanguage();
     renderInputs();
 }
 
@@ -414,6 +508,7 @@ function setupEventListeners() {
         if (playerCount < 20) {
             playerCount++;
             renderInputs();
+            saveSessionState();
         }
     });
     
@@ -422,6 +517,7 @@ function setupEventListeners() {
             playerCount--;
             if (winnerCount >= playerCount) winnerCount = playerCount - 1;
             renderInputs();
+            saveSessionState();
         }
     });
     
@@ -429,6 +525,7 @@ function setupEventListeners() {
         if (winnerCount < playerCount - 1) {
             winnerCount++;
             winnerCountDisplay.textContent = winnerCount;
+            saveSessionState();
         }
     });
     
@@ -436,21 +533,25 @@ function setupEventListeners() {
         if (winnerCount > 1) {
             winnerCount--;
             winnerCountDisplay.textContent = winnerCount;
+            saveSessionState();
         }
     });
 
     document.getElementById('start-btn').addEventListener('click', startGame);
     
     document.getElementById('reset-btn').addEventListener('click', () => {
+        clearSessionState();
         setupSection.classList.remove('hidden');
         gameStage.classList.add('hidden');
         finalResultSection.classList.add('hidden');
         missionSection.classList.remove('hidden');
         const missionDisplay = document.getElementById('game-mission-display');
         if (missionDisplay) missionDisplay.classList.add('hidden');
+        players = [];
+        renderInputs();
     });
     
-    revealBtn.addEventListener('click', revealAll);
+    revealBtn.addEventListener('click', () => revealAll());
 
     const soundToggle = document.getElementById('sound-toggle');
     if (soundToggle) {

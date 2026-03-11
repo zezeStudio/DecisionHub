@@ -107,6 +107,7 @@ const diceRotations = [
 let currentLang = localStorage.getItem('lang') || 'ko';
 let options = JSON.parse(localStorage.getItem('dice_options')) || ["Yes", "No"];
 let historyLog = JSON.parse(localStorage.getItem('dice_history')) || [];
+let lastResultIndex = null;
 
 // DOM Elements
 const dice = document.getElementById('dice');
@@ -119,6 +120,7 @@ const resultText = document.getElementById('result-text');
 const storyDisplayText = document.getElementById('story-display-text');
 const shareButtons = document.getElementById('share-buttons');
 const historyList = document.getElementById('history-list');
+const missionInput = document.getElementById('mission-input');
 
 // Help Modal Elements
 const helpModal = document.getElementById('help-modal');
@@ -137,6 +139,7 @@ const SoundManager = {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioContext();
         }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
     },
     updateMuteUI() {
         const icon = document.getElementById('sound-icon');
@@ -166,9 +169,75 @@ const SoundManager = {
     }
 };
 
+// 💾 Session State Persistence
+function saveSessionState() {
+    const session = {
+        options,
+        missionText: missionInput ? missionInput.value : "",
+        lastResultIndex,
+        isResultVisible: destinySection.classList.contains('result-visible')
+    };
+    localStorage.setItem('zeze_destinydice_session', JSON.stringify(session));
+}
+
+function loadSessionState() {
+    const saved = localStorage.getItem('zeze_destinydice_session');
+    if (!saved) return;
+
+    const state = JSON.parse(saved);
+    options = state.options;
+    if (missionInput) missionInput.value = state.missionText || "";
+    lastResultIndex = state.lastResultIndex;
+
+    renderOptions();
+
+    if (state.isResultVisible && lastResultIndex !== null) {
+        const result = options[lastResultIndex];
+        const missionText = state.missionText || "";
+        const winSuffix = translations[currentLang].win_suffix;
+        
+        const finalResultDisplay = missionText ? `${result}${winSuffix}` : result;
+        resultText.textContent = finalResultDisplay;
+
+        if (missionText) {
+            storyDisplayText.innerHTML = `<span class="text-secondary font-bold">Mission:</span> ${missionText}`;
+        } else {
+            const funStories = {
+                "ko": ["주사위의 눈이 당신의 진심을 꿰뚫어 보았습니다. 이 선택이 당신을 빛나는 미래로 안내할 것입니다."],
+                "en": ["The dice has seen through your heart. This choice will guide you to a shining future."]
+            };
+            storyDisplayText.textContent = funStories[currentLang][0];
+        }
+
+        const rotation = diceRotations[lastResultIndex];
+        dice.style.transition = 'none';
+        dice.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
+        setTimeout(() => { dice.style.transition = ''; }, 50);
+
+        destinySection.classList.add('result-visible');
+        destinySection.style.opacity = '1';
+        shareButtons.classList.remove('opacity-0');
+    }
+}
+
+function clearSessionState() {
+    localStorage.removeItem('zeze_destinydice_session');
+}
+
 function init() {
     applyLanguage();
-    renderOptions();
+    
+    // Check if Reload
+    const perfEntries = performance.getEntriesByType('navigation');
+    const isReload = perfEntries.length > 0 && perfEntries[0].type === 'reload';
+    
+    if (isReload) {
+        loadSessionState();
+    } else {
+        clearSessionState();
+        renderOptions();
+    }
+    
     renderHistory();
     setupEventListeners();
     SoundManager.updateMuteUI();
@@ -248,6 +317,7 @@ function rollDice() {
     shareButtons.classList.add('opacity-0');
     
     const resultIndex = Math.floor(Math.random() * options.length);
+    lastResultIndex = resultIndex;
     const rotation = diceRotations[resultIndex];
     const extraX = (Math.floor(Math.random() * 5) + 5) * 360;
     const extraY = (Math.floor(Math.random() * 5) + 5) * 360;
@@ -257,27 +327,24 @@ function rollDice() {
 
     setTimeout(() => {
         const result = options[resultIndex];
-        const missionInput = document.getElementById('mission-input');
-        const missionText = missionInput ? missionInput.value.trim() : "";
+        const mText = missionInput ? missionInput.value.trim() : "";
         const winSuffix = translations[currentLang].win_suffix;
         
-        // Formatted Result: Name + " 당첨" (if mission exists)
-        const finalResultDisplay = missionText ? `${result}${winSuffix}` : result;
+        const finalResultDisplay = mText ? `${result}${winSuffix}` : result;
         resultText.textContent = finalResultDisplay;
         
         const now = new Date();
         const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
         
-        // Save to History: Name + " 당첨 : 미션내용"
-        const historyDisplay = missionText ? `${result}${winSuffix} : ${missionText}` : result;
+        const historyDisplay = mText ? `${result}${winSuffix} : ${mText}` : result;
         historyLog.push({ time: timeStr, result: historyDisplay });
         
         if (historyLog.length > 10) historyLog.shift();
         localStorage.setItem('dice_history', JSON.stringify(historyLog));
         renderHistory();
 
-        if (missionText) {
-            storyDisplayText.innerHTML = `<span class="text-secondary font-bold">Mission:</span> ${missionText}`;
+        if (mText) {
+            storyDisplayText.innerHTML = `<span class="text-secondary font-bold">Mission:</span> ${mText}`;
         } else {
             const funStories = {
                 "ko": [
@@ -298,8 +365,10 @@ function rollDice() {
         }
         
         destinySection.classList.add('result-visible');
+        destinySection.style.opacity = '1';
         shareButtons.classList.remove('opacity-0');
         
+        saveSessionState();
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#FF0266', '#BB86FC', '#FFFFFF'] });
         rollButton.disabled = false;
     }, 1500);
@@ -313,9 +382,20 @@ function applyLanguage() {
         }
     });
 
-    const missionInput = document.getElementById('mission-input');
     if (missionInput && translations[currentLang].mission_placeholder) {
         missionInput.placeholder = translations[currentLang].mission_placeholder;
+    }
+
+    if (destinySection.classList.contains('result-visible') && lastResultIndex !== null) {
+        const result = options[lastResultIndex];
+        const mText = missionInput ? missionInput.value.trim() : "";
+        const winSuffix = translations[currentLang].win_suffix;
+        const finalResultDisplay = mText ? `${result}${winSuffix}` : result;
+        resultText.textContent = finalResultDisplay;
+        
+        if (mText) {
+            storyDisplayText.innerHTML = `<span class="text-secondary font-bold">Mission:</span> ${mText}`;
+        }
     }
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -376,6 +456,7 @@ function setupEventListeners() {
         if (options.length < 6) {
             options.push("");
             renderOptions();
+            saveSessionState();
         }
     });
 
@@ -385,6 +466,7 @@ function setupEventListeners() {
             options.splice(index, 1);
             localStorage.setItem('dice_options', JSON.stringify(options));
             renderOptions();
+            saveSessionState();
         }
     });
 
@@ -394,8 +476,15 @@ function setupEventListeners() {
             options[index] = e.target.value;
             localStorage.setItem('dice_options', JSON.stringify(options));
             updateDiceFaces();
+            saveSessionState();
         }
     });
+
+    if (missionInput) {
+        missionInput.addEventListener('input', () => {
+            saveSessionState();
+        });
+    }
 
     document.getElementById('save-img-btn').addEventListener('click', saveImage);
     document.getElementById('share-link-btn').addEventListener('click', () => {
@@ -410,6 +499,7 @@ function setupEventListeners() {
             renderOptions();
             destinySection.classList.remove('result-visible');
             destinySection.style.opacity = '0';
+            clearSessionState();
         }
     });
 

@@ -237,10 +237,89 @@ const SoundManager = {
     }
 };
 
+// 💾 Session State Persistence
+function saveSessionState() {
+    const session = {
+        currentSkin,
+        currentScenario,
+        lastResult,
+        selectedPrediction,
+        currentStreak,
+        isAnswerVisible: resultOverlay.classList.contains('answer-visible')
+    };
+    localStorage.setItem('zeze_coinflip_session', JSON.stringify(session));
+}
+
+function loadSessionState() {
+    const saved = localStorage.getItem('zeze_coinflip_session');
+    if (!saved) return;
+
+    const state = JSON.parse(saved);
+    currentSkin = state.currentSkin;
+    currentScenario = state.currentScenario;
+    lastResult = state.lastResult;
+    selectedPrediction = state.selectedPrediction;
+    currentStreak = state.currentStreak;
+
+    applySkin(currentSkin);
+    
+    document.querySelectorAll('.scenario-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.scenario === currentScenario);
+    });
+
+    if (selectedPrediction) {
+        document.querySelectorAll('.predict-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.predict === selectedPrediction);
+        });
+    }
+
+    if (state.isAnswerVisible && lastResult) {
+        const t = translations[currentLang];
+        const isHeads = lastResult === 'heads';
+        const scenarioData = storyData[currentScenario];
+        
+        resultText.textContent = isHeads ? t.heads_text : t.tails_text;
+        resultAdvice.textContent = isHeads ? t.heads_advice : t.tails_advice;
+        
+        storyDisplayText.textContent = scenarioData[lastResult][currentLang];
+        storyIcon.textContent = scenarioData.icon;
+        storyThemeName.textContent = t[`sc_${currentScenario}`];
+        destinySection.classList.remove('opacity-0', 'translate-y-4');
+
+        if (selectedPrediction) {
+            const isWin = selectedPrediction === lastResult;
+            if (isWin) {
+                winBadge.textContent = t.win_label;
+                winBadge.className = "inline-block px-3 py-1 bg-yellow-500 text-[#050c1d] text-[10px] font-black rounded-full mb-3 uppercase tracking-tighter";
+                winBadge.classList.remove('hidden');
+            } else {
+                winBadge.textContent = t.lose_label;
+                winBadge.className = "inline-block px-3 py-1 bg-gray-600 text-white text-[10px] font-black rounded-full mb-3 uppercase tracking-tighter opacity-70";
+                winBadge.classList.remove('hidden');
+            }
+        }
+
+        resultOverlay.classList.remove('opacity-0', 'scale-50');
+        resultOverlay.classList.add('answer-visible');
+        shareButtons.classList.remove('opacity-0');
+        
+        coin.style.transition = 'none';
+        coin.style.transform = `rotateY(${isHeads ? 0 : 180}deg)`;
+        setTimeout(() => { coin.style.transition = ''; }, 50);
+    }
+}
+
+function clearSessionState() {
+    localStorage.removeItem('zeze_coinflip_session');
+}
+
 function init() {
     applyLanguage();
+    const perfEntries = performance.getEntriesByType('navigation');
+    const isReload = perfEntries.length > 0 && perfEntries[0].type === 'reload';
+    if (isReload) loadSessionState();
+    else { clearSessionState(); applySkin(currentSkin); }
     updateDisplay();
-    applySkin(currentSkin);
     setupEventListeners();
     SoundManager.updateMuteUI();
 }
@@ -249,131 +328,66 @@ function updateDisplay() {
     totalFlipsDisplay.textContent = totalFlips;
     headsCountDisplay.textContent = headsCount;
     tailsCountDisplay.textContent = tailsCount;
-    
-    if (currentStreak > 0) {
-        streakCounter.classList.remove('opacity-0');
-        streakValue.textContent = currentStreak;
-    } else {
-        streakCounter.classList.add('opacity-0');
-    }
+    if (currentStreak > 0) { streakCounter.classList.remove('opacity-0'); streakValue.textContent = currentStreak; }
+    else { streakCounter.classList.add('opacity-0'); }
 }
 
 function applySkin(skin) {
-    currentSkin = skin;
-    localStorage.setItem('coin_skin', skin);
-    
-    // Reset classes and add new skin
+    currentSkin = skin; localStorage.setItem('coin_skin', skin);
     coin.className = `coin skin-${skin}`;
-    
     const frontIcon = coin.querySelector('.side.front .coin-icon');
     const backIcon = coin.querySelector('.side.back .coin-icon');
-    
     if (frontIcon && backIcon) {
-        // Reset to default icon class
         frontIcon.className = 'coin-icon material-icons text-6xl';
         backIcon.className = 'coin-icon material-icons text-6xl';
-
-        if (skin === 'gold') { 
-            frontIcon.textContent = 'face'; 
-            backIcon.textContent = 'toll'; 
-        }
-        else if (skin === 'bitcoin') { 
-            frontIcon.textContent = 'currency_bitcoin'; 
-            backIcon.textContent = 'savings'; 
-        }
-        else if (skin === 'heart') { 
-            frontIcon.textContent = 'favorite'; 
-            backIcon.textContent = 'favorite_border'; 
-        }
-        else if (skin === 'cat') { 
-            frontIcon.textContent = 'pets'; 
-            backIcon.textContent = 'catching_pokemon'; 
-        }
-        else if (skin === 'star') { 
-            frontIcon.textContent = 'star'; 
-            backIcon.textContent = 'auto_awesome'; 
-        }
+        if (skin === 'gold') { frontIcon.textContent = 'face'; backIcon.textContent = 'toll'; }
+        else if (skin === 'bitcoin') { frontIcon.textContent = 'currency_bitcoin'; backIcon.textContent = 'savings'; }
+        else if (skin === 'heart') { frontIcon.textContent = 'favorite'; backIcon.textContent = 'favorite_border'; }
+        else if (skin === 'cat') { frontIcon.textContent = 'pets'; backIcon.textContent = 'catching_pokemon'; }
+        else if (skin === 'star') { frontIcon.textContent = 'star'; backIcon.textContent = 'auto_awesome'; }
         else if (skin === 'dog') { 
-            // For Dog skin, use emojis for a "picture" feel and remove material-icons class
             frontIcon.className = 'coin-icon text-6xl flex items-center justify-center';
             backIcon.className = 'coin-icon text-6xl flex items-center justify-center';
-            frontIcon.textContent = '🐶'; 
-            backIcon.textContent = '🦴'; 
+            frontIcon.textContent = '🐶'; backIcon.textContent = '🦴'; 
         }
     }
-
     document.querySelectorAll('.skin-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.skin === skin));
+    saveSessionState();
 }
 
 function flipCoin() {
     if (flipButton.disabled) return;
-    
     flipButton.disabled = true;
-    resultOverlay.classList.remove('answer-visible');
-    resultOverlay.classList.add('opacity-0', 'scale-50');
-    shareButtons.classList.add('opacity-0');
-    
-    // Animate destiny section exit
+    resultOverlay.classList.remove('answer-visible'); resultOverlay.classList.add('opacity-0', 'scale-50'); shareButtons.classList.add('opacity-0');
     destinySection.classList.add('opacity-0', 'translate-y-4');
-    
     const isHeads = Math.random() < 0.5;
-    
-    coinContainer.classList.remove('is-jumping');
-    void coinContainer.offsetWidth;
-    coinContainer.classList.add('is-jumping');
-
+    coinContainer.classList.remove('is-jumping'); void coinContainer.offsetWidth; coinContainer.classList.add('is-jumping');
     const currentRotationY = getRotationY(coin);
     const extraSpins = (Math.floor(Math.random() * 5) + 5) * 360;
     const targetRotationY = isHeads ? 0 : 180;
     const finalRotationY = currentRotationY + extraSpins + (targetRotationY - (currentRotationY % 360));
     const finalRotationX = (Math.floor(Math.random() * 5) + 5) * 360;
-    
     coin.style.transform = `rotateY(${finalRotationY}deg) rotateX(${finalRotationX}deg)`;
     SoundManager.playFlip();
-
     setTimeout(() => {
         const t = translations[currentLang];
         lastResult = isHeads ? 'heads' : 'tails';
         const scenarioData = storyData[currentScenario];
-        const scenarioText = scenarioData[lastResult][currentLang];
-        
         resultText.textContent = isHeads ? t.heads_text : t.tails_text;
         resultAdvice.textContent = isHeads ? t.heads_advice : t.tails_advice;
-        
-        // Update Bottom Story Card
-        storyDisplayText.textContent = scenarioText;
+        storyDisplayText.textContent = scenarioData[lastResult][currentLang];
         storyIcon.textContent = scenarioData.icon;
         storyThemeName.textContent = t[`sc_${currentScenario}`];
         destinySection.classList.remove('opacity-0', 'translate-y-4');
-        
-        totalFlips++;
-        if (isHeads) headsCount++; else tailsCount++;
-        
+        totalFlips++; if (isHeads) headsCount++; else tailsCount++;
         if (selectedPrediction) {
             const isWin = selectedPrediction === (isHeads ? 'heads' : 'tails');
-            if (isWin) {
-                currentStreak++;
-                winBadge.textContent = t.win_label;
-                winBadge.className = "inline-block px-3 py-1 bg-yellow-500 text-[#050c1d] text-[10px] font-black rounded-full mb-3 uppercase tracking-tighter";
-                winBadge.classList.remove('hidden');
-                SoundManager.playWin();
-                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-            } else {
-                currentStreak = 0;
-                winBadge.textContent = t.lose_label;
-                winBadge.className = "inline-block px-3 py-1 bg-gray-600 text-white text-[10px] font-black rounded-full mb-3 uppercase tracking-tighter opacity-70";
-                winBadge.classList.remove('hidden');
-                SoundManager.playLose();
-            }
+            if (isWin) { currentStreak++; winBadge.textContent = t.win_label; winBadge.className = "inline-block px-3 py-1 bg-yellow-500 text-[#050c1d] text-[10px] font-black rounded-full mb-3 uppercase tracking-tighter"; winBadge.classList.remove('hidden'); SoundManager.playWin(); confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } }); }
+            else { currentStreak = 0; winBadge.textContent = t.lose_label; winBadge.className = "inline-block px-3 py-1 bg-gray-600 text-white text-[10px] font-black rounded-full mb-3 uppercase tracking-tighter opacity-70"; winBadge.classList.remove('hidden'); SoundManager.playLose(); }
         } else { winBadge.classList.add('hidden'); }
-
-        resultOverlay.classList.remove('opacity-0', 'scale-50');
-        resultOverlay.classList.add('answer-visible');
+        resultOverlay.classList.remove('opacity-0', 'scale-50'); resultOverlay.classList.add('answer-visible');
         shareButtons.classList.remove('opacity-0');
-        
-        updateDisplay();
-        saveState();
-        flipButton.disabled = false;
+        updateDisplay(); saveState(); saveSessionState(); flipButton.disabled = false;
     }, 1500);
 }
 
@@ -387,27 +401,16 @@ function getRotationY(el) {
 }
 
 function saveState() {
-    localStorage.setItem('coin_total', totalFlips);
-    localStorage.setItem('coin_heads', headsCount);
-    localStorage.setItem('coin_tails', tailsCount);
+    localStorage.setItem('coin_total', totalFlips); localStorage.setItem('coin_heads', headsCount); localStorage.setItem('coin_tails', tailsCount);
 }
 
 function clearHistory() {
     if (confirm(currentLang === 'ko' ? "모든 기록을 초기화할까요?" : "Are you sure you want to clear all history?")) {
-        totalFlips = 0;
-        headsCount = 0;
-        tailsCount = 0;
-        currentStreak = 0;
-        saveState();
-        updateDisplay();
-        
-        // Hide destiny section
+        totalFlips = 0; headsCount = 0; tailsCount = 0; currentStreak = 0; lastResult = null;
+        saveState(); clearSessionState(); updateDisplay();
         destinySection.classList.add('opacity-0', 'translate-y-4');
-        resultOverlay.classList.remove('answer-visible');
-        resultOverlay.classList.add('opacity-0');
+        resultOverlay.classList.remove('answer-visible'); resultOverlay.classList.add('opacity-0');
         shareButtons.classList.add('opacity-0');
-        
-        // Close Sidebar
         document.getElementById('sidebar-menu').classList.add('translate-x-full');
         document.getElementById('sidebar-overlay').classList.add('hidden');
     }
@@ -418,110 +421,61 @@ function applyLanguage() {
         const key = el.dataset.key;
         if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
-
-    // Update current result if visible
     if (lastResult !== null) {
         const t = translations[currentLang];
-        const isHeads = lastResult === 'heads';
         const scenarioData = storyData[currentScenario];
-        
-        resultText.textContent = isHeads ? t.heads_text : t.tails_text;
-        resultAdvice.textContent = isHeads ? t.heads_advice : t.tails_advice;
+        resultText.textContent = lastResult === 'heads' ? t.heads_text : t.tails_text;
+        resultAdvice.textContent = lastResult === 'heads' ? t.heads_advice : t.tails_advice;
         storyDisplayText.textContent = scenarioData[lastResult][currentLang];
         storyThemeName.textContent = t[`sc_${currentScenario}`];
-
         if (selectedPrediction) {
-            const isWin = selectedPrediction === lastResult;
-            if (isWin) {
-                winBadge.textContent = t.win_label;
-            } else {
-                winBadge.textContent = t.lose_label;
-            }
+            winBadge.textContent = (selectedPrediction === lastResult) ? t.win_label : t.lose_label;
         }
     }
-
-    // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        // 스타일 관련 클래스 완전 초기화
         btn.classList.remove('bg-secondary', 'text-[#0A192F]', 'font-bold', 'bg-white/5', 'border', 'border-white/10', 'text-white', 'bg-transparent', 'border-transparent');
-        
-        if (btn.dataset.lang === currentLang) {
-            // 선택된 언어: 무조건 테마색(민트색) 강조
-            btn.classList.add('bg-secondary', 'text-[#0A192F]', 'font-bold');
-        } else {
-            // 선택되지 않은 언어: 메뉴 배경색과 동일하게 투명 처리
-            btn.classList.add('bg-transparent', 'border-transparent', 'text-white');
-        }
+        if (btn.dataset.lang === currentLang) btn.classList.add('bg-secondary', 'text-[#0A192F]', 'font-bold');
+        else btn.classList.add('bg-transparent', 'border-transparent', 'text-white');
     });
 }
 
 function setLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem('lang', lang);
-    applyLanguage();
+    currentLang = lang; localStorage.setItem('lang', lang); applyLanguage();
 }
 
 async function saveImage() {
     const target = document.querySelector('#destiny-section > div');
-    const canvas = await html2canvas(target, { 
-        backgroundColor: '#0A192F', 
-        scale: 2,
-        useCORS: true,
-        borderRadius: 24
-    });
-    const link = document.createElement('a');
-    link.download = `Zeze_Destiny_${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+    const canvas = await html2canvas(target, { backgroundColor: '#0A192F', scale: 2, useCORS: true, borderRadius: 24 });
+    const link = document.createElement('a'); link.download = `Zeze_Destiny_${Date.now()}.png`; link.href = canvas.toDataURL('image/png'); link.click();
 }
 
 function setupEventListeners() {
     flipButton.addEventListener('click', flipCoin);
-    const soundToggle = document.getElementById('sound-toggle');
-    if (soundToggle) {
-        soundToggle.addEventListener('click', () => SoundManager.toggleMute());
-    }
+    const soundToggle = document.getElementById('sound-toggle'); if (soundToggle) soundToggle.addEventListener('click', () => SoundManager.toggleMute());
     document.getElementById('save-img-btn').addEventListener('click', saveImage);
     document.getElementById('share-link-btn').addEventListener('click', () => {
         const text = `🔮 Zeze Hub 3D Coin Flip Result!\n\nCheck your destiny too: ${window.location.href}`;
         navigator.clipboard.writeText(text).then(() => alert(currentLang === 'ko' ? "링크가 복사되었습니다!" : "Link copied to clipboard!"));
     });
     document.getElementById('clear-history-btn').addEventListener('click', clearHistory);
-    
     document.querySelectorAll('.predict-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.predict-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            selectedPrediction = btn.dataset.predict;
+            document.querySelectorAll('.predict-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+            selectedPrediction = btn.dataset.predict; saveSessionState();
         });
     });
-
-    document.querySelectorAll('.skin-btn').forEach(btn => {
-        btn.addEventListener('click', () => applySkin(btn.dataset.skin));
-    });
-
+    document.querySelectorAll('.skin-btn').forEach(btn => { btn.addEventListener('click', () => applySkin(btn.dataset.skin)); });
     document.querySelectorAll('.scenario-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentScenario = btn.dataset.scenario;
+            document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+            currentScenario = btn.dataset.scenario; saveSessionState();
         });
     });
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
-    });
-
+    document.querySelectorAll('.lang-btn').forEach(btn => { btn.addEventListener('click', () => setLanguage(btn.dataset.lang)); });
     const sidebarMenu = document.getElementById('sidebar-menu');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
-    document.getElementById('menu-toggle').addEventListener('click', () => {
-        sidebarMenu.classList.remove('translate-x-full');
-        sidebarOverlay.classList.remove('hidden');
-    });
-    document.getElementById('close-menu').addEventListener('click', () => {
-        sidebarMenu.classList.add('translate-x-full');
-        sidebarOverlay.classList.add('hidden');
-    });
+    document.getElementById('menu-toggle').addEventListener('click', () => { sidebarMenu.classList.remove('translate-x-full'); sidebarOverlay.classList.remove('hidden'); });
+    document.getElementById('close-menu').addEventListener('click', () => { sidebarMenu.classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); });
 }
 
 document.addEventListener('DOMContentLoaded', init);

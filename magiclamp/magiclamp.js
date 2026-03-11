@@ -1,4 +1,5 @@
-// Translations data
+// Magic Lamp Logic
+
 const translations = {
     "en": {
         "app_title": "Magic Lamp - Decision Hub",
@@ -128,7 +129,7 @@ const translations = {
             { cat: "life", q: "오늘 운동 갈까?" }
         ],
         "info_title1": "요술 램프와 의사결정의 역사: 신화에서 심리학까지",
-        "info_desc1": "요술 램프의 이야기는 '아라비안 나이트(천일야화)'의 알라딘 설화에서 유래되었습니다. 램프를 문질러 지니를 불러내는 행위는 인류가 수천 년 동안 '초월적인 존재'에게 자신의 운명을 묻고 답을 구하고 싶어 했던 원초적인 욕망을 상징합니다. 현대 심리학에서 이러한 도구는 단순히 미래를 점치는 것을 넘어, 뇌의 '결정 피로(Decision Fatigue)'를 해소해주는 훌륭한 도구로 재해석됩니다. 인간의 뇌는 하루에 수만 번의 선택을 내리며 에너지를 소모하는데, 요술 램프와 같은 무작위 도구에 선택을 맡김으로써 스트레스를 줄이고 더 중요한 창의적 활동에 에너지를 집중할 수 있게 됩니다. 이는 단순한 유희를 넘어 현대인의 정신 건강을 위한 실용적인 전략이 될 수 있습니다.",
+        "info_desc1": "요술 램프의 이야기는 '아라비안 나이트(천일야화)'의 알라딘 설화에서 유래되었습니다. 램프를 문지러 지니를 불러내는 행위는 인류가 수천 년 동안 '초월적인 존재'에게 자신의 운명을 묻고 답을 구하고 싶어 했던 원초적인 욕망을 상징합니다. 현대 심리학에서 이러한 도구는 단순히 미래를 점치는 것을 넘어, 뇌의 '결정 피로(Decision Fatigue)'를 해소해주는 훌륭한 도구로 재해석됩니다. 인간의 뇌는 하루에 수만 번의 선택을 내리며 에너지를 소모하는데, 요술 램프와 같은 무작위 도구에 선택을 맡김으로써 스트레스를 줄이고 더 중요한 창의적 활동에 에너지를 집중할 수 있게 됩니다. 이는 단순한 유희를 넘어 현대인의 정신 건강을 위한 실용적인 전략이 될 수 있습니다.",
         "info_title2": "'예/아니오' 질문의 심리학: 내면의 목소리를 듣는 법",
         "info_desc2": "심리학자들은 결정이 어려울 때 램프나 동전 던지기를 사용하는 것이 사실 '자신의 진심을 확인하는 거울'과 같다고 말합니다. 램프가 'YES'라고 대답했을 때 당신의 기분이 미묘하게 좋아지거나 안도감을 느낀다면, 그것은 당신이 이미 마음속 깊은 곳에서 그 선택을 간절히 원하고 있었다는 가장 강력한 증거입니다. 반대로 결과에 대해 실망감이 느껴진다면, 당신은 이미 'NO'라는 답을 내리고 있었던 것이죠. Zeze Hub의 요술 램프는 Web Crypto API를 통한 진정한 난수 생성을 통해 당신의 무의식을 일깨우는 완벽하게 공정하고 객관적인 조력자 역할을 수행합니다. 결과가 나오기 전 당신의 심장 박동에 집중해 보세요. 정답은 이미 당신 안에 있습니다.",
         "info_title3": "효과적인 질문 가이드와 활용 팁",
@@ -264,10 +265,10 @@ const adviceDB_en = {
 
 let currentLang = localStorage.getItem('lang') || 'ko';
 let selectedCategory = 'food';
-let currentTrendingIndex = null; // 현재 선택된 인기 고민 인덱스 저장
-let currentGenieVoiceIndex = null; // 현재 지니의 목소리 인덱스 저장
+let currentTrendingIndex = null; 
+let currentGenieVoiceIndex = null; 
 
-// State
+// State (Persistent stats)
 let totalFlips = parseInt(localStorage.getItem('totalFlips')) || 0;
 let headsCount = parseInt(localStorage.getItem('headsCount')) || 0; 
 let tailsCount = parseInt(localStorage.getItem('tailsCount')) || 0; 
@@ -307,11 +308,8 @@ function getLevenshteinDistance(a, b) {
     for (let j = 0; j <= a.length; j++) { matrix[0][j] = j; }
     for (let i = 1; i <= b.length; i++) {
         for (let j = 1; j <= a.length; j++) {
-            if (b.charAt(i - 1) == a.charAt(j - 1)) {
-                matrix[i][j] = matrix[i - 1][j - 1];
-            } else {
-                matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
-            }
+            if (b.charAt(i - 1) == a.charAt(j - 1)) matrix[i][j] = matrix[i - 1][j - 1];
+            else matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
         }
     }
     return matrix[b.length][a.length];
@@ -327,39 +325,15 @@ function isSimilar(q1, q2) {
     return (maxLength - dist) / maxLength >= 0.75 || dist <= 2;
 }
 
-// 🛡️ 이상한 질문 필터링 로직
+// Validation
 function validateQuestion(q, currentCat) {
     const text = q.trim();
-    
-    // 1. 너무 짧은 경우
-    if (text.length < 2) {
-        return currentLang === 'ko' ? "질문이 너무 짧습니다. 좀 더 구체적으로 물어보세요." : "Question is too short. Please be more specific.";
-    }
-    
-    // 2. 숫자만 이루어진 경우
-    if (/^[0-9\s?]+$/.test(text)) {
-        return currentLang === 'ko' ? "램프는 수수께끼가 아닌 의미 있는 문장을 원합니다." : "The lamp desires meaningful sentences, not numerical riddles.";
-    }
-
-    // 3. 자음/모음만 이루어진 경우 (ㅋㅋㅋ, ㅎㅎㅎ 등)
-    if (/^[ㄱ-ㅎㅏ-ㅣ\s!@#$%^&*()_+?]+$/.test(text)) {
-        return currentLang === 'ko' ? "램프의 요정은 완성된 인간의 언어만 이해할 수 있습니다." : "The genie only understands complete human languages.";
-    }
-    
-    // 4. 무의미한 반복 (아아아아, 1111 등 4번 이상 연속 반복)
-    if (/(.)\1{3,}/.test(text)) {
-        return currentLang === 'ko' ? "장난치지 마세요! 요정은 진지한 고민만 들어줍니다." : "No joking around! The genie only listens to serious concerns.";
-    }
-    
-    // 5. 금칙어
+    if (text.length < 2) return currentLang === 'ko' ? "질문이 너무 짧습니다. 좀 더 구체적으로 물어보세요." : "Question is too short. Please be more specific.";
+    if (/^[0-9\s?]+$/.test(text)) return currentLang === 'ko' ? "램프는 수수께끼가 아닌 의미 있는 문장을 원합니다." : "The lamp desires meaningful sentences, not numerical riddles.";
+    if (/^[ㄱ-ㅎㅏ-ㅣ\s!@#$%^&*()_+?]+$/.test(text)) return currentLang === 'ko' ? "램프의 요정은 완성된 인간의 언어만 이해할 수 있습니다." : "The genie only understands complete human languages.";
+    if (/(.)\1{3,}/.test(text)) return currentLang === 'ko' ? "장난치지 마세요! 요정은 진지한 고민만 들어줍니다." : "No joking around! The genie only listens to serious concerns.";
     const badWords = ['죽고', '자살', '씨발', '개새', '병신', '지랄', '존나', '미친', 'fuck', 'shit', 'bitch', 'damn', 'ass', 'kill'];
-    for (let word of badWords) {
-        if (text.toLowerCase().includes(word)) {
-            return currentLang === 'ko' ? "램프는 긍정적이고 건전한 질문에만 답을 내어줍니다. 바른 말을 사용해 주세요." : "The lamp only answers positive and wholesome questions. Please use proper language.";
-        }
-    }
-
-    // 6. 🔍 카테고리 오용 감지 (키워드 매칭)
+    for (let word of badWords) if (text.toLowerCase().includes(word)) return currentLang === 'ko' ? "램프는 긍정적이고 건전한 질문에만 답을 내어줍니다. 바른 말을 사용해 주세요." : "The lamp only answers positive and wholesome questions. Please use proper language.";
     const categoryKeywords = {
         food: ['먹을', '맛있', '배고파', '치킨', '피자', '음식', '메뉴', '디저트', '식사', '야식', 'eat', 'hungry', 'food', 'pizza', 'chicken', 'meal', 'dinner', 'snack'],
         love: ['고백', '사랑', '썸', '연애', '남친', '여친', '남자친구', '여자친구', '데이트', '좋아해', 'love', 'date', 'boyfriend', 'girlfriend', 'crush', 'kiss', 'marry'],
@@ -367,42 +341,32 @@ function validateQuestion(q, currentCat) {
         study: ['공부', '시험', '성적', '학업', '숙제', '강의', '전공', '자격증', '취업', 'study', 'exam', 'test', 'homework', 'class', 'grade', 'school'],
         life: ['운동', '산책', '청소', '일상', '습관', '여행', '약속', '빨래', 'gym', 'workout', 'clean', 'travel', 'trip', 'habit', 'walk', 'run']
     };
-
-    // 현재 선택한 카테고리가 아닌 다른 카테고리의 키워드가 강력하게 의심될 때
     for (const [cat, keywords] of Object.entries(categoryKeywords)) {
         if (cat !== currentCat) {
             for (const keyword of keywords) {
                 if (text.toLowerCase().includes(keyword)) {
                     const catNamesKo = { food: '음식', love: '연애', money: '금전', study: '학업', life: '일상' };
                     const catNamesEn = { food: 'Food', love: 'Love', money: 'Money', study: 'Study', life: 'Life' };
-                    if (currentLang === 'ko') {
-                        return `이 고민은 '${catNamesKo[cat]}' 카테고리에 더 잘 어울리는 것 같아요! 카테고리를 바꿔서 다시 물어봐 줄래요?`;
-                    } else {
-                        return `This concern seems to fit the '${catNamesEn[cat]}' category better! Could you switch categories and ask again?`;
-                    }
+                    if (currentLang === 'ko') return `이 고민은 '${catNamesKo[cat]}' 카테고리에 더 잘 어울리는 것 같아요! 카테고리를 바꿔서 다시 물어봐 줄래요?`;
+                    else return `This concern seems to fit the '${catNamesEn[cat]}' category better! Could you switch categories and ask again?`;
                 }
             }
         }
     }
-
-    return null; // 정상적인 질문
+    return null;
 }
 
-// 🎵 Sound Manager (Web Audio API Synthesizer)
+// 🎵 Sound Manager
 const SoundManager = {
     ctx: null,
     muted: localStorage.getItem('zeze_muted') === 'true',
-
     init() {
         if (!this.ctx) {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioContext();
         }
-        if (this.ctx.state === 'suspended') {
-            this.ctx.resume();
-        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
     },
-
     updateMuteUI() {
         const icon = document.getElementById('sound-icon');
         if (icon) {
@@ -411,128 +375,158 @@ const SoundManager = {
             else icon.classList.remove('text-red-500');
         }
     },
-
     toggleMute() {
         this.muted = !this.muted;
         localStorage.setItem('zeze_muted', this.muted);
         this.updateMuteUI();
         return this.muted;
     },
-
     playRub() {
         if (this.muted) return;
         this.init();
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        
         osc.type = 'sine';
-        // Low rumble frequency sweep
         osc.frequency.setValueAtTime(80, this.ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.8);
-        
-        // Tremolo effect
         const lfo = this.ctx.createOscillator();
-        lfo.frequency.value = 15; // 15Hz wobble
+        lfo.frequency.value = 15;
         const lfoGain = this.ctx.createGain();
         lfoGain.gain.value = 20;
-        lfo.connect(lfoGain);
-        lfoGain.connect(osc.frequency);
-        lfo.start();
-        lfo.stop(this.ctx.currentTime + 0.8);
-
+        lfo.connect(lfoGain); lfoGain.connect(osc.frequency);
+        lfo.start(); lfo.stop(this.ctx.currentTime + 0.8);
         gain.gain.setValueAtTime(0, this.ctx.currentTime);
         gain.gain.linearRampToValueAtTime(0.5, this.ctx.currentTime + 0.2);
         gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.8);
-
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.8);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.8);
     },
-
     playPoof() {
         if (this.muted) return;
         this.init();
-        const bufferSize = this.ctx.sampleRate * 0.5; // 0.5 seconds
-        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-            data[i] = Math.random() * 2 - 1; // White noise
-        }
-        
+        const bufSize = this.ctx.sampleRate * 0.5;
+        const buf = this.ctx.createBuffer(1, bufSize, this.ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
         const noise = this.ctx.createBufferSource();
-        noise.buffer = buffer;
-        
+        noise.buffer = buf;
         const filter = this.ctx.createBiquadFilter();
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
         filter.frequency.exponentialRampToValueAtTime(100, this.ctx.currentTime + 0.5);
-        
         const gain = this.ctx.createGain();
         gain.gain.setValueAtTime(1, this.ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.5);
-        
-        noise.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.ctx.destination);
+        noise.connect(filter); filter.connect(gain); gain.connect(this.ctx.destination);
         noise.start();
     },
-
     playPositive() {
         if (this.muted) return;
         this.init();
-        // C Major arpeggio (C5, E5, G5, C6)
         const notes = [523.25, 659.25, 783.99, 1046.50];
         notes.forEach((freq, i) => {
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             osc.type = 'triangle';
             osc.frequency.value = freq;
-            
             const startTime = this.ctx.currentTime + (i * 0.08);
             gain.gain.setValueAtTime(0, startTime);
             gain.gain.linearRampToValueAtTime(0.3, startTime + 0.02);
             gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
-            
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(startTime);
-            osc.stop(startTime + 0.3);
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(startTime); osc.stop(startTime + 0.3);
         });
     },
-
     playNegative() {
         if (this.muted) return;
         this.init();
-        // Descending diminished notes
         const notes = [440, 415.30, 392, 349.23];
         notes.forEach((freq, i) => {
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             osc.type = 'sawtooth';
             osc.frequency.value = freq;
-            
             const filter = this.ctx.createBiquadFilter();
             filter.type = 'lowpass';
             filter.frequency.value = 800;
-
             const startTime = this.ctx.currentTime + (i * 0.15);
             gain.gain.setValueAtTime(0, startTime);
             gain.gain.linearRampToValueAtTime(0.3, startTime + 0.05);
             gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.4);
-            
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(startTime);
-            osc.stop(startTime + 0.4);
+            osc.connect(filter); filter.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(startTime); osc.stop(startTime + 0.4);
         });
     }
 };
 
-// Initialize
+// 💾 Session State Persistence
+function saveSessionState() {
+    const session = {
+        selectedCategory,
+        question: questionInput.value,
+        currentFateData,
+        currentGenieVoiceIndex,
+        isAnswerVisible: answerReveal.classList.contains('answer-visible')
+    };
+    localStorage.setItem('zeze_magiclamp_session', JSON.stringify(session));
+}
+
+function loadSessionState() {
+    const saved = localStorage.getItem('zeze_magiclamp_session');
+    if (!saved) return;
+
+    const state = JSON.parse(saved);
+    selectedCategory = state.selectedCategory;
+    questionInput.value = state.question || "";
+    currentFateData = state.currentFateData;
+    currentGenieVoiceIndex = state.currentGenieVoiceIndex;
+
+    categoryButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.category === selectedCategory);
+    });
+    updateCategoryUI();
+
+    if (state.isAnswerVisible && currentFateData) {
+        const fate = currentFateData;
+        answerText.textContent = fate.answer;
+        const ansLen = fate.answer.length;
+        if (ansLen > 8) answerText.style.fontSize = '1.8rem';
+        else if (ansLen > 4) answerText.style.fontSize = '2.5rem';
+        else answerText.style.fontSize = '3.75rem';
+
+        if(fate.type === 'positive') answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primaryLight to-secondary tracking-tight mb-4 block break-keep py-4 leading-normal";
+        else if(fate.type === 'negative') answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-red-500 tracking-tight mb-4 block break-keep py-4 leading-normal";
+        else answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 tracking-tight mb-4 block break-keep py-4 leading-normal";
+
+        answerAdvice.textContent = fate.text;
+        if (answerFunfact) answerFunfact.textContent = fate.funFact || "";
+
+        const genieVoice = document.getElementById('genie-voice');
+        if (genieVoice && currentGenieVoiceIndex !== null) {
+            const t = translations[currentLang];
+            genieVoice.textContent = (fate.type === 'positive') ? t.genie_pos[currentGenieVoiceIndex] : t.genie_neg[currentGenieVoiceIndex];
+        } else if (genieVoice && fate.type === 'error') {
+            genieVoice.textContent = translations[currentLang].genie_refused;
+        }
+
+        magicLampContainer.classList.add('lamp-dimmed');
+        answerReveal.classList.remove('opacity-0', 'scale-50');
+        answerReveal.classList.add('answer-visible', 'pointer-events-auto');
+        const shareBtns = document.getElementById('share-buttons');
+        if (shareBtns) shareBtns.classList.replace('opacity-0', 'opacity-100');
+    }
+}
+
+function clearSessionState() {
+    localStorage.removeItem('zeze_magiclamp_session');
+}
+
 function init() {
-    setLanguage(currentLang);
+    applyLanguage();
+    const perfEntries = performance.getEntriesByType('navigation');
+    const isReload = perfEntries.length > 0 && perfEntries[0].type === 'reload';
+    if (isReload) loadSessionState();
+    else { clearSessionState(); updateCategoryUI(); }
     updateDisplay();
     setupEventListeners();
     SoundManager.updateMuteUI();
@@ -542,60 +536,27 @@ function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
     applyLanguage();
-    if (typeof updateCategoryUI === 'function') updateCategoryUI();
+    updateCategoryUI();
     renderLog();
     renderTrending();
-    
-    // 언어 전환 시 인기 고민이 선택되어 있다면 입력창 텍스트도 함께 번역
     if (currentTrendingIndex !== null) {
         const list = translations[currentLang].trending_list || [];
-        if (list[currentTrendingIndex]) {
-            questionInput.value = list[currentTrendingIndex].q;
-        }
+        if (list[currentTrendingIndex]) questionInput.value = list[currentTrendingIndex].q;
     }
-
-    // 언어 전환 시 지니의 목소리 텍스트도 함께 번역
     const genieVoice = document.getElementById('genie-voice');
     if (genieVoice && currentGenieVoiceIndex !== null && currentFateData) {
         const t = translations[currentLang];
-        if (currentFateData.type === 'positive') {
-            genieVoice.textContent = t.genie_pos[currentGenieVoiceIndex];
-        } else if (currentFateData.type === 'negative') {
-            genieVoice.textContent = t.genie_neg[currentGenieVoiceIndex];
-        }
+        genieVoice.textContent = (currentFateData.type === 'positive') ? t.genie_pos[currentGenieVoiceIndex] : t.genie_neg[currentGenieVoiceIndex];
     } else if (genieVoice && currentFateData && currentFateData.type === 'error') {
         genieVoice.textContent = translations[currentLang].genie_refused;
     }
-    
-    // Update currently visible answer card if any
-    const answerReveal = document.getElementById('answer-reveal');
-    if (answerReveal && answerReveal.classList.contains('answer-visible') && currentFateData) {
+    if (answerReveal.classList.contains('answer-visible') && currentFateData) {
         if (currentFateData.poolIndex !== undefined && currentFateData.type !== 'error') {
-            const activeDB = currentLang === 'ko' ? adviceDB : adviceDB_en;
-            if (activeDB[selectedCategory] && activeDB[selectedCategory][currentFateData.poolIndex]) {
-                const translatedFate = activeDB[selectedCategory][currentFateData.poolIndex];
-                
-                const answerText = document.getElementById('answer-text');
-                const answerAdvice = document.getElementById('answer-advice');
-                const answerFunfact = document.getElementById('answer-funfact');
-                
-                if (answerText) {
-                    answerText.textContent = translatedFate.answer;
-                    const len = translatedFate.answer.length;
-                    if (len > 8) answerText.style.fontSize = '1.8rem';
-                    else if (len > 4) answerText.style.fontSize = '2.5rem';
-                    else answerText.style.fontSize = '3.75rem';
-                }
-                if (answerAdvice) answerAdvice.textContent = translatedFate.text;
-                if (answerFunfact) answerFunfact.textContent = translatedFate.funFact || "";
-            }
-        } else if (currentFateData.type === 'error') {
-            // Re-validate to get translated error message
-            const validationError = validateQuestion(document.getElementById('question-input').value.trim(), selectedCategory);
-            const answerAdvice = document.getElementById('answer-advice');
-            const answerText = document.getElementById('answer-text');
-            if (answerAdvice && validationError) answerAdvice.textContent = validationError;
-            if (answerText) answerText.textContent = currentLang === 'ko' ? "응답 거부" : "Refused";
+            const activeDB = (currentLang === 'ko') ? adviceDB : adviceDB_en;
+            const translatedFate = activeDB[selectedCategory][currentFateData.poolIndex];
+            answerText.textContent = translatedFate.answer;
+            answerAdvice.textContent = translatedFate.text;
+            if (answerFunfact) answerFunfact.textContent = translatedFate.funFact || "";
         }
     }
 }
@@ -603,23 +564,12 @@ function setLanguage(lang) {
 function applyLanguage() {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.dataset.key;
-        if (translations[currentLang] && translations[currentLang][key]) {
-            el.innerHTML = translations[currentLang][key];
-        }
+        if (translations[currentLang] && translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
-
-    // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        // 모든 스타일 관련 클래스 제거
         btn.classList.remove('bg-primary', 'text-white', 'font-bold', 'bg-white/5', 'border', 'border-white/10', 'bg-transparent', 'text-gray-400');
-        
-        if (btn.dataset.lang === currentLang) {
-            // 활성화: 한국어/영어 상관없이 동일한 강조색
-            btn.classList.add('bg-primary', 'text-white', 'font-bold');
-        } else {
-            // 비활성화: 메뉴창 배경과 동일하게 투명 처리
-            btn.classList.add('bg-transparent', 'text-gray-400');
-        }
+        if (btn.dataset.lang === currentLang) btn.classList.add('bg-primary', 'text-white', 'font-bold');
+        else btn.classList.add('bg-transparent', 'text-gray-400');
     });
 }
 
@@ -634,43 +584,28 @@ function updateDisplay() {
 function renderTrending() {
     const container = document.getElementById('trending-container');
     if (!container) return;
-    
     container.innerHTML = '';
     const list = translations[currentLang].trending_list || [];
-    
     list.forEach((item, index) => {
         const badge = document.createElement('button');
         badge.className = 'px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] text-gray-300 hover:bg-yellow-500/20 hover:border-yellow-500/50 transition-all flex items-center gap-1.5 active:scale-95';
-        
-        const rank = document.createElement('span');
-        rank.className = 'font-bold text-yellow-500';
-        rank.textContent = index + 1;
-        
-        const text = document.createElement('span');
-        text.textContent = item.q;
-        
-        badge.appendChild(rank);
-        badge.appendChild(text);
-        
+        badge.innerHTML = `<span class="font-bold text-yellow-500">${index+1}</span><span>${item.q}</span>`;
         badge.addEventListener('click', () => {
             const catBtn = document.querySelector(`.cat-btn[data-category="${item.cat}"]`);
             if (catBtn) catBtn.click();
-            currentTrendingIndex = index; // 현재 클릭한 고민의 인덱스 저장
+            currentTrendingIndex = index;
             questionInput.value = item.q;
             questionInput.focus();
+            saveSessionState();
         });
-        
         container.appendChild(badge);
     });
 }
 
 function updateCategoryUI() {
     const questionHint = document.getElementById('question-hint');
-    // Update placeholder and hint based on language
     questionInput.placeholder = translations[currentLang][`ph_${selectedCategory}`] || translations[currentLang][`ph_etc`];
-    if (questionHint) {
-        questionHint.textContent = translations[currentLang][`hint_${selectedCategory}`] || translations[currentLang][`hint_etc`];
-    }
+    if (questionHint) questionHint.textContent = translations[currentLang][`hint_${selectedCategory}`] || translations[currentLang][`hint_etc`];
 }
 
 function renderLog() {
@@ -679,22 +614,15 @@ function renderLog() {
         const item = document.createElement('div');
         item.className = 'flex flex-col p-4 bg-white/5 rounded-2xl border border-white/10 shadow-sm';
         const colorClass = entry.type === 'positive' ? 'text-secondary' : 'text-pink-400';
-        
-        // Translate category for log display
         const translatedCat = translations[currentLang][`cat_${entry.category}`] || entry.category;
-        
-        // Dynamically translate answer and advice if poolIndex is available
-        let displayAnswer = entry.answer;
-        let displayAdvice = entry.advice;
-        
+        let displayAnswer = entry.answer, displayAdvice = entry.advice;
         if (entry.poolIndex !== undefined && entry.type !== 'error') {
-            const activeDB = currentLang === 'ko' ? adviceDB : adviceDB_en;
+            const activeDB = (currentLang === 'ko') ? adviceDB : adviceDB_en;
             if (activeDB[entry.category] && activeDB[entry.category][entry.poolIndex]) {
                 displayAnswer = activeDB[entry.category][entry.poolIndex].answer;
                 displayAdvice = activeDB[entry.category][entry.poolIndex].text;
             }
         }
-
         item.innerHTML = `
             <div class="flex justify-between items-center mb-2">
                 <span class="text-[10px] text-gray-500">${entry.timestamp}</span>
@@ -716,353 +644,153 @@ function askLamp() {
         setTimeout(() => questionInput.classList.remove('animate-shake'), 400);
         return;
     }
-
     const validationError = validateQuestion(question, selectedCategory);
-
-    // Reset UI
     askButton.disabled = true;
     answerReveal.classList.remove('answer-visible', 'pointer-events-auto');
     answerReveal.classList.add('opacity-0', 'scale-50');
     magicLampContainer.classList.remove('lamp-dimmed');
-    
-    // Reset Smoke
-    smokePuffs.forEach(puff => {
-        puff.classList.remove('active', 'hidden');
-        void puff.offsetWidth; // trigger reflow
-    });
-
-    // 1. Lamp starts shaking intensely
+    smokePuffs.forEach(puff => { puff.classList.remove('active', 'hidden'); void puff.offsetWidth; });
     magicLampContainer.classList.add('lamp-shaking');
-    SoundManager.playRub(); // Play rubbing sound
+    SoundManager.playRub();
     
     setTimeout(() => {
-        // 2. Smoke bursts out
         smokePuffs.forEach(puff => puff.classList.add('active'));
-        SoundManager.playPoof(); // Play smoke sound
-        
-        let fateData;
-        let isNewQuestion = true;
-        let matchedKey = null;
-
+        SoundManager.playPoof();
+        let fateData, isNewQuestion = true, matchedKey = null;
         if (validationError) {
-            fateData = {
-                type: "error",
-                answer: "응답 거부",
-                text: validationError,
-                funFact: "💡 램프의 규칙: 요정은 진지하고 명확한 질문에만 올바른 운명을 보여줍니다."
-            };
-            isNewQuestion = false; // 에러일 때는 캐시나 통계에 추가하지 않음
+            fateData = { type: "error", answer: currentLang === 'ko' ? "응답 거부" : "Refused", text: validationError, funFact: translations[currentLang].genie_refused };
+            isNewQuestion = false;
         } else {
             for (const key in questionCache) {
                 const separatorIdx = key.indexOf("_");
                 if (separatorIdx > -1) {
                     const cachedCategory = key.substring(0, separatorIdx);
                     const cachedQuestion = key.substring(separatorIdx + 1);
-                    if (cachedCategory === selectedCategory && isSimilar(question, cachedQuestion)) {
-                        matchedKey = key;
-                        isNewQuestion = false;
-                        break;
-                    }
+                    if (cachedCategory === selectedCategory && isSimilar(question, cachedQuestion)) { matchedKey = key; isNewQuestion = false; break; }
                 }
             }
-
-                    if (!isNewQuestion && matchedKey) {
-                        fateData = Object.assign({}, questionCache[matchedKey]);
-                        if (fateData.poolIndex !== undefined && fateData.type !== 'error') {
-                            const activeDB = currentLang === 'ko' ? adviceDB : adviceDB_en;
-                            if (activeDB[selectedCategory] && activeDB[selectedCategory][fateData.poolIndex]) {
-                                const translatedFate = activeDB[selectedCategory][fateData.poolIndex];
-                                fateData.answer = translatedFate.answer;
-                                fateData.text = translatedFate.text;
-                                fateData.funFact = translatedFate.funFact;
-                            }
-                        }
-                    } else {                const activeDB = currentLang === 'ko' ? adviceDB : adviceDB_en;
+            if (!isNewQuestion && matchedKey) {
+                fateData = Object.assign({}, questionCache[matchedKey]);
+                const activeDB = (currentLang === 'ko') ? adviceDB : adviceDB_en;
+                if (fateData.poolIndex !== undefined && activeDB[selectedCategory][fateData.poolIndex]) {
+                    const translatedFate = activeDB[selectedCategory][fateData.poolIndex];
+                    fateData.answer = translatedFate.answer; fateData.text = translatedFate.text; fateData.funFact = translatedFate.funFact;
+                }
+            } else {
+                const activeDB = (currentLang === 'ko') ? adviceDB : adviceDB_en;
                 const pool = activeDB[selectedCategory];
                 const randomValues = new Uint8Array(1);
                 window.crypto.getRandomValues(randomValues);
                 const poolIndex = randomValues[0] % pool.length;
-                fateData = pool[poolIndex];
-                fateData.poolIndex = poolIndex;
-                
+                fateData = pool[poolIndex]; fateData.poolIndex = poolIndex;
                 const newKey = selectedCategory + "_" + question;
                 questionCache[newKey] = fateData;
                 localStorage.setItem('questionCache', JSON.stringify(questionCache));
-                
-                totalFlips++;
-                if (fateData.type === 'positive') headsCount++; else tailsCount++;
-                
+                totalFlips++; if (fateData.type === 'positive') headsCount++; else tailsCount++;
                 const now = new Date();
                 const timeStr = now.toLocaleTimeString(currentLang, { hour: '2-digit', minute: '2-digit' });
-                logEntries.push({
-                    timestamp: timeStr,
-                    category: selectedCategory,
-                    question: question,
-                    type: fateData.type,
-                    answer: fateData.answer,
-                    advice: fateData.text,
-                    funFact: fateData.funFact,
-                    poolIndex: poolIndex
-                });
+                logEntries.push({ timestamp: timeStr, category: selectedCategory, question: question, type: fateData.type, answer: fateData.answer, advice: fateData.text, funFact: fateData.funFact, poolIndex: poolIndex });
                 if (logEntries.length > 50) logEntries.shift();
             }
         }
-        
         currentFateData = fateData;
-
-        // Setup Result UI
         answerText.textContent = fateData.answer;
         const ansLen = fateData.answer.length;
-        if (ansLen > 8) answerText.style.fontSize = '1.8rem';
-        else if (ansLen > 4) answerText.style.fontSize = '2.5rem';
-        else answerText.style.fontSize = '3.75rem';
-        
-        // Change gradient based on result type
-        if(fateData.type === 'positive') {
-            answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primaryLight to-secondary tracking-tight mb-4 block break-keep py-4 leading-normal";
-        } else if(fateData.type === 'negative') {
-            answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-red-500 tracking-tight mb-4 block break-keep py-4 leading-normal";
-        } else {
-            answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 tracking-tight mb-4 block break-keep py-4 leading-normal";
-        }
-
+        if (ansLen > 8) answerText.style.fontSize = '1.8rem'; else if (ansLen > 4) answerText.style.fontSize = '2.5rem'; else answerText.style.fontSize = '3.75rem';
+        if(fateData.type === 'positive') answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primaryLight to-secondary tracking-tight mb-4 block break-keep py-4 leading-normal";
+        else if(fateData.type === 'negative') answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-red-500 tracking-tight mb-4 block break-keep py-4 leading-normal";
+        else answerText.className = "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 tracking-tight mb-4 block break-keep py-4 leading-normal";
         answerAdvice.textContent = fateData.text;
         if (answerFunfact) answerFunfact.textContent = fateData.funFact || "";
-        
-        // Pick Genie's Voice message
         const genieVoice = document.getElementById('genie-voice');
         if (genieVoice) {
             const t = translations[currentLang];
-            if (fateData.type === 'positive') {
-                currentGenieVoiceIndex = Math.floor(Math.random() * t.genie_pos.length);
-                genieVoice.textContent = t.genie_pos[currentGenieVoiceIndex];
-            } else if (fateData.type === 'negative') {
-                currentGenieVoiceIndex = Math.floor(Math.random() * t.genie_neg.length);
-                genieVoice.textContent = t.genie_neg[currentGenieVoiceIndex];
-            } else {
-                currentGenieVoiceIndex = null;
-                genieVoice.textContent = t.genie_refused;
-            }
+            if (fateData.type === 'positive') { currentGenieVoiceIndex = Math.floor(Math.random() * t.genie_pos.length); genieVoice.textContent = t.genie_pos[currentGenieVoiceIndex]; }
+            else if (fateData.type === 'negative') { currentGenieVoiceIndex = Math.floor(Math.random() * t.genie_neg.length); genieVoice.textContent = t.genie_neg[currentGenieVoiceIndex]; }
+            else { currentGenieVoiceIndex = null; genieVoice.textContent = t.genie_refused; }
         }
-
         setTimeout(() => {
-            // 3. Lamp stops shaking, dims down, and answer appears cleanly on top
-            magicLampContainer.classList.remove('lamp-shaking');
-            magicLampContainer.classList.add('lamp-dimmed');
-            
-            answerReveal.classList.remove('opacity-0', 'scale-50');
-            answerReveal.classList.add('answer-visible', 'pointer-events-auto');
-            
-            // Play result sound
-            if (fateData.type === 'positive') SoundManager.playPositive();
-            else if (fateData.type === 'negative') SoundManager.playNegative();
-
-            // Show share buttons
+            magicLampContainer.classList.remove('lamp-shaking'); magicLampContainer.classList.add('lamp-dimmed');
+            answerReveal.classList.remove('opacity-0', 'scale-50'); answerReveal.classList.add('answer-visible', 'pointer-events-auto');
+            if (fateData.type === 'positive') SoundManager.playPositive(); else if (fateData.type === 'negative') SoundManager.playNegative();
             const shareBtns = document.getElementById('share-buttons');
-            if (shareBtns) {
-                shareBtns.classList.remove('opacity-0');
-                shareBtns.classList.add('opacity-100');
-            }
-            
-            saveState();
-            updateDisplay();
+            if (shareBtns) { shareBtns.classList.remove('opacity-0'); shareBtns.classList.add('opacity-100'); }
+            saveState(); saveSessionState(); updateDisplay();
             if(fateData.type !== 'error') showParticles(fateData.type);
             askButton.disabled = false;
-        }, 800); // Time to wait for smoke to get thick before revealing
-
-    }, 800); // Time spent rubbing/shaking before smoke
+        }, 800);
+    }, 800);
 }
 
 function saveState() {
-    localStorage.setItem('totalFlips', totalFlips);
-    localStorage.setItem('headsCount', headsCount);
-    localStorage.setItem('tailsCount', tailsCount);
-    localStorage.setItem('logEntries', JSON.stringify(logEntries));
+    localStorage.setItem('totalFlips', totalFlips); localStorage.setItem('headsCount', headsCount); localStorage.setItem('tailsCount', tailsCount); localStorage.setItem('logEntries', JSON.stringify(logEntries));
 }
 
 function showParticles(type) {
     const colors = type === 'positive' ? ['#03DAC6', '#BB86FC', '#FFFFFF'] : ['#F472B6', '#EF4444', '#FFFFFF'];
-    confetti({
-        particleCount: 80,
-        spread: 80,
-        origin: { y: 0.5 },
-        colors: colors,
-        ticks: 200
-    });
+    confetti({ particleCount: 80, spread: 80, origin: { y: 0.5 }, colors: colors, ticks: 200 });
 }
 
-// Share & Save Functions
 async function saveImage() {
-    const card = document.getElementById('capture-card');
-    const btn = document.getElementById('save-img-btn');
-    const answerText = document.getElementById('answer-text');
-    const originalText = btn.innerHTML;
-    const originalClassName = answerText.className;
-    
+    const card = document.getElementById('capture-card'), btn = document.getElementById('save-img-btn'), answerText = document.getElementById('answer-text');
+    const originalText = btn.innerHTML, originalClassName = answerText.className;
     try {
-        const capturingText = translations[currentLang].save_img_capturing || "Capturing...";
-        btn.innerHTML = `<span class="material-icons animate-spin text-[16px]">sync</span> ${capturingText}`;
-        
-        // html2canvas rendering bug fix: temporarily replace bg-clip-text with solid color
+        btn.innerHTML = `<span class="material-icons animate-spin text-[16px]">sync</span> ${translations[currentLang].save_img_capturing || "Capturing..."}`;
         answerText.className = answerText.className.replace(/text-transparent|bg-clip-text|bg-gradient-to-r|from-[a-zA-Z0-9\-]+/g, '').trim();
-        if (currentFateData && currentFateData.type === 'positive') {
-            answerText.classList.add('text-yellow-400');
-        } else if (currentFateData && currentFateData.type === 'negative') {
-            answerText.classList.add('text-pink-400');
-        } else {
-            answerText.classList.add('text-gray-400');
-        }
-        
-        // Wait a tiny bit for DOM to apply styles
+        if (currentFateData && currentFateData.type === 'positive') answerText.classList.add('text-yellow-400'); else if (currentFateData && currentFateData.type === 'negative') answerText.classList.add('text-pink-400'); else answerText.classList.add('text-gray-400');
         await new Promise(resolve => setTimeout(resolve, 50));
-
-        const canvas = await html2canvas(card, {
-            backgroundColor: '#0F0524',
-            scale: 2, // High resolution
-            logging: false,
-            useCORS: true
-        });
-        
-        const link = document.createElement('a');
-        link.download = `Zeze_MagicLamp_${Date.now()}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        
-        const doneText = translations[currentLang].save_img_done || "Saved!";
-        btn.innerHTML = `<span class="material-icons text-[16px]">check</span> ${doneText}`;
-    } catch (err) {
-        console.error("Image capture failed", err);
-        alert(currentLang === 'ko' ? "이미지 저장에 실패했습니다." : "Failed to save image.");
-    } finally {
-        // Restore original gradient classes
-        answerText.className = originalClassName;
-        setTimeout(() => btn.innerHTML = originalText, 2000);
-    }
+        const canvas = await html2canvas(card, { backgroundColor: '#0F0524', scale: 2, logging: false, useCORS: true });
+        const link = document.createElement('a'); link.download = `Zeze_MagicLamp_${Date.now()}.png`; link.href = canvas.toDataURL('image/png'); link.click();
+        btn.innerHTML = `<span class="material-icons text-[16px]">check</span> ${translations[currentLang].save_img_done || "Saved!"}`;
+    } catch (err) { console.error("Image capture failed", err); alert(currentLang === 'ko' ? "이미지 저장에 실패했습니다." : "Failed to save image."); }
+    finally { answerText.className = originalClassName; setTimeout(() => btn.innerHTML = originalText, 2000); }
 }
 
 function getShareText() {
-    const answer = document.getElementById('answer-text').innerText;
-    const advice = document.getElementById('answer-advice').innerText;
-    const t = translations[currentLang];
+    const answer = document.getElementById('answer-text').innerText, advice = document.getElementById('answer-advice').innerText, t = translations[currentLang];
     return `${t.share_title}\n\n"${questionInput.value}"\n\n${t.share_result_label}: ${answer}\n${t.share_advice_label}: ${advice}\n\n👉 ${t.share_check_destiny}: ${window.location.href}`;
 }
 
-function shareToTwitter() {
-    const text = encodeURIComponent(getShareText());
-    window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-}
-
-function shareToFacebook() {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-}
-
+function shareToTwitter() { const text = encodeURIComponent(getShareText()); window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank'); }
+function shareToFacebook() { const url = encodeURIComponent(window.location.href); window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank'); }
 function copyShareText() {
     navigator.clipboard.writeText(getShareText()).then(() => {
-        const btn = document.getElementById('share-link-btn');
-        const originalText = btn.innerHTML;
-        const copiedText = translations[currentLang].copy_done || "Copied!";
-        btn.innerHTML = `<span class="material-icons text-[16px]">check</span> ${copiedText}`;
+        const btn = document.getElementById('share-link-btn'), originalText = btn.innerHTML;
+        btn.innerHTML = `<span class="material-icons text-[16px]">check</span> ${translations[currentLang].copy_done || "Copied!"}`;
         setTimeout(() => btn.innerHTML = originalText, 2000);
     });
 }
 
 function setupEventListeners() {
     askButton.addEventListener('click', askLamp);
-    
-    const saveImgBtn = document.getElementById('save-img-btn');
-    if(saveImgBtn) saveImgBtn.addEventListener('click', saveImage);
-    
-    const shareTwitterBtn = document.getElementById('share-twitter-btn');
-    if(shareTwitterBtn) shareTwitterBtn.addEventListener('click', shareToTwitter);
-    
-    const shareFbBtn = document.getElementById('share-fb-btn');
-    if(shareFbBtn) shareFbBtn.addEventListener('click', shareToFacebook);
-
-    const shareLinkBtn = document.getElementById('share-link-btn');
-    if(shareLinkBtn) shareLinkBtn.addEventListener('click', copyShareText);
-    
-    // Sound Toggle
-    const soundToggleBtn = document.getElementById('sound-toggle');
-    if (soundToggleBtn) {
-        soundToggleBtn.addEventListener('click', () => {
-            SoundManager.toggleMute();
-        });
-    }
-
-    // Hide answer and reset lamp if user types a new question
+    const saveImgBtn = document.getElementById('save-img-btn'); if(saveImgBtn) saveImgBtn.addEventListener('click', saveImage);
+    const shareTwitterBtn = document.getElementById('share-twitter-btn'); if(shareTwitterBtn) shareTwitterBtn.addEventListener('click', shareToTwitter);
+    const shareFbBtn = document.getElementById('share-fb-btn'); if(shareFbBtn) shareFbBtn.addEventListener('click', shareToFacebook);
+    const shareLinkBtn = document.getElementById('share-link-btn'); if(shareLinkBtn) shareLinkBtn.addEventListener('click', copyShareText);
+    const soundToggleBtn = document.getElementById('sound-toggle'); if (soundToggleBtn) soundToggleBtn.addEventListener('click', () => SoundManager.toggleMute());
     questionInput.addEventListener('input', () => {
-        currentTrendingIndex = null; // 수동 입력 시 인덱스 초기화
+        currentTrendingIndex = null;
         if(answerReveal.classList.contains('answer-visible')) {
-            answerReveal.classList.remove('answer-visible', 'pointer-events-auto');
-            answerReveal.classList.add('opacity-0', 'scale-50');
-            
-            const shareBtns = document.getElementById('share-buttons');
-            if (shareBtns) {
-                shareBtns.classList.add('opacity-0');
-                shareBtns.classList.remove('opacity-100');
-            }
-            
+            answerReveal.classList.remove('answer-visible', 'pointer-events-auto'); answerReveal.classList.add('opacity-0', 'scale-50');
+            const shareBtns = document.getElementById('share-buttons'); if (shareBtns) shareBtns.classList.replace('opacity-100', 'opacity-0');
             magicLampContainer.classList.remove('lamp-dimmed');
         }
+        saveSessionState();
     });
-
-    // Call once to initialize
-    updateCategoryUI();
-
     categoryButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            categoryButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            selectedCategory = btn.dataset.category;
-            
-            updateCategoryUI();
-
-            // Hide answer on category change
-            answerReveal.classList.remove('answer-visible', 'pointer-events-auto');
-            answerReveal.classList.add('opacity-0', 'scale-50');
-            
-            const shareBtns = document.getElementById('share-buttons');
-            if (shareBtns) {
-                shareBtns.classList.add('opacity-0');
-                shareBtns.classList.remove('opacity-100');
-            }
-            
+            categoryButtons.forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedCategory = btn.dataset.category; updateCategoryUI();
+            answerReveal.classList.remove('answer-visible', 'pointer-events-auto'); answerReveal.classList.add('opacity-0', 'scale-50');
+            const shareBtns = document.getElementById('share-buttons'); if (shareBtns) shareBtns.classList.replace('opacity-100', 'opacity-0');
             magicLampContainer.classList.remove('lamp-dimmed');
+            saveSessionState();
         });
     });
-
-    clearLogButton.addEventListener('click', () => {
-        // 모든 통계 및 기록 초기화
-        logEntries = [];
-        questionCache = {}; 
-        totalFlips = 0;
-        headsCount = 0;
-        tailsCount = 0;
-        
-        localStorage.removeItem('questionCache');
-        updateDisplay();
-        saveState();
-    });
-
-    menuToggle.addEventListener('click', () => {
-        sidebarMenu.classList.remove('translate-x-full');
-        sidebarOverlay.classList.remove('hidden');
-    });
-
-    closeMenu.addEventListener('click', () => {
-        sidebarMenu.classList.add('translate-x-full');
-        sidebarOverlay.classList.add('hidden');
-    });
-
-    sidebarOverlay.addEventListener('click', () => {
-        sidebarMenu.classList.add('translate-x-full');
-        sidebarOverlay.classList.add('hidden');
-    });
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
-    });
+    clearLogButton.addEventListener('click', () => { logEntries = []; questionCache = {}; totalFlips = 0; headsCount = 0; tailsCount = 0; localStorage.removeItem('questionCache'); updateDisplay(); saveState(); });
+    menuToggle.addEventListener('click', () => { sidebarMenu.classList.remove('translate-x-full'); sidebarOverlay.classList.remove('hidden'); });
+    closeMenu.addEventListener('click', () => { sidebarMenu.classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); });
+    sidebarOverlay.addEventListener('click', () => { sidebarMenu.classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); });
+    document.querySelectorAll('.lang-btn').forEach(btn => { btn.addEventListener('click', () => setLanguage(btn.dataset.lang)); });
 }
 
 document.addEventListener('DOMContentLoaded', init);

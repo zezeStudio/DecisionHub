@@ -87,9 +87,9 @@ const translations = {
         "info_title1": "사다리 타기의 유래: 아미다쿠지",
         "info_desc1": "사다리 타기는 동아시아에서 매우 대중적인 결정 도구로, 일본에서는 '아미다쿠지(阿弥陀籤)'라고 불립니다. 이 이름은 과거 사다리 모양이 아미다 부처의 후광(방사형 선)과 닮았다고 해서 붙여진 명칭입니다. 초기에는 부채꼴 모양의 선을 그어 제비를 뽑는 방식이었으나, 시간이 흐르며 오늘날 우리가 아는 수직선과 수평 다리 모양의 사다리 형태로 발전했습니다. 한국, 일본, 중국 등지에서 간식 내기나 역할 분담을 정할 때 없어서는 안 될 민속적인 놀이 문화로 자리 잡았습니다.",
         "info_title2": "사다리 타기는 왜 수학적으로 공정할까?",
-        "info_desc2": "사다리 타기가 공정한 이유는 수학의 '치환(Permutation)' 원리에 기반하기 때문입니다. 사다리의 가로선은 인접한 두 세로선의 위치를 맞바꾸는 역할을 합니다. 수학적으로 가로선 하나는 하나의 '전치(Transposition)'에 해당하며, 아무리 많은 가로선이 있더라도 출발점과 도착점은 항상 일대일 대응(Bijection)을 이룹니다.",
+        "info_desc2": "사다리 타기가 공정한 이유는 수학의 '치환(Permutation)' 원리에 기반하기 때문입니다. 사다리의 가로선은 인접한 두 세로선의 위치를 맞바꾸는 역할을 합니다. 수학적으로 가로선 하나는 하나의 '전치(Transposition)'에 해당하며, 아무리 많은 가로선이 있더라도 출발점과 도착점은 항상 일대일 대응(Bijection)을 이룬다는 특징이 있습니다. Zeze Hub는 Web Crypto API를 통한 정교한 난수 생성을 사용하여, 어떠한 주관적 개입 없이 완벽한 확률적 공정성을 보장합니다.",
         "info_title3": "사다리 타기 활용 팁",
-        "info_desc3": "<li>공정한 내기: 참가자 수에 맞춰 가로선이 자동으로 생성되므로 조작의 우려 없이 깨끗한 내기가 가능합니다.</li><li>애니메이션의 긴장감: Zeze Hub의 사다리 타기는 결과가 선을 따라 실시간으로 그려지며 시각적 즐거움을 제공합니다.</li><li>일대일 대응 확인: '전체 결과' 버튼을 통해 모든 인원의 당첨 여부를 한눈에 투명하게 공개할 수 있습니다.</li><li>개인정보 보호: 입력한 친구들의 이름은 서버에 저장되지 않으며, 현재 이용 중인 기기에만 임시 보관됩니다.</li>"
+        "info_desc3": "<li>공정한 내기: 참가자 수에 맞춰 가로선이 자동으로 생성되므로 조작의 우려 없이 깨끗한 내기가 가능합니다.</li><li>애니메이션의 긴장감: Zeze Hub의 사다리 타기는 결과가 선을 따라 실시간으로 그려지며 시각적 즐거움을 제공합니다.</li><li>일대일 대응 확인: '전체 결과' 버튼을 통해 모든 인원의 당첨 여부를 한눈에 투명하게 공개할 수 있습니다.</li><li>개인정보 보호: 입력한 친구들의 이름은 서버에 저장되지 않으며, 오직 현재 이용 중인 기기에만 임시 보관됩니다.</li>"
     }
 };
 
@@ -126,9 +126,70 @@ function formatNames(nameStr) {
     return names.join(', ');
 }
 
+// 💾 Session State Persistence
+function saveSessionState() {
+    const session = {
+        playerCount,
+        players,
+        results,
+        ladderData,
+        completedPlayers: Array.from(completedPlayers),
+        playerResultMap,
+        showAllResults,
+        persistentPaths,
+        winnerIndices,
+        setupVisible: !setupSection.classList.contains('hidden')
+    };
+    localStorage.setItem('zeze_ladderclimb_session', JSON.stringify(session));
+}
+
+function loadSessionState() {
+    const saved = localStorage.getItem('zeze_ladderclimb_session');
+    if (!saved) return;
+
+    const state = JSON.parse(saved);
+    playerCount = state.playerCount;
+    players = state.players;
+    results = state.results;
+    ladderData = state.ladderData;
+    completedPlayers = new Set(state.completedPlayers);
+    playerResultMap = state.playerResultMap;
+    showAllResults = state.showAllResults;
+    persistentPaths = state.persistentPaths;
+    winnerIndices = state.winnerIndices;
+
+    playerCountDisplay.textContent = playerCount;
+    renderInputs(); // 텍스트 필드 값들 복구
+
+    if (!state.setupVisible) {
+        setupGuideArea.classList.add('hidden');
+        setupSection.classList.add('hidden');
+        ladderStage.classList.remove('hidden');
+        
+        updateDynamicTexts();
+        resizeCanvas();
+        drawLadder();
+    }
+}
+
+function clearSessionState() {
+    localStorage.removeItem('zeze_ladderclimb_session');
+}
+
 function init() {
     applyLanguage();
-    renderInputs();
+    
+    // Check if Reload
+    const perfEntries = performance.getEntriesByType('navigation');
+    const isReload = perfEntries.length > 0 && perfEntries[0].type === 'reload';
+    
+    if (isReload) {
+        loadSessionState();
+    } else {
+        clearSessionState();
+        renderInputs();
+    }
+    
     setupEventListeners();
 }
 
@@ -136,7 +197,7 @@ function renderInputs() {
     if (!playerInputsContainer || !resultInputsContainer) return;
     
     const currentNames = Array.from(document.querySelectorAll('.player-name-input')).map(i => i.value);
-    const currentResults = Array.from(document.querySelectorAll('.result-text-input')).map(i => i.value);
+    const currentResultsArr = Array.from(document.querySelectorAll('.result-text-input')).map(i => i.value);
     
     playerInputsContainer.innerHTML = '';
     resultInputsContainer.innerHTML = '';
@@ -147,7 +208,7 @@ function renderInputs() {
         pDiv.innerHTML = `
             <span class="w-6 h-10 flex items-center justify-center font-black text-gray-300 text-[10px] shrink-0">${i + 1}</span>
             <input type="text" class="player-name-input w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-primary outline-none transition-all" 
-                placeholder="${translations[currentLang].player_placeholder}" value="${currentNames[i] || ''}">
+                placeholder="${translations[currentLang].player_placeholder}" value="${players[i] || currentNames[i] || ''}">
         `;
         playerInputsContainer.appendChild(pDiv);
 
@@ -155,7 +216,7 @@ function renderInputs() {
         rInput.type = 'text';
         rInput.className = 'result-text-input w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-secondary outline-none transition-all';
         rInput.placeholder = translations[currentLang].result_placeholder;
-        rInput.value = currentResults[i] || '';
+        rInput.value = results[i] || currentResultsArr[i] || '';
         resultInputsContainer.appendChild(rInput);
     }
     
@@ -205,6 +266,7 @@ function generateLadder() {
         }
     }
     ladderData.sort((a, b) => a.y - b.y);
+    saveSessionState();
 }
 
 function drawLadder(activePath = null) {
@@ -250,7 +312,8 @@ function drawLadder(activePath = null) {
         if (isRevealed) {
             ctx.fillStyle = '#6B7280';
             ctx.font = 'bold 11px Roboto';
-            const displayResult = results[i].length > 8 ? results[i].substring(0,7)+'..' : results[i];
+            const resVal = results[i] || '';
+            const displayResult = resVal.length > 8 ? resVal.substring(0,7)+'..' : resVal;
             ctx.fillText(displayResult || `R${i+1}`, x, h - 15);
             ctx.font = 'bold 14px Roboto';
         } else {
@@ -348,17 +411,16 @@ async function tracePath(playerIndex) {
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
     }
 
-    updateDynamicTexts(); // 언어 변경 시에도 갱신되도록 함수 분리
+    updateDynamicTexts();
     
     if (completedPlayers.size === playerCount) {
         highlightWinners();
     }
     drawLadder(); 
+    saveSessionState();
 }
 
-// 언어 변경 시 즉각 반영을 위해 텍스트 생성 로직을 독립 함수로 분리
 function updateDynamicTexts() {
-    // 1. 당첨자 공지 업데이트
     const winnerAnnounce = document.getElementById('winner-announcement');
     const winnerText = document.getElementById('winner-text');
     
@@ -376,7 +438,6 @@ function updateDynamicTexts() {
         winnerText.innerHTML = '';
     }
 
-    // 2. 결과 요약 업데이트
     const summarySection = document.getElementById('result-section');
     const display = document.getElementById('result-display');
     if (completedPlayers.size > 0) {
@@ -393,7 +454,6 @@ function updateDynamicTexts() {
         });
     }
     
-    // 3. 참가자 명단 업데이트 (포맷팅)
     if (players.length > 0) {
         const mappingList = document.getElementById('player-mapping-list');
         mappingList.innerHTML = '';
@@ -405,7 +465,7 @@ function updateDynamicTexts() {
             div.innerHTML = `<span class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-primary shrink-0">${i+1}</span> <span class="truncate" title="${nameText}">${nameText}</span>`;
             mappingList.appendChild(div);
         });
-        highlightWinners(); // 명단 다시 그린 후 하이라이트 복구
+        highlightWinners();
     }
 }
 
@@ -432,7 +492,7 @@ function applyLanguage() {
         if (btn.dataset.lang === currentLang) btn.classList.add('bg-primary', 'text-white', 'font-bold');
         else btn.classList.add('bg-transparent', 'border-transparent');
     });
-    updateDynamicTexts(); // 언어 전환 시 결과 텍스트들도 모두 즉각 번역 갱신
+    updateDynamicTexts();
 }
 
 function setLanguage(lang) {
@@ -459,10 +519,10 @@ function setupEventListeners() {
     });
 
     document.getElementById('player-plus').addEventListener('click', () => {
-        if (playerCount < 6) { playerCount++; playerCountDisplay.textContent = playerCount; renderInputs(); }
+        if (playerCount < 6) { playerCount++; playerCountDisplay.textContent = playerCount; renderInputs(); saveSessionState(); }
     });
     document.getElementById('player-minus').addEventListener('click', () => {
-        if (playerCount > 2) { playerCount--; playerCountDisplay.textContent = playerCount; renderInputs(); }
+        if (playerCount > 2) { playerCount--; playerCountDisplay.textContent = playerCount; renderInputs(); saveSessionState(); }
     });
     
     document.getElementById('auto-fill-btn').addEventListener('click', autoFillResults);
@@ -485,16 +545,19 @@ function setupEventListeners() {
         setupSection.classList.add('hidden'); ladderStage.classList.remove('hidden');
         completedPlayers.clear(); playerResultMap = {}; showAllResults = false; persistentPaths = []; winnerIndices = [];
         
-        updateDynamicTexts(); // 명단 그리기
-        
+        updateDynamicTexts();
         document.getElementById('result-section').classList.add('hidden');
         generateLadder(); resizeCanvas();
+        saveSessionState();
     });
     document.getElementById('reset-btn').addEventListener('click', () => {
+        clearSessionState();
         setupGuideArea.classList.remove('hidden');
         setupSection.classList.remove('hidden'); ladderStage.classList.add('hidden');
         document.getElementById('result-section').classList.add('hidden');
         document.getElementById('winner-announcement').classList.add('hidden');
+        players = []; results = [];
+        renderInputs();
     });
     canvas.addEventListener('click', (e) => {
         const rect = canvas.getBoundingClientRect();
@@ -515,6 +578,7 @@ function setupEventListeners() {
         showAllResults = true; 
         highlightWinners();
         drawLadder(); 
+        saveSessionState();
     });
     document.getElementById('sequential-btn').addEventListener('click', async () => {
         for (let i = 0; i < playerCount; i++) {
