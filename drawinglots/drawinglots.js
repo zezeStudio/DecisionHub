@@ -97,6 +97,8 @@ function init() {
 }
 
 function renderInputs() {
+    const currentValues = Array.from(document.querySelectorAll('.player-name-input')).map(i => i.value);
+    
     playerInputsContainer.innerHTML = '';
     for (let i = 0; i < playerCount; i++) {
         const div = document.createElement('div');
@@ -104,7 +106,7 @@ function renderInputs() {
         div.innerHTML = `
             <span class="w-6 h-6 rounded-full bg-primary/10 text-primary text-[10px] flex items-center justify-center font-bold">${i + 1}</span>
             <input type="text" class="player-name-input flex-1 p-3 rounded-xl border border-gray-200 focus:border-primary outline-none transition-all text-sm" 
-                placeholder="${translations[currentLang].player_placeholder} ${i + 1}">
+                placeholder="${translations[currentLang].player_placeholder} ${i + 1}" value="${currentValues[i] || ''}">
         `;
         playerInputsContainer.appendChild(div);
     }

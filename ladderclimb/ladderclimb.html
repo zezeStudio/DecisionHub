@@ -81,6 +81,19 @@
             <p class="text-sm text-gray-500" data-key="main_description">팀원들과 함께 운명을 결정해보세요.</p>
         </section>
 
+        <!-- Guide Section -->
+        <div id="setup-guide-area">
+            <section class="bg-primary/5 p-4 rounded-3xl border border-primary/10 mb-6">
+                <h3 class="text-sm font-bold text-primary mb-2 flex items-center gap-1">
+                    <span class="material-icons text-[16px]">info</span>
+                    <span data-key="guide_header">작성 가이드</span>
+                </h3>
+                <p class="text-[12px] text-gray-600 leading-relaxed" data-key="setup_instruction">
+                    이름과 결과를 입력해 주세요. 각 줄은 <strong>고정된 사다리 번호</strong>를 나타냅니다. 또한 이름 칸과 결과 칸에 <strong>콤마(,)</strong>로 구분하여 한 칸에 여러 명을 넣을 수 있습니다.
+                </p>
+            </section>
+        </div>
+
         <!-- Setup Section -->
         <section id="setup-section" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-8">
             <div class="flex justify-between items-center mb-6">
@@ -92,8 +105,29 @@
                 </div>
             </div>
 
-            <div id="player-inputs" class="space-y-4">
-                <!-- Inputs will be injected here -->
+            <div id="player-inputs" class="space-y-3 mb-8">
+                <!-- Name Inputs will be injected here -->
+            </div>
+
+            <div class="border-t border-dashed border-gray-100 pt-6 mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest" data-key="result_settings_title">결과 설정</h3>
+                    <!-- Auto Fill UI -->
+                    <div class="flex items-center gap-2 bg-gray-50 p-1.5 rounded-xl border border-gray-100">
+                        <div class="flex items-center gap-1 px-2">
+                            <span class="text-[9px] font-bold text-primary" data-key="win_label">당첨</span>
+                            <input type="number" id="auto-win-count" class="w-8 bg-white border border-gray-200 rounded text-center text-xs font-bold py-0.5" value="1" min="0">
+                        </div>
+                        <div class="flex items-center gap-1 px-2 border-l border-gray-200">
+                            <span class="text-[9px] font-bold text-gray-400" data-key="loss_label">꽝</span>
+                            <input type="number" id="auto-loss-count" class="w-8 bg-white border border-gray-200 rounded text-center text-xs font-bold py-0.5" value="3" min="0">
+                        </div>
+                        <button id="auto-fill-btn" class="bg-primary text-white text-[9px] font-bold px-3 py-1.5 rounded-lg hover:bg-primaryLight transition-all active:scale-95" data-key="auto_fill_btn">자동 입력</button>
+                    </div>
+                </div>
+                <div id="result-inputs" class="space-y-3">
+                    <!-- Result Inputs will be injected here -->
+                </div>
             </div>
 
             <button id="start-btn" class="w-full mt-8 bg-primary text-white py-4 rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 hover:bg-primaryLight transition-all active:scale-95 flex items-center justify-center gap-2">
@@ -104,19 +138,28 @@
 
         <!-- Ladder Stage -->
         <section id="ladder-stage" class="hidden flex flex-col items-center">
-            <!-- New Information Section -->
-            <div class="w-full mb-4 space-y-2">
+            <!-- 1. 클릭 안내 -->
+            <div class="w-full mb-4 bg-primary/5 p-3 rounded-2xl text-center border border-primary/10">
+                <p class="text-[11px] text-primary font-medium" data-key="click_instruction">참가자 번호를 클릭하면 해당 참가자의 사다리 결과를 확인할 수 있습니다.</p>
+            </div>
+
+            <!-- 2. 참가자 명단 (Number : Name) -->
+            <div id="player-map-area" class="w-full mb-4 p-4 bg-white rounded-3xl border border-gray-100 shadow-sm">
+                <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3" data-key="player_map_title">참가자 명단</h3>
+                <div id="player-mapping-list" class="grid grid-cols-2 gap-2 text-xs font-medium text-gray-700">
+                    <!-- Mapping items will be injected here -->
+                </div>
+            </div>
+
+            <!-- 3. 당첨자 공지 -->
+            <div class="w-full mb-4">
                 <div id="winner-announcement" class="hidden bg-secondary/10 border border-secondary/20 p-3 rounded-2xl text-center">
                     <span class="text-sm font-bold text-secondary" id="winner-text"></span>
-                </div>
-                <div class="bg-primary/5 p-3 rounded-2xl text-center border border-primary/10">
-                    <p class="text-[11px] text-primary font-medium" data-key="click_instruction">참가자 이름을 클릭하면 해당 참가자의 사다리 결과를 확인할 수 있습니다.</p>
                 </div>
             </div>
 
             <div class="w-full overflow-x-auto no-scrollbar pb-4 mb-6">
                 <div id="ladder-container" class="relative bg-white rounded-3xl shadow-inner border border-gray-100 py-10 px-4 min-h-[400px]">
-                    <!-- Ladder lines and labels will be here -->
                     <div id="ladder-canvas-container" class="relative w-full h-full mx-auto">
                         <canvas id="ladder-canvas"></canvas>
                     </div>
@@ -166,7 +209,7 @@
                     <span data-key="info_title2">사다리 타기는 왜 수학적으로 공정할까?</span>
                 </h2>
                 <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc2">
-                    사다리 타기가 공정한 이유는 수학의 '치환(Permutation)' 원리에 기반하기 때문입니다. 사다리의 가로선은 인접한 두 세로선의 위치를 맞바꾸는 역할을 합니다. 수학적으로 가로선 하나는 하나의 '전치(Transposition)'에 해당하며, 아무리 많은 가로선이 있더라도 출발점과 도착점은 항상 일대일 대응(Bijection)을 이룹니다. 즉, 어떤 중복이나 누락 없이 모든 참가자가 반드시 하나의 결과에 도달하게 되며, 무작위로 배치된 가로선 덕분에 각 결과에 도달할 확률은 모든 참가자에게 동일하게 보장됩니다.
+                    사다리 타기가 공정한 이유는 수학의 '치환(Permutation)' 원리에 기반하기 때문입니다. 사다리의 가로선은 인접한 두 세로선의 위치를 맞바꾸는 역할을 합니다. 수학적으로 가로선 하나는 하나의 '전치(Transposition)'에 해당하며, 아무리 많은 가로선이 있더라도 출발점과 도착점은 항상 일대일 대응(Bijection)을 이룹니다.
                 </p>
             </article>
         </div>

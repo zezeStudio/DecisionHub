@@ -155,6 +155,8 @@ const SoundManager = {
 };
 
 function renderCustomInputs() {
+    const currentValues = Array.from(document.querySelectorAll('.custom-card-input')).map(i => i.value);
+    
     customInputsList.innerHTML = '';
     for (let i = 0; i < cardCount; i++) {
         const div = document.createElement('div');
@@ -162,7 +164,7 @@ function renderCustomInputs() {
         div.innerHTML = `
             <div class="w-8 h-10 flex items-center justify-center font-black text-gray-400 text-xs">${i + 1}</div>
             <input type="text" class="custom-card-input flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:border-primary outline-none transition-all" 
-                placeholder="내용 입력" maxlength="20">
+                placeholder="내용 입력" maxlength="20" value="${currentValues[i] || ''}">
         `;
         customInputsList.appendChild(div);
     }
