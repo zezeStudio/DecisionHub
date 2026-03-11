@@ -14,24 +14,16 @@
     <meta name="description" content="결정이 어려울 때 사용하세요! 요술 램프, 주사위, 동전 던지기, 팀 나누기 등 8가지 스마트한 결정 도구를 제공합니다.">
     <meta name="keywords" content="결정 도구, 복불복, 주사위 굴리기, 동전 던지기, 사다리 타기, 제비뽑기, 팀 나누기, 시한 폭탄, Zeze Hub">
     
-    <!-- Open Graph (Facebook, KakaoTalk, etc.) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Zeze's Decision Hub - 선택의 순간">
     <meta property="og:description" content="인생의 사소한 고민부터 내기까지! 8가지 스마트 도구로 쉽고 재미있게 결정하세요.">
     <meta property="og:image" content="https://zezehub.netlify.app/favicon.png">
     <meta property="og:url" content="https://zezehub.netlify.app/">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Zeze's Decision Hub">
-    <meta name="twitter:description" content="결정 장애를 한 번에 해결해줄 스마트 결정 도구 모음">
-    <meta name="twitter:image" content="https://zezehub.netlify.app/favicon.png">
-
     <link rel="icon" type="image/png" href="favicon.png">
-    <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     <script>
@@ -49,55 +41,42 @@
         }
     </script>
     <style>
-        /* Card Hover Effects */
-        .tool-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .tool-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .tool-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(98, 0, 238, 0.2), 0 10px 10px -5px rgba(98, 0, 238, 0.1);
             border-color: #BB86FC;
         }
-        .tool-card:hover .icon-container {
-            transform: scale(1.1) rotate(5deg);
-        }
+        .tool-card:hover .icon-container { transform: scale(1.1) rotate(5deg); }
     </style>
+</head>
 <body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
 
     <!-- Header -->
     <nav class="bg-white shadow-sm z-50 sticky top-0">
         <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-...
             <div class="flex items-center space-x-2">
                 <span class="material-icons text-primary text-3xl">hub</span>
                 <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Decision Hub</span>
             </div>
             <div class="flex items-center gap-2">
-                <!-- Global Sound Toggle -->
                 <button id="global-sound-toggle" class="p-2 rounded-full hover:bg-gray-100 transition-colors mr-2">
                     <span class="material-icons text-gray-600" id="global-sound-icon">volume_up</span>
                 </button>
-                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">
-                    <span class="md:hidden">KO</span>
-                    <span class="hidden md:inline">한국어</span>
-                </button>
-                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">
-                    <span class="md:hidden">EN</span>
-                    <span class="hidden md:inline">English</span>
-                </button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">KO</button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">EN</button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-12">
-        <!-- Hero Section -->
         <section class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4" data-key="hub_title">선택이 어려울 때,<br>Zeze Hub가 도와드릴게요.</h1>
             <p class="text-lg text-gray-600" data-key="hub_desc">당신의 고민에 맞는 도구를 선택해 보세요. 앞으로 더 많은 기능이 추가될 예정입니다.</p>
         </section>
 
-        <!-- Daily Fortune Section -->
+        <!-- Daily Fortune -->
         <section class="mb-16">
             <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-3xl p-1 shadow-xl">
                 <div class="bg-surface rounded-[22px] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -116,151 +95,61 @@
                     <button id="draw-fortune-btn" class="bg-gray-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-black transition-all shrink-0 shadow-lg active:scale-95" onclick="drawFortune()" data-key="draw_fortune_btn">운세 뽑기</button>
                 </div>
             </div>
-            <p class="mt-4 text-center text-xs text-gray-400" data-key="fortune_disclaimer">※ 본 서비스의 운세 결과는 재미로만 즐겨주시기 바랍니다.</p>
         </section>
 
         <!-- Tools Grid -->
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-            
-            <!-- Tool Card 1: Magic Lamp (Yes or No) -->
-            <a href="magiclamp/magiclamp.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex flex-col gap-6">
-                    <div class="icon-container w-16 h-16 rounded-2xl bg-yellow-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-4xl text-yellow-600">auto_fix_high</span>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-2" data-key="card1_title">요술 램프 (Yes or No)</h2>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card1_desc">"할까 말까?" 고민되는 질문을 던져보세요. 램프의 요정이 당신의 운명을 점치고 재미있는 조언을 해줍니다.</p>
-                        <span class="inline-flex items-center text-primary font-medium group-hover:text-primaryLight transition-colors">
-                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="magiclamp/magiclamp.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg group">
+                <div class="icon-container w-16 h-16 rounded-2xl bg-yellow-100 flex items-center justify-center mb-6"><span class="material-icons text-4xl text-yellow-600">auto_fix_high</span></div>
+                <h2 class="text-xl font-bold mb-2" data-key="card1_title">요술 램프</h2>
+                <p class="text-sm text-gray-600 mb-4" data-key="card1_desc">할까 말까? 램프의 요정이 당신의 운명을 점쳐줍니다.</p>
+                <span class="text-primary font-medium flex items-center"><span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span></span>
             </a>
-
-            <!-- Tool Card 2: 3D Coin Flip -->
-            <a href="coinflip/coinflip.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex flex-col gap-6">
-                    <div class="icon-container w-16 h-16 rounded-2xl bg-teal-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-4xl text-teal-600">toll</span>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-2" data-key="card2_title">3D 동전 던지기</h2>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card2_desc">앞면일까, 뒷면일까? 실제 같은 3D 물리 효과와 함께 운명에 맡겨보세요. 예측 성공 시 특별한 효과가 나타납니다.</p>
-                        <span class="inline-flex items-center text-secondary font-medium group-hover:text-primaryLight transition-colors">
-                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="coinflip/coinflip.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg group">
+                <div class="icon-container w-16 h-16 rounded-2xl bg-teal-100 flex items-center justify-center mb-6"><span class="material-icons text-4xl text-teal-600">toll</span></div>
+                <h2 class="text-xl font-bold mb-2" data-key="card2_title">3D 동전 던지기</h2>
+                <p class="text-sm text-gray-600 mb-4" data-key="card2_desc">앞면일까 뒷면일까? 실제 같은 3D 물리 효과.</p>
+                <span class="text-secondary font-medium flex items-center"><span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span></span>
             </a>
-
-            <!-- Tool Card 3: Dice of Destiny -->
-            <a href="destinydice/destinydice.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-pink-500/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex flex-col gap-6">
-                    <div class="icon-container w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-4xl text-pink-600">casino</span>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-2" data-key="card3_title">운명의 주사위</h2>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card3_desc">여러 개의 선택지 중 하나를 골라야 할 때 사용하는 커스텀 주사위 도구입니다. 직접 선택지를 입력해보세요.</p>
-                        <span class="inline-flex items-center text-pink-600 font-medium group-hover:text-pink-400 transition-colors">
-                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="destinydice/destinydice.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg group">
+                <div class="icon-container w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center mb-6"><span class="material-icons text-4xl text-pink-600">casino</span></div>
+                <h2 class="text-xl font-bold mb-2" data-key="card3_title">운명의 주사위</h2>
+                <p class="text-sm text-gray-600 mb-4" data-key="card3_desc">선택지가 많을 때 유용한 커스텀 주사위.</p>
+                <span class="text-pink-600 font-medium flex items-center"><span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span></span>
             </a>
-
-            <!-- Tool Card 4: Ladder Climb -->
-            <a href="ladderclimb/ladderclimb.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex flex-col gap-6">
-                    <div class="icon-container w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-4xl text-primary">format_align_justify</span>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-2" data-key="card4_title">운명의 사다리</h2>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card4_desc">친구들과 함께 내기를 하거나 역할을 정할 때 유용한 사다리 타기 도구입니다. 참가자 수와 내용을 자유롭게 설정하세요.</p>
-                        <span class="inline-flex items-center text-primary font-medium group-hover:text-primaryLight transition-colors">
-                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="ladderclimb/ladderclimb.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg group">
+                <div class="icon-container w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center mb-6"><span class="material-icons text-4xl text-primary">format_align_justify</span></div>
+                <h2 class="text-xl font-bold mb-2" data-key="card4_title">운명의 사다리</h2>
+                <p class="text-sm text-gray-600 mb-4" data-key="card4_desc">친구들과 공정한 역할 분담과 내기.</p>
+                <span class="text-primary font-medium flex items-center"><span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span></span>
             </a>
-
-            <!-- Tool Card 5: Drawing Lots -->
-            <a href="drawinglots/drawinglots.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex flex-col gap-6">
-                    <div class="icon-container w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-4xl text-secondary">style</span>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-2" data-key="card5_title">두근두근 제비뽑기</h2>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card5_desc">사다리 타기보다 빠르고 간편하게 당첨자를 확인하세요. 여러 개의 제비 중 행운의 주인공을 바로 뽑을 수 있습니다.</p>
-                        <span class="inline-flex items-center text-secondary font-medium group-hover:text-primaryLight transition-colors">
-                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="drawinglots/drawinglots.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg group">
+                <div class="icon-container w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center mb-6"><span class="material-icons text-4xl text-secondary">style</span></div>
+                <h2 class="text-xl font-bold mb-2" data-key="card5_title">제비뽑기</h2>
+                <p class="text-sm text-gray-600 mb-4" data-key="card5_desc">빠르고 간편하게 행운의 주인공을 뽑으세요.</p>
+                <span class="text-secondary font-medium flex items-center"><span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span></span>
             </a>
-
-            <!-- Tool Card 6: Team Maker -->
-            <a href="teammaker/teammaker.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex flex-col gap-6">
-                    <div class="icon-container w-16 h-16 rounded-2xl bg-teal-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-4xl text-teal-600">groups</span>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-2" data-key="card6_title">무작위 팀 나누기</h2>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card6_desc">명단을 입력하면 무작위로 팀을 구성해줍니다. 팀 개수나 팀별 인원수를 설정하여 공정하게 조를 편성하세요.</p>
-                        <span class="inline-flex items-center text-teal-600 font-medium group-hover:text-primaryLight transition-colors">
-                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="teammaker/teammaker.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg group">
+                <div class="icon-container w-16 h-16 rounded-2xl bg-teal-100 flex items-center justify-center mb-6"><span class="material-icons text-4xl text-teal-600">groups</span></div>
+                <h2 class="text-xl font-bold mb-2" data-key="card6_title">무작위 팀 나누기</h2>
+                <p class="text-sm text-gray-600 mb-4" data-key="card6_desc">명단만 입력하면 공정하게 팀을 편성합니다.</p>
+                <span class="text-teal-600 font-medium flex items-center"><span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span></span>
             </a>
-
-            <!-- Tool Card 7: Card Flip -->
-            <a href="cardflip/cardflip.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex flex-col gap-6">
-                    <div class="icon-container w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-4xl text-pink-600">style</span>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-2" data-key="card7_title">행운의 카드 뒤집기</h2>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card7_desc">여러 장의 카드 중 하나를 선택하는 게임입니다. 순서 정하기나 행운 확인을 위해 카드를 뒤집어보세요.</p>
-                        <span class="inline-flex items-center text-secondary font-medium group-hover:text-primaryLight transition-colors">
-                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="cardflip/cardflip.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg group">
+                <div class="icon-container w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center mb-6"><span class="material-icons text-4xl text-pink-600">style</span></div>
+                <h2 class="text-xl font-bold mb-2" data-key="card7_title">카드 뒤집기</h2>
+                <p class="text-sm text-gray-600 mb-4" data-key="card7_desc">행운 확인이나 순서 정하기를 위한 게임.</p>
+                <span class="text-secondary font-medium flex items-center"><span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span></span>
             </a>
-
-            <!-- Tool Card 8: Time Bomb -->
-            <a href="timebomb/timebomb.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div class="flex flex-col gap-6">
-                    <div class="icon-container w-16 h-16 rounded-2xl bg-red-100 flex items-center justify-center shrink-0 transition-transform duration-300">
-                        <span class="material-icons text-4xl text-primary">timer</span>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold mb-2" data-key="card8_title">공포의 시한 폭탄</h2>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-4" data-key="card8_desc">심장이 쫄깃한 와이어 끊기 게임! 언제 터질지 모르는 폭탄의 와이어를 신중하게 선택하세요.</p>
-                        <span class="inline-flex items-center text-primary font-medium group-hover:text-primaryLight transition-colors">
-                            <span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="timebomb/timebomb.html" class="tool-card block bg-surface p-8 rounded-3xl border border-gray-100 shadow-lg group">
+                <div class="icon-container w-16 h-16 rounded-2xl bg-red-100 flex items-center justify-center mb-6"><span class="material-icons text-4xl text-primary">timer</span></div>
+                <h2 class="text-xl font-bold mb-2" data-key="card8_title">시한 폭탄</h2>
+                <p class="text-sm text-gray-600 mb-4" data-key="card8_desc">심장이 쫄깃한 와이어 끊기 복불복 게임.</p>
+                <span class="text-primary font-medium flex items-center"><span data-key="use_it">사용해보기</span> <span class="material-icons ml-1 text-sm">arrow_forward</span></span>
             </a>
-
         </section>
 
-        <!-- Information Articles Section -->
+        <!-- Decision Insights Section -->
         <section class="border-t border-gray-200 pt-16">
             <div class="flex items-center gap-2 mb-8 justify-center">
                 <span class="material-icons text-primary">psychology</span>
@@ -268,214 +157,89 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="article-grid">
-                <!-- 16 Articles will be here -->
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art1_title">선택 장애를 극복하는 법</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art1_desc">결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여준다는 사실을 알고 계셨나요?</p>
-                    <a href="insights/decision-fatigue.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art2_title">운과 확률의 심리학</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art2_desc">동전 던지기나 요술 램프는 사실 정답을 알려주는 것이 아니라, 결과가 나왔을 때 당신의 마음이 어느 쪽으로 기우는지 확인시켜주는 도구입니다.</p>
-                    <a href="insights/psychology-of-luck.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art3_title">암호학적 무작위성이란?</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art3_desc">저희 램프는 단순한 가짜 난수가 아닌 Web Crypto API를 사용합니다. 보안 통신에 쓰이는 수준의 무작위성을 보장합니다.</p>
-                    <a href="insights/crypto-randomness.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art4_title">MBTI별 결정 스타일</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art4_desc">계획적인 J와 즉흥적인 P, 논리의 T와 감정의 F는 어떻게 결정을 내릴까요? 성격 유형별 의사결정 방식을 분석해 봅니다.</p>
-                    <a href="insights/mbti-decisions.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art5_title">오늘 점심 뭐 먹지?</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art5_desc">매일 반복되는 지긋지긋한 점심 메뉴 고민! 결정 피로를 줄이고 행복한 식사 시간을 만드는 5가지 팁을 소개합니다.</p>
-                    <a href="insights/lunch-menu-tips.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art6_title">공정한 팀 구성의 과학</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art6_desc">다수결이 항상 정답일까요? 갈등 없는 모임을 위해 무작위 추첨이 필요한 이유를 사회 심리학적 관점에서 살펴봅니다.</p>
-                    <a href="insights/fairness-science.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <!-- New Articles -->
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art7_title">오늘의 운세 활용법</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art7_desc">단순한 재미를 넘어 오늘의 운세를 삶의 긍정적인 에너지로 바꾸는 법. 긍정적 확언의 과학적 근거를 소개합니다.</p>
-                    <a href="insights/daily-fortune-philosophy.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art8_title">선택의 역설</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art8_desc">왜 선택지가 많을수록 우리는 더 불행해질까요? 풍요 속의 빈곤, 선택의 역설을 심리학적으로 분석합니다.</p>
-                    <a href="insights/paradox-of-choice.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art9_title">팀 의사결정 전략</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art9_desc">여러 사람이 모여 갈등 없이 결론을 내는 법. 효율적인 팀을 위한 '피스트 투 파이브' 등 다양한 기법을 알아봅니다.</p>
-                    <a href="insights/group-decision-strategies.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art10_title">AI 시대의 의사결정</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art10_desc">인공지능이 모든 것을 분석하는 시대, 인간의 직관은 여전히 유효할까요? AI와 인간의 협업 모델을 제시합니다.</p>
-                    <a href="insights/ai-decision-making.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art11_title">결정 후 후회 줄이기</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art11_desc">"다른 걸 선택했더라면?" 결정 후 찾아오는 부조화를 해결하고 자신의 선택에 만족하는 심리학적 기술 5가지.</p>
-                    <a href="insights/regret-management.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art12_title">복불복의 역사</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art12_desc">고대 그리스 민주주의부터 현대 예능까지. 인류가 운명에 결정을 맡겨온 흥미진진한 역사를 탐험합니다.</p>
-                    <a href="insights/history-of-games-of-chance.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art13_title">인지 편향의 이해</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art13_desc">우리의 판단을 흐리는 생각의 지름길, 인지 편향. 매몰 비용 오류와 확증 편향 등 결정의 오류들을 분석합니다.</p>
-                    <a href="insights/cognitive-biases-in-choices.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art14_title">마음챙김과 선택</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art14_desc">불안과 분노 속에서 내린 결정은 위험합니다. 현재에 집중하여 평온한 상태에서 올바른 선택을 내리는 명상법.</p>
-                    <a href="insights/mindfulness-and-decisions.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art15_title">인생의 게임화</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art15_desc">따분한 일상을 게임처럼 즐겁게! 게이미피케이션 기법을 의사결정에 도입하여 삶의 활력을 되찾는 비결.</p>
-                    <a href="insights/gamification-of-daily-life.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
-
-                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art16_title">점술의 현대적 해석</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art16_desc">과거의 신비주의를 넘어 심리적 위안과 통찰을 주는 현대적 점술 도구들의 역할과 가치를 재조명합니다.</p>
-                    <a href="insights/history-of-divination.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
-                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
-                    </a>
-                </article>
+                <!-- 16 Articles -->
+                <script>
+                    const insights = [
+                        { id: 1, file: 'decision-fatigue.html' },
+                        { id: 2, file: 'psychology-of-luck.html' },
+                        { id: 3, file: 'crypto-randomness.html' },
+                        { id: 4, file: 'mbti-decisions.html' },
+                        { id: 5, file: 'lunch-menu-tips.html' },
+                        { id: 6, file: 'fairness-science.html' },
+                        { id: 7, file: 'daily-fortune-philosophy.html' },
+                        { id: 8, file: 'paradox-of-choice.html' },
+                        { id: 9, file: 'group-decision-strategies.html' },
+                        { id: 10, file: 'ai-decision-making.html' },
+                        { id: 11, file: 'regret-management.html' },
+                        { id: 12, file: 'history-of-games-of-chance.html' },
+                        { id: 13, file: 'cognitive-biases-in-choices.html' },
+                        { id: 14, file: 'mindfulness-and-decisions.html' },
+                        { id: 15, file: 'gamification-of-daily-life.html' },
+                        { id: 16, file: 'history-of-divination.html' }
+                    ];
+                    insights.forEach(art => {
+                        document.write(`
+                            <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                                <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art${art.id}_title">로드 중...</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art${art.id}_desc">내용을 불러오는 중입니다.</p>
+                                <a href="insights/${art.file}" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                                    <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                                </a>
+                            </article>
+                        `);
+                    });
+                </script>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-surface py-12 mt-auto border-t border-gray-200">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <div class="flex justify-center gap-6 mb-6 text-sm font-medium text-gray-500">
-                <a href="hub-guide.html" class="hover:text-primary transition-colors" data-key="footer_guide">사용 가이드</a>
-                <a href="privacy.html" class="hover:text-primary transition-colors" data-key="footer_privacy">개인정보처리방침</a>
-                <a href="terms.html" class="hover:text-primary transition-colors" data-key="footer_terms">서비스 약관</a>
+                <a href="hub-guide.html" class="hover:text-primary" data-key="footer_guide">사용 가이드</a>
+                <a href="privacy.html" class="hover:text-primary" data-key="footer_privacy">개인정보처리방침</a>
+                <a href="terms.html" class="hover:text-primary" data-key="footer_terms">서비스 약관</a>
             </div>
             <p class="text-xs text-gray-400" data-key="footer_copyright">© 2024 ZezeStudio Decision Hub. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        const translations = {
             "en": {
                 "hub_title": "When decision is hard,<br>Zeze Hub will help you.",
                 "hub_desc": "Choose the tool that fits your concern. More features coming soon.",
                 "daily_fortune_title": "Daily Word of Wisdom",
                 "daily_fortune_desc": "Check your special advice once a day.",
                 "draw_fortune_btn": "Draw Fortune",
-                "fortune_disclaimer": "※ Please enjoy the fortune results for entertainment purposes only.",
-                "card1_title": "Magic Lamp (Yes or No)",
-                "card1_desc": "Ask any question on your mind. The genie will predict your destiny and give fun advice.",
                 "use_it": "Try it now",
-                "card2_title": "3D Coin Flip",
-                "card2_desc": "Heads or Tails? Flip with real 3D physics. Special effects appear on correct predictions.",
-                "card3_title": "Dice of Destiny",
-                "card3_desc": "Custom roulette and dice tools for when you need to pick one from many options.",
-                "card4_title": "Ladder Climb",
-                "card4_desc": "A fun tool for betting or assigning roles with friends. Set participants and contents freely.",
-                "card5_title": "Drawing Lots",
-                "card5_desc": "Faster and easier than ladder climb. Pick the lucky winner immediately among several slips.",
-                "card6_title": "Random Team Maker",
-                "card6_desc": "Divide teams randomly by entering a list. Set team count or members per team for fair grouping.",
-                "card7_title": "Lucky Card Flip",
-                "card7_desc": "A simple game of picking one from many cards. Flip to decide the order or find your luck.",
-                "card8_title": "Time Bomb",
-                "card8_desc": "High-tension wire cutting game! Carefully choose which wire to cut before it's too late.",
                 "article_section_title": "Decision Insights",
-                "art1_title": "Overcoming Decision Fatigue",
-                "art1_desc": "Know as 'Hamlet Syndrome'. Sometimes a 'fast decision' is better than a perfect one for reducing brain stress.",
-                "art2_title": "Psychology of Luck",
-                "art2_desc": "Tools like the lamp don't just give answers; they reveal your true preference by showing your reaction to results.",
-                "art3_title": "What is Crypto Randomness?",
-                "art3_desc": "Our genie uses Web Crypto API for true randomness, ensuring zero bias. Global security standard.",
-                "art4_title": "MBTI Decision Styles",
-                "art4_desc": "How do J vs P, or T vs F types make choices? We analyze mechanisms by personality type.",
-                "art5_title": "What's for Lunch?",
-                "art5_desc": "Tired of the daily lunch menu struggle? Here are 5 smart tips to reduce decision fatigue.",
-                "art6_title": "Science of Fair Grouping",
-                "art6_desc": "Is majority rule always the best? Explore why random selection is necessary for conflict-free meetings.",
-                "art7_title": "Fortune & Affirmation",
-                "art7_desc": "How to turn daily fortunes into positive life energy using the science of affirmation.",
-                "art8_title": "The Paradox of Choice",
-                "art8_desc": "Why having too many options makes us unhappy. Analyze the psychological burden of abundance.",
-                "art9_title": "Team Decision Strategies",
-                "art9_desc": "Reaching a conclusion without conflict. Learn 'Fist to Five' and other effective techniques.",
-                "art10_title": "AI Era Decision Making",
-                "art10_desc": "Is human intuition still valid in the age of AI? Exploring the collaboration between humans and AI.",
-                "art11_title": "Reducing Post-Regret",
-                "art11_desc": "Post-decision dissonance? 5 psychological techniques to be satisfied with your choice.",
-                "art12_title": "History of Chance",
-                "art12_desc": "From Athenian democracy to modern entertainment. Explore the fascinating history of fate.",
-                "art13_title": "Understanding Biases",
-                "art13_desc": "Cognitive biases that cloud our judgment. Analyze Sunk Cost Fallacy and Confirmation Bias.",
-                "art14_title": "Mindfulness & Choice",
-                "art14_desc": "Making choices in anger is dangerous. How to decide in a peaceful state through meditation.",
-                "art15_title": "Gamification of Life",
-                "art15_desc": "Make daily routines fun like a game! Secret to regaining vitality through gamification.",
-                "art16_title": "Modern Divination",
-                "art16_desc": "Beyond mysticism. Re-evaluating modern tools that provide psychological comfort and insight.",
                 "read_more": "Read more",
-                "footer_guide": "User Guide",
-                "footer_privacy": "Privacy Policy",
-                "footer_terms": "Terms of Service",
-                "footer_copyright": "© 2024 ZezeStudio Decision Hub. All rights reserved."
+                "footer_guide": "User Guide", "footer_privacy": "Privacy Policy", "footer_terms": "Terms of Service", "footer_copyright": "© 2024 ZezeStudio. All rights reserved.",
+                "card1_title": "Magic Lamp", "card1_desc": "Yes or No? Let the genie decide your fate.",
+                "card2_title": "3D Coin Flip", "card2_desc": "Heads or Tails? Real 3D physics effects.",
+                "card3_title": "Dice of Destiny", "card3_desc": "Custom dice for multiple choices.",
+                "card4_title": "Ladder Climb", "card4_desc": "Fair role assignment and betting with friends.",
+                "card5_title": "Drawing Lots", "card5_desc": "Quick and easy way to pick a winner.",
+                "card6_title": "Team Maker", "card6_desc": "Divide teams fairly by entering a list.",
+                "card7_title": "Card Flip", "card7_desc": "Flip cards to decide order or luck.",
+                "card8_title": "Time Bomb", "card8_desc": "High-tension wire cutting game.",
+                "art1_title": "Overcoming Decision Fatigue", "art1_desc": "Why 'fast decisions' are better than perfect ones.",
+                "art2_title": "Psychology of Luck", "art2_desc": "Tools reveal your true preference through results.",
+                "art3_title": "What is Crypto Randomness?", "art3_desc": "Web Crypto API ensures zero bias and fairness.",
+                "art4_title": "MBTI Decision Styles", "art4_desc": "How different personalities make choices.",
+                "art5_title": "What's for Lunch?", "art5_desc": "5 smart tips to reduce daily menu stress.",
+                "art6_title": "Science of Fair Grouping", "art6_desc": "Why random selection is necessary for teams.",
+                "art7_title": "Fortune & Affirmation", "art7_desc": "Turning daily fortunes into positive life energy.",
+                "art8_title": "The Paradox of Choice", "art8_desc": "Why having too many options makes us unhappy.",
+                "art9_title": "Team Decision Strategies", "art9_desc": "Reaching a conclusion without conflict.",
+                "art10_title": "AI Era Decision Making", "art10_desc": "Is human intuition still valid in the age of AI?",
+                "art11_title": "Reducing Post-Regret", "art11_desc": "5 techniques to be satisfied with your choice.",
+                "art12_title": "History of Chance", "art12_desc": "From ancient democracy to modern entertainment.",
+                "art13_title": "Understanding Biases", "art13_desc": "Cognitive biases that cloud our judgment.",
+                "art14_title": "Mindfulness & Choice", "art14_desc": "Deciding in a peaceful state through meditation.",
+                "art15_title": "Gamification of Life", "art15_desc": "Make daily routines fun like a game!",
+                "art16_title": "Modern Divination", "art16_desc": "Re-evaluating tools that provide comfort and insight."
             },
             "ko": {
                 "hub_title": "선택이 어려울 때,<br>Zeze Hub가 도와드릴게요.",
@@ -483,62 +247,34 @@
                 "daily_fortune_title": "오늘의 한마디 운세",
                 "daily_fortune_desc": "매일 한 번, 당신을 위한 특별한 조언을 확인하세요.",
                 "draw_fortune_btn": "운세 뽑기",
-                "fortune_disclaimer": "※ 본 서비스의 운세 결과는 재미로만 즐겨주시기 바랍니다.",
-                "card1_title": "요술 램프 (Yes or No)",
-                "card1_desc": "\"할까 말까?\" 고민되는 질문을 던져보세요. 램프의 요정이 당신의 운명을 점치고 재미있는 조언을 해줍니다.",
                 "use_it": "사용해보기",
-                "card2_title": "3D 동전 던지기",
-                "card2_desc": "앞면일까, 뒷면일까? 실제 같은 3D 물리 효과와 함께 운명에 맡겨보세요. 예측 성공 시 특별한 효과가 나타납니다.",
-                "card3_title": "운명의 주사위",
-                "card3_desc": "여러 개의 선택지 중 하나를 골라야 할 때 사용하는 커스텀 룰렛과 주사위 도구입니다.",
-                "card4_title": "운명의 사다리",
-                "card4_desc": "친구들과 함께 내기를 하거나 역할을 정할 때 유용한 사다리 타기 도구입니다. 참가자 수와 내용을 자유롭게 설정하세요.",
-                "card5_title": "두근두근 제비뽑기",
-                "card5_desc": "사다리 타기보다 빠르고 간편하게 당첨자를 확인하세요. 여러 개의 제비 중 행운의 주인공을 바로 뽑을 수 있습니다.",
-                "card6_title": "무작위 팀 나누기",
-                "card6_desc": "명단을 입력하면 무작위로 팀을 구성해줍니다. 팀 개수나 팀별 인원수를 설정하여 공정하게 조를 편성하세요.",
-                "card7_title": "행운의 카드 뒤집기",
-                "card7_desc": "여러 장의 카드 중 하나를 선택하는 게임입니다. 순서 정하기나 행운 확인을 위해 카드를 뒤집어보세요.",
-                "card8_title": "공포의 시한 폭탄",
-                "card8_desc": "심장이 쫄깃한 와이어 끊기 게임! 언제 터질지 모르는 폭탄의 와이어를 신중하게 선택하세요.",
                 "article_section_title": "의사결정 인사이트",
-                "art1_title": "선택 장애를 극복하는 법",
-                "art1_desc": "결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여줍니다.",
-                "art2_title": "운과 확률의 심리학",
-                "art2_desc": "도구들은 정답을 알려주는 것이 아니라, 결과에 대한 당신의 반응을 통해 진심을 확인시켜줍니다.",
-                "art3_title": "암호학적 무작위성이란?",
-                "art3_desc": "저희 램프는 Web Crypto API를 사용합니다. 보안 통신 수준의 무작위성으로 공정성을 보장합니다.",
-                "art4_title": "MBTI별 결정 스타일",
-                "art4_desc": "계획적인 J와 즉흥적인 P는 어떻게 결정을 내릴까요? 성격 유형별 의사결정 방식을 분석해 봅니다.",
-                "art5_title": "오늘 점심 뭐 먹지?",
-                "art5_desc": "매일 반복되는 지긋지긋한 점심 메뉴 고민! 결정 피로를 줄이고 행복한 식사를 만드는 5가지 팁.",
-                "art6_title": "공정한 팀 구성의 과학",
-                "art6_desc": "다수결이 항상 정답일까요? 갈등 없는 모임을 위해 무작위 추첨이 필요한 사회 심리학적 이유.",
-                "art7_title": "오늘의 운세 활용법",
-                "art7_desc": "단순한 재미를 넘어 오늘의 운세를 삶의 긍정적인 에너지로 바꾸는 법. 긍정적 확언의 과학적 근거.",
-                "art8_title": "선택의 역설",
-                "art8_desc": "왜 선택지가 많을수록 우리는 더 불행해질까요? 풍요 속의 빈곤, 선택의 역설을 심리학적으로 분석합니다.",
-                "art9_title": "팀 의사결정 전략",
-                "art9_desc": "여러 사람이 모여 갈등 없이 결론을 내는 법. 효율적인 팀을 위한 '피스트 투 파이브' 등 다양한 기법.",
-                "art10_title": "AI 시대의 의사결정",
-                "art10_desc": "인공지능이 모든 것을 분석하는 시대, 인간의 직관은 여전히 유효할까요? AI와 인간의 협업 모델.",
-                "art11_title": "결정 후 후회 줄이기",
-                "art11_desc": "\"다른 걸 선택했더라면?\" 결정 후 찾아오는 부조화를 해결하고 선택에 만족하는 심리학적 기술.",
-                "art12_title": "복불복의 역사",
-                "art12_desc": "고대 그리스 민주주의부터 현대 예능까지. 인류가 운명에 결정을 맡겨온 흥미진진한 역사를 탐험합니다.",
-                "art13_title": "인지 편향의 이해",
-                "art13_desc": "판단을 흐리는 생각의 지름길, 인지 편향. 매몰 비용 오류와 확증 편향 등 결정의 오류들을 분석합니다.",
-                "art14_title": "마음챙김과 선택",
-                "art14_desc": "불안과 분노 속에서 내린 결정은 위험합니다. 현재에 집중하여 올바른 선택을 내리는 명상법.",
-                "art15_title": "인생의 게임화",
-                "art15_desc": "따분한 일상을 게임처럼 즐겁게! 게이미피케이션 기법을 의사결정에 도입하여 삶의 활력을 되찾는 비결.",
-                "art16_title": "점술의 현대적 해석",
-                "art16_desc": "과거의 신비주의를 넘어 심리적 위안과 통찰을 주는 현대적 점술 도구들의 역할과 가치를 재조명합니다.",
                 "read_more": "자세히 보기",
-                "footer_guide": "사용 가이드",
-                "footer_privacy": "개인정보처리방침",
-                "footer_terms": "서비스 약관",
-                "footer_copyright": "© 2024 ZezeStudio Decision Hub. All rights reserved."
+                "footer_guide": "사용 가이드", "footer_privacy": "개인정보처리방침", "footer_terms": "서비스 약관", "footer_copyright": "© 2024 ZezeStudio. All rights reserved.",
+                "card1_title": "요술 램프", "card1_desc": "할까 말까? 램프의 요정이 당신의 운명을 점쳐줍니다.",
+                "card2_title": "3D 동전 던지기", "card2_desc": "앞면일까 뒷면일까? 실제 같은 3D 물리 효과.",
+                "card3_title": "운명의 주사위", "card3_desc": "선택지가 많을 때 유용한 커스텀 주사위.",
+                "card4_title": "운명의 사다리", "card4_desc": "친구들과 공정한 역할 분담과 내기.",
+                "card5_title": "제비뽑기", "card5_desc": "빠르고 간편하게 행운의 주인공을 뽑으세요.",
+                "card6_title": "무작위 팀 나누기", "card6_desc": "명단만 입력하면 공정하게 팀을 편성합니다.",
+                "card7_title": "카드 뒤집기", "card7_desc": "행운 확인이나 순서 정하기를 위한 게임.",
+                "card8_title": "시한 폭탄", "card8_desc": "심장이 쫄깃한 와이어 끊기 복불복 게임.",
+                "art1_title": "선택 장애를 극복하는 법", "art1_desc": "왜 '빠른 결정'이 완벽한 결정보다 나은가.",
+                "art2_title": "운과 확률의 심리학", "art2_desc": "도구들은 결과에 대한 반응을 통해 진심을 확인시켜줍니다.",
+                "art3_title": "암호학적 무작위성이란?", "art3_desc": "Web Crypto API로 보장하는 완벽한 공정성.",
+                "art4_title": "MBTI별 결정 스타일", "art4_desc": "성격 유형에 따른 다양한 선택의 메커니즘.",
+                "art5_title": "오늘 점심 뭐 먹지?", "art5_desc": "결정 피로를 줄이고 행복한 식사를 만드는 5가지 팁.",
+                "art6_title": "공정한 팀 구성의 과학", "art6_desc": "갈등 없는 모임을 위해 무작위 추첨이 필요한 이유.",
+                "art7_title": "오늘의 운세 활용법", "art7_desc": "운세를 삶의 긍정적인 에너지로 바꾸는 법.",
+                "art8_title": "선택의 역설", "art8_desc": "왜 선택지가 많을수록 우리는 더 불행해질까요?",
+                "art9_title": "팀 의사결정 전략", "art9_desc": "여러 사람이 모여 갈등 없이 결론을 내는 법.",
+                "art10_title": "AI 시대의 의사결정", "art10_desc": "인공지능 시대, 인간의 직관은 여전히 유효할까요?",
+                "art11_title": "결정 후 후회 줄이기", "art11_desc": "자신의 선택에 만족하게 돕는 심리학적 기술.",
+                "art12_title": "복불복의 역사", "art12_desc": "고대 민주주의부터 현대 예능까지의 운명 게임.",
+                "art13_title": "인지 편향의 이해", "art13_desc": "판단을 흐리는 생각의 지름길과 결정의 오류 분석.",
+                "art14_title": "마음챙김과 선택", "art14_desc": "평온한 상태에서 올바른 선택을 내리는 명상법.",
+                "art15_title": "인생의 게임화", "art15_desc": "따분한 일상을 게임처럼 즐겁게 만드는 비결.",
+                "art16_title": "점술의 현대적 해석", "art16_desc": "심리적 위안과 통찰을 주는 현대적 점술의 가치."
             }
         };
 
@@ -550,57 +286,13 @@
                 const response = await fetch('fortunes.json');
                 fortunesData = await response.json();
                 checkDailyFortuneState();
-            } catch (error) {
-                console.error('Failed to load fortunes:', error);
-            }
+            } catch (error) { console.error('Failed to load fortunes:', error); }
         }
 
         function setLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('lang', lang);
             applyLanguage();
-            const display = document.getElementById('fortune-display');
-            if (!display.classList.contains('hidden')) {
-                showFortuneText();
-            }
-        }
-
-        function drawFortune() {
-            if (!fortunesData) return;
-            const btn = document.getElementById('draw-fortune-btn');
-            const display = document.getElementById('fortune-display');
-            const todayStr = new Date().toDateString();
-            localStorage.setItem('last_fortune_date', todayStr);
-            btn.classList.add('hidden');
-            display.classList.remove('hidden');
-            display.classList.add('animate-bounce');
-            setTimeout(() => display.classList.remove('animate-bounce'), 1000);
-            showFortuneText();
-        }
-
-        function showFortuneText() {
-            if (!fortunesData) return;
-            const list = fortunesData[currentLang];
-            const today = new Date();
-            const y = today.getFullYear();
-            const m = today.getMonth() + 1;
-            const d = today.getDate();
-            let seed = (y * 31) + (m * 7) + d;
-            seed = (seed ^ (seed << 13)) ^ (seed >> 17);
-            const index = Math.abs(seed) % list.length;
-            document.getElementById('fortune-text').textContent = list[index];
-        }
-
-        function checkDailyFortuneState() {
-            const lastDate = localStorage.getItem('last_fortune_date');
-            const todayStr = new Date().toDateString();
-            const btn = document.getElementById('draw-fortune-btn');
-            const display = document.getElementById('fortune-display');
-            if (lastDate === todayStr) {
-                btn.classList.add('hidden');
-                display.classList.remove('hidden');
-                showFortuneText();
-            }
         }
 
         function applyLanguage() {
@@ -611,49 +303,46 @@
                 }
             });
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                const btnLang = btn.id.split('-')[1];
-                if (btnLang === currentLang) {
+                if (btn.id === `lang-${currentLang}`) {
                     btn.classList.add('bg-primary', 'text-white', 'border-primary');
-                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
+                    btn.classList.remove('bg-transparent', 'text-gray-600');
                 } else {
                     btn.classList.remove('bg-primary', 'text-white', 'border-primary');
-                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
+                    btn.classList.add('bg-transparent', 'text-gray-600');
                 }
             });
             document.documentElement.lang = currentLang;
         }
 
-        // Global Sound Logic
-        let isMuted = localStorage.getItem('zeze_muted') === 'true';
-        const soundIcon = document.getElementById('global-sound-icon');
-        function updateSoundUI() {
-            if (!soundIcon) return;
-            soundIcon.textContent = isMuted ? 'volume_off' : 'volume_up';
-            if (isMuted) {
-                soundIcon.classList.add('text-red-500');
-            } else {
-                soundIcon.classList.remove('text-red-500');
-            }
+        function drawFortune() {
+            if (!fortunesData) return;
+            localStorage.setItem('last_fortune_date', new Date().toDateString());
+            document.getElementById('draw-fortune-btn').classList.add('hidden');
+            const display = document.getElementById('fortune-display');
+            display.classList.remove('hidden');
+            showFortuneText();
         }
-        document.getElementById('global-sound-toggle').addEventListener('click', () => {
-            isMuted = !isMuted;
-            localStorage.setItem('zeze_muted', isMuted);
-            updateSoundUI();
-        });
 
-        // Register Service Worker for PWA
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker registered', reg))
-                    .catch(err => console.log('Service Worker registration failed', err));
-            });
+        function showFortuneText() {
+            if (!fortunesData) return;
+            const list = fortunesData[currentLang];
+            const today = new Date();
+            let seed = (today.getFullYear() * 31) + (today.getMonth() + 1 * 7) + today.getDate();
+            seed = (seed ^ (seed << 13)) ^ (seed >> 17);
+            document.getElementById('fortune-text').textContent = list[Math.abs(seed) % list.length];
+        }
+
+        function checkDailyFortuneState() {
+            if (localStorage.getItem('last_fortune_date') === new Date().toDateString()) {
+                document.getElementById('draw-fortune-btn').classList.add('hidden');
+                document.getElementById('fortune-display').classList.remove('hidden');
+                showFortuneText();
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             applyLanguage();
             fetchFortunes();
-            updateSoundUI();
         });
     </script>
 </body>
