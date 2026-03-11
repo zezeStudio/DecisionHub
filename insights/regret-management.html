@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="meta_title">결정 후 후회를 줄이는 5가지 심리학적 기술 - Zeze Hub Insight</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { primary: '#6200EE', primaryLight: '#BB86FC', surface: '#FFFFFF', background: '#F5F5F5' } } }
+        }
+    </script>
+</head>
+<body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+    <nav class="bg-surface shadow-sm sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-primary"><span class="material-icons">arrow_back</span></a>
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Insight Blog</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">KO</button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12">
+        <article class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
+            <header class="mb-10 text-center">
+                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4" data-key="category">정신 건강 칼럼</span>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">결정 후 후회를 줄이는<br>5가지 심리학적 기술</h1>
+                <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 11월 09일 · 읽는 시간: 약 6분</p>
+            </header>
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
+            <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
+                <a href="../index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
+                    <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
+                </a>
+            </div>
+        </article>
+    </main>
+    <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
+        <p>© 2024 ZezeStudio Decision Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        const translations = {
+            "ko": {
+                "meta_title": "결정 후 후회 관리법 - Zeze Hub Insight",
+                "category": "정신 건강 칼럼",
+                "main_title": "결정 후 후회를 줄이는 5가지 심리학적 기술",
+                "date_info": "작성일: 2024년 11월 09일 · 읽는 시간: 약 6분",
+                "back_home": "허브로 돌아가기",
+                "body": `
+                    <p>우리는 결정을 내리기 전보다 내린 후에 더 큰 고통을 겪기도 합니다. "다른 걸 선택했더라면?"이라는 생각이 머릿속을 떠나지 않는 현상을 심리학에서는 <strong>'구매 후 부조화(Post-Purchase Dissonance)'</strong> 혹은 선택 후 후회라고 부릅니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. '선택하지 않은 길'의 단점을 찾아라</h2>
+                    <p>우리는 흔히 내가 포기한 옵션의 장점만 떠올리며 후회합니다. 반대로 포기한 옵션이 가졌을 법한 잠재적 문제점이나 단점을 의도적으로 떠올려 보세요. 현재의 선택을 지지하는 강력한 근거가 됩니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. 결정의 가역성(Reversibility)을 인정하라</h2>
+                    <p>인생의 대부분의 결정은 되돌릴 수 있습니다. 이번 선택이 최종적이고 영원한 실패라고 생각하는 압박감에서 벗어나세요. "언제든 수정할 수 있다"는 마음가짐이 후회를 줄여줍니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. '충분히 좋은' 선택에 만족하기</h2>
+                    <p>최고의 선택(Optimal)이 아닌 최선의 선택(Acceptable)에 집중하세요. 완벽주의는 후회의 가장 큰 적입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Zeze Hub의 철학</h2>
+                    <p>Zeze Hub의 도구들이 내놓는 무작위 결과는 당신에게 '결론'을 주는 것이 아니라, 결정을 내린 후의 <strong>'심리적 면죄부'</strong>를 주는 것입니다. "운명이 정해준 것이니 일단 해보자"는 태도는 후회 없이 행동에 집중하게 만듭니다.</p>
+                `
+            },
+            "en": {
+                "meta_title": "5 Psychological Techniques to Reduce Regret - Zeze Hub Insight",
+                "category": "Mental Health Column",
+                "main_title": "5 Psychological Techniques to Reduce<br>Post-Decision Regret",
+                "date_info": "Published: Nov 9, 2024 · Read time: Approx. 6 min",
+                "back_home": "Back to Hub",
+                "body": `
+                    <p>Sometimes we suffer more after making a decision than before. The recurring thought, "What if I had chosen differently?" is known in psychology as <strong>'Post-Purchase Dissonance'</strong> or post-decision regret.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. Look for Flaws in the 'Road Not Taken'</h2>
+                    <p>We often regret by recalling only the strengths of the options we gave up. Instead, intentionally think about the potential problems or downsides of those skipped options. It reinforces your current choice.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. Acknowledge Reversibility</h2>
+                    <p>Most decisions in life are reversible. Escape the pressure of thinking this choice is a final, eternal failure. A "we can always adjust later" mindset reduces regret significantly.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. Satisfy with 'Good Enough'</h2>
+                    <p>Focus on an acceptable choice rather than the absolute optimal one. Perfectionism is the biggest ally of regret.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Zeze Hub's Philosophy</h2>
+                    <p>The random results from Zeze Hub's tools don't just give you a conclusion; they provide a <strong>'psychological free pass'</strong> after the decision. A "Fate decided this, so let's just do it" attitude helps you focus on action without looking back.</p>
+                `
+            }
+        };
+        let currentLang = localStorage.getItem('lang') || 'ko';
+        function applyLanguage() {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+            });
+            document.getElementById('article-body').innerHTML = translations[currentLang].body;
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.id.split('-')[1];
+                if (btnLang === currentLang) {
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
+                }
+            });
+        }
+        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
+</body>
+</html>

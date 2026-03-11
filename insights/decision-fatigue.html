@@ -3,14 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>선택 장애를 극복하는 법: 결정 피로의 이해 - Zeze Hub Insight</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="결정 장애(햄릿 증후군)의 원인인 '결정 피로(Decision Fatigue)'에 대해 알아보고, 일상 속 선택의 고통을 줄이기 위한 심리학적 해결책을 제시합니다.">
-    <meta name="keywords" content="결정 장애, 햄릿 증후군, 결정 피로, 선택의 역설, 자아 고갈, 심리학, Zeze Hub">
-    <meta property="og:title" content="선택 장애를 극복하는 법: 결정 피로의 이해">
-    <meta property="og:description" content="완벽한 정답보다 빠른 결정이 중요한 이유. 당신의 뇌가 피곤해하는 원인을 알아봅니다.">
-    
+    <title data-key="meta_title">선택 장애를 극복하는 법: 결정 피로의 이해 - Zeze Hub Insight</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -18,96 +11,105 @@
     <link rel="stylesheet" href="../style.css">
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { primary: '#6200EE', primaryLight: '#BB86FC', surface: '#FFFFFF', background: '#F5F5F5' }
-                }
-            }
+            theme: { extend: { colors: { primary: '#6200EE', primaryLight: '#BB86FC', surface: '#FFFFFF', background: '#F5F5F5' } } }
         }
     </script>
 </head>
 <body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
-
-    <!-- Navigation Bar -->
     <nav class="bg-surface shadow-sm sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-primary">
-                    <span class="material-icons">arrow_back</span>
-                </a>
+                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-primary"><span class="material-icons">arrow_back</span></a>
                 <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Insight Blog</span>
             </div>
-            <a href="../index.html" class="text-sm font-bold text-gray-500 hover:text-primary transition-colors">홈으로</a>
+            <div class="flex items-center gap-2">
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">KO</button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
         </div>
     </nav>
-
-    <!-- Article Content -->
     <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12">
         <article class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
-            <!-- Header -->
             <header class="mb-10 text-center">
-                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4">심리학 칼럼</span>
-                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight">선택 장애를 극복하는 법: <br class="hidden md:block">결정 피로(Decision Fatigue)의 이해</h1>
-                <p class="text-sm text-gray-500">작성일: 2024년 10월 24일 · 읽는 시간: 약 4분</p>
+                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4" data-key="category">심리학 칼럼</span>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">선택 장애를 극복하는 법:<br>결정 피로(Decision Fatigue)의 이해</h1>
+                <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 10월 24일 · 읽는 시간: 약 4분</p>
             </header>
-
-            <!-- Body -->
-            <div class="space-y-6 text-gray-700 leading-loose text-lg">
-                <p>
-                    현대인들은 아침에 눈을 뜨는 순간부터 잠자리에 들 때까지 수많은 선택의 기로에 놓입니다. "아침으로 무엇을 먹을까?", "어떤 옷을 입고 나갈까?", "이 메일에 지금 답장을 할까, 이따가 할까?" 등 하루 평균 인간이 내리는 결정의 수는 약 3만 5천 번에 달한다고 합니다. 이렇게 끊임없이 이어지는 선택은 종종 우리를 지치게 만들며, 흔히 말하는 <strong>'선택 장애(결정 장애, 햄릿 증후군)'</strong>를 유발합니다. 
-                </p>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">뇌도 근육처럼 지친다: 자아 고갈(Ego Depletion)</h2>
-                <p>
-                    왜 우리는 점심 메뉴 하나를 고르면서도 엄청난 피로감을 느낄까요? 심리학자 로이 바우마이스터(Roy Baumeister)는 이를 <strong>'자아 고갈(Ego Depletion)'</strong>이라는 개념으로 설명했습니다. 인간의 의지력과 판단력을 관장하는 뇌의 에너지는 한정되어 있으며, 근육을 계속 쓰면 지치듯이 결정을 반복할수록 뇌의 에너지가 고갈된다는 것입니다.
-                </p>
-                <p>
-                    이를 가장 잘 보여주는 현상이 바로 <strong>'결정 피로(Decision Fatigue)'</strong>입니다. 아침에는 신중하고 합리적인 결정을 내리던 사람도, 저녁이 되면 충동구매를 하거나 아예 결정을 회피해버리는 경향을 보입니다. 판사들이 아침보다 늦은 오후에 피고인에게 불리한(보수적인) 판결을 내릴 확률이 현저히 높다는 연구 결과도 이를 뒷받침합니다. 에너지가 고갈된 뇌는 가장 에너지가 적게 드는 방식, 즉 '현상 유지'나 '회피'를 선택하게 됩니다.
-                </p>
-
-                <div class="my-8 p-6 bg-yellow-50 rounded-2xl border-l-4 border-yellow-400">
-                    <h3 class="font-bold text-yellow-800 mb-2">💡 스티브 잡스와 마크 저커버그의 공통점</h3>
-                    <p class="text-sm text-yellow-900">
-                        애플의 창업자 스티브 잡스는 매일 검은색 터틀넥과 청바지를 입었고, 메타의 마크 저커버그 역시 매일 같은 회색 티셔츠를 입습니다. 이는 단순히 패션 감각이 없어서가 아닙니다. <strong>'오늘 무엇을 입을지' 고민하는 데 쓰이는 뇌의 에너지를 아껴두었다가, 회사 경영이라는 훨씬 더 중요한 결정에 쏟아붓기 위한 철저한 전략</strong>입니다.
-                    </p>
-                </div>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">선택의 역설 (Paradox of Choice)</h2>
-                <p>
-                    과거에 비해 우리는 압도적으로 많은 선택지를 가지고 있습니다. 배달 앱을 열면 수백 개의 식당이 있고, 넷플릭스를 켜면 수천 편의 영화가 있습니다. 선택지가 많으면 더 행복할 것 같지만, 심리학자 배리 슈워츠(Barry Schwartz)는 그의 저서 <em>'선택의 심리학(The Paradox of Choice)'</em>에서 선택지가 많을수록 오히려 만족도는 떨어지고 후회와 스트레스가 증가한다고 주장합니다.
-                </p>
-                <p>
-                    수많은 대안 중에서 '최고의 선택'을 해야 한다는 압박감(Maximizer)은 결정을 지연시키고 심리적 고통을 낳습니다. 결국 아무것도 선택하지 못하고 시간만 낭비하거나, 선택을 하고 나서도 "다른 걸 골랐으면 더 좋지 않았을까?" 하는 아쉬움에 시달리게 됩니다.
-                </p>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">그렇다면 어떻게 해결해야 할까?</h2>
-                <ul class="list-disc pl-6 space-y-4">
-                    <li><strong>루틴화(Routine) 하기:</strong> 매일 반복되는 일상적인 선택은 규칙으로 만드세요. 식단, 운동 시간, 입을 옷 등을 미리 정해두면 불필요한 결정 피로를 크게 줄일 수 있습니다.</li>
-                    <li><strong>중요한 결정은 오전에:</strong> 뇌의 에너지가 가장 충만한 아침 시간에 인생에 영향을 미칠 중요한 결정을 내리는 것이 좋습니다.</li>
-                    <li><strong>적당한 선에서 타협하기 (Satisficing):</strong> 완벽한 선택(Maximizing)을 추구하기보다는, '이 정도면 충분히 만족스럽다(Satisficing)'는 기준을 세우고 그 기준을 넘는 첫 번째 옵션을 과감하게 선택하는 연습이 필요합니다.</li>
-                    <li><strong>무작위성의 힘 빌리기:</strong> 오늘 점심 메뉴나 누가 설거지를 할 것인가 같은 가벼운 문제는 깊게 고민할 가치가 없습니다. 이럴 때는 동전 던지기, 제비뽑기, 사다리 타기 같은 <strong>외부의 무작위성 도구</strong>에 결정을 위임하세요.</li>
-                </ul>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Zeze Hub가 당신을 돕는 방식</h2>
-                <p>
-                    저희 <strong>Zeze's Decision Hub</strong>는 바로 이러한 심리학적 배경에서 탄생했습니다. 당신의 소중한 뇌 에너지를 사소한 고민에 낭비하지 마세요. "할까 말까?" 고민될 때는 <a href="../magiclamp/magiclamp.html" class="text-primary font-bold hover:underline">요술 램프</a>에게 묻고, 친구들과의 역할 분담은 <a href="../ladderclimb/ladderclimb.html" class="text-primary font-bold hover:underline">운명의 사다리</a>에 맡기세요. 
-                </p>
-                <p>
-                    때로는 완벽한 정답보다 <strong>'빠른 결정' 그 자체가 우리에게 훨씬 더 큰 평화와 자유를 가져다줍니다.</strong> 지금 바로 Zeze Hub의 도구들을 이용해 뇌의 부담을 내려놓고 가벼운 하루를 시작해 보세요!
-                </p>
-            </div>
-            
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
             <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
                 <a href="../index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
-                    <span class="material-icons">home</span> 허브로 돌아가기
+                    <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
                 </a>
             </div>
         </article>
     </main>
-
     <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
         <p>© 2024 ZezeStudio Decision Hub. All rights reserved.</p>
     </footer>
-
+    <script>
+        const translations = {
+            "ko": {
+                "meta_title": "선택 장애를 극복하는 법: 결정 피로의 이해 - Zeze Hub Insight",
+                "category": "심리학 칼럼",
+                "main_title": "선택 장애를 극복하는 법: 결정 피로(Decision Fatigue)의 이해",
+                "date_info": "작성일: 2024년 10월 24일 · 읽는 시간: 약 4분",
+                "back_home": "허브로 돌아가기",
+                "body": `
+                    <p>현대인들은 하루 평균 약 3만 5천 번의 결정을 내린다고 합니다. "아침으로 무엇을 먹을까?", "어떤 옷을 입을까?" 같은 사소한 고민부터 업무상의 중요한 판단까지, 끊임없는 선택은 우리의 뇌를 지치게 만듭니다. 이를 심리학에서는 <strong>'결정 피로(Decision Fatigue)'</strong>라고 부릅니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">뇌도 근육처럼 에너지를 소모합니다</h2>
+                    <p>결정을 내리는 행위는 뇌의 에너지를 소모하는 고도의 정신 작업입니다. 근육을 과하게 사용하면 지치듯이, 결정을 반복할수록 우리 의지력과 판단력은 저하됩니다. 결정 피로가 쌓이면 사람들은 두 가지 극단적인 행태를 보입니다. 하나는 충동적인 결정이고, 다른 하나는 결정을 아예 회피해버리는 '마비' 상태입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">성공한 사람들의 비밀: 결정 최소화</h2>
+                    <p>스티브 잡스가 매일 같은 검은색 터틀넥을 입고, 마크 저커버그가 같은 회색 티셔츠를 고집하는 이유는 패션 센스가 없어서가 아닙니다. 아침에 옷을 고르는 데 쓰이는 소중한 뇌 에너지를 아껴서, 더 중요한 의사결정에 집중하기 위한 전략입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">결정 피로를 줄이는 팁</h2>
+                    <ul class="list-disc pl-6 space-y-4">
+                        <li>중요한 결정은 오전 중 뇌가 가장 맑을 때 내리세요.</li>
+                        <li>일상적인 루틴을 만들어 사소한 선택의 가짓수를 줄이세요.</li>
+                        <li>가벼운 고민(메뉴 선택 등)은 Zeze Hub의 무작위 도구에 맡겨버리세요.</li>
+                    </ul>
+                `
+            },
+            "en": {
+                "meta_title": "Overcoming Decision Fatigue - Zeze Hub Insight",
+                "category": "Psychology Column",
+                "main_title": "Overcoming Decision Fatigue:<br>Understanding the Strain of Choice",
+                "date_info": "Published: Oct 24, 2024 · Read time: Approx. 4 min",
+                "back_home": "Back to Hub",
+                "body": `
+                    <p>Modern people are said to make an average of 35,000 decisions a day. From trivial concerns like "What should I eat for breakfast?" or "What should I wear?" to important business judgments, constant choices wear out our brains. In psychology, this is called <strong>'Decision Fatigue.'</strong></p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">The Brain Consumes Energy Like a Muscle</h2>
+                    <p>The act of making a decision is a high-level mental task that consumes brain energy. Just as muscles get tired when overused, our willpower and judgment decline as we repeat decisions. When decision fatigue builds up, people tend to show two extreme behaviors: impulsive decisions or a state of 'paralysis' where they avoid making decisions altogether.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Secret of Success: Minimizing Decisions</h2>
+                    <p>The reason Steve Jobs wore the same black turtleneck every day and Mark Zuckerberg sticks to the same gray T-shirt isn't a lack of fashion sense. It's a strategy to save the precious brain energy used in picking clothes for more important decision-making.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Tips to Reduce Decision Fatigue</h2>
+                    <ul class="list-disc pl-6 space-y-4">
+                        <li>Make important decisions in the morning when your brain is clearest.</li>
+                        <li>Create daily routines to reduce the number of trivial choices.</li>
+                        <li>Delegate light concerns (like menu selection) to Zeze Hub's random tools.</li>
+                    </ul>
+                `
+            }
+        };
+        let currentLang = localStorage.getItem('lang') || 'ko';
+        function applyLanguage() {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+            });
+            document.getElementById('article-body').innerHTML = translations[currentLang].body;
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.id.split('-')[1];
+                if (btnLang === currentLang) {
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
+                }
+            });
+        }
+        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
 </body>
 </html>

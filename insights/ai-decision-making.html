@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="meta_title">AI 시대의 의사결정: 인간의 직관은 여전히 유효한가? - Zeze Hub Insight</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { primary: '#6200EE', primaryLight: '#BB86FC', surface: '#FFFFFF', background: '#F5F5F5' } } }
+        }
+    </script>
+</head>
+<body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+    <nav class="bg-surface shadow-sm sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-primary"><span class="material-icons">arrow_back</span></a>
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Insight Blog</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">KO</button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12">
+        <article class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
+            <header class="mb-10 text-center">
+                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4" data-key="category">미래 기술 칼럼</span>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">AI 시대의 의사결정:<br>인간의 직관은 여전히 유효한가?</h1>
+                <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 11월 08일 · 읽는 시간: 약 7분</p>
+            </header>
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
+            <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
+                <a href="../index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
+                    <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
+                </a>
+            </div>
+        </article>
+    </main>
+    <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
+        <p>© 2024 ZezeStudio Decision Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        const translations = {
+            "ko": {
+                "meta_title": "AI 시대의 의사결정 - Zeze Hub Insight",
+                "category": "미래 기술 칼럼",
+                "main_title": "AI 시대의 의사결정: 인간의 직관은 여전히 유효한가?",
+                "date_info": "작성일: 2024년 11월 08일 · 읽는 시간: 약 7분",
+                "back_home": "허브로 돌아가기",
+                "body": `
+                    <p>인공지능(AI)이 인간보다 더 빠르고 정확하게 데이터를 분석하는 시대입니다. 이제 많은 영역에서 AI가 내리는 권고안이 인간의 판단을 대체하고 있습니다. 그렇다면 미래의 의사결정에서 인간의 역할은 무엇일까요?</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">AI는 '확률'을 보고, 인간은 '맥락'을 봅니다</h2>
+                    <p>AI는 방대한 데이터를 바탕으로 가장 높은 확률의 결과값을 도출하는 데 탁월합니다. 하지만 데이터에 포함되지 않은 미묘한 인간의 감정, 윤리적 딜레마, 그리고 예외적인 상황(Black Swan)에 대응하는 '맥락적 사고'는 여전히 인간의 영역입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">직관의 재발견</h2>
+                    <p>직관은 단순히 '운'이나 '감'이 아닙니다. 심리학에서는 직관을 뇌가 수십 년간 쌓아온 패턴 인식의 결과물로 봅니다. 때로는 논리적 설명이 불가능하더라도, 직관이 AI의 분석보다 더 정확한 해답을 내놓을 때가 있습니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Zeze Hub: 인간의 의사결정을 돕는 보조자</h2>
+                    <p>저희 Zeze Hub는 AI처럼 정답을 강요하지 않습니다. 대신, 무작위성이라는 도구를 통해 당신의 직관이 깨어날 수 있는 '기회'를 제공합니다. 도구가 내놓은 결과를 보고 당신의 마음이 어떻게 움직이는지 관찰하세요. 그것이 바로 가장 인공지능적인 시대에 가장 인간답게 결정하는 방법입니다.</p>
+                `
+            },
+            "en": {
+                "meta_title": "Decision Making in the AI Era - Zeze Hub Insight",
+                "category": "Future Tech Column",
+                "main_title": "Decision Making in the AI Era:<br>Is Human Intuition Still Valid?",
+                "date_info": "Published: Nov 8, 2024 · Read time: Approx. 7 min",
+                "back_home": "Back to Hub",
+                "body": `
+                    <p>We live in an age where Artificial Intelligence (AI) analyzes data faster and more accurately than humans. AI recommendations are replacing human judgment in many fields. So, what is the role of humans in future decision-making?</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">AI Sees 'Probability,' Humans See 'Context'</h2>
+                    <p>AI excels at deriving the highest probability outcomes based on vast datasets. However, 'contextual thinking'—responding to subtle human emotions, ethical dilemmas, and exceptional events (Black Swans) not in the data—remains a human domain.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">The Rediscovery of Intuition</h2>
+                    <p>Intuition isn't just a 'gut feeling' or luck. Psychology views intuition as the result of pattern recognition built up over decades in the brain. Sometimes, intuition provides a more accurate answer than AI analysis, even if it can't be logically explained immediately.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Zeze Hub: An Assistant to Human Decision</h2>
+                    <p>Zeze Hub doesn't force a "correct" answer like an AI might. Instead, we provide an 'opportunity' for your intuition to awaken through the tool of randomness. Observe how your heart reacts to the result. That is the most human way to decide in the most AI-driven era.</p>
+                `
+            }
+        };
+        let currentLang = localStorage.getItem('lang') || 'ko';
+        function applyLanguage() {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+            });
+            document.getElementById('article-body').innerHTML = translations[currentLang].body;
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.id.split('-')[1];
+                if (btnLang === currentLang) {
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
+                }
+            });
+        }
+        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
+</body>
+</html>

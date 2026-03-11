@@ -267,8 +267,8 @@
                 <h2 class="text-2xl font-bold" data-key="article_section_title">의사결정 인사이트</h2>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Column 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="article-grid">
+                <!-- 16 Articles will be here -->
                 <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
                     <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art1_title">선택 장애를 극복하는 법</h3>
                     <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art1_desc">결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여준다는 사실을 알고 계셨나요?</p>
@@ -276,7 +276,7 @@
                         <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
                     </a>
                 </article>
-                <!-- Column 2 -->
+
                 <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
                     <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art2_title">운과 확률의 심리학</h3>
                     <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art2_desc">동전 던지기나 요술 램프는 사실 정답을 알려주는 것이 아니라, 결과가 나왔을 때 당신의 마음이 어느 쪽으로 기우는지 확인시켜주는 도구입니다.</p>
@@ -284,7 +284,7 @@
                         <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
                     </a>
                 </article>
-                <!-- Column 3 -->
+
                 <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
                     <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art3_title">암호학적 무작위성이란?</h3>
                     <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art3_desc">저희 램프는 단순한 가짜 난수가 아닌 Web Crypto API를 사용합니다. 보안 통신에 쓰이는 수준의 무작위성을 보장합니다.</p>
@@ -292,7 +292,7 @@
                         <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
                     </a>
                 </article>
-                <!-- Column 4 -->
+
                 <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
                     <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art4_title">MBTI별 결정 스타일</h3>
                     <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art4_desc">계획적인 J와 즉흥적인 P, 논리의 T와 감정의 F는 어떻게 결정을 내릴까요? 성격 유형별 의사결정 방식을 분석해 봅니다.</p>
@@ -300,7 +300,7 @@
                         <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
                     </a>
                 </article>
-                <!-- Column 5 -->
+
                 <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
                     <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art5_title">오늘 점심 뭐 먹지?</h3>
                     <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art5_desc">매일 반복되는 지긋지긋한 점심 메뉴 고민! 결정 피로를 줄이고 행복한 식사 시간을 만드는 5가지 팁을 소개합니다.</p>
@@ -308,11 +308,92 @@
                         <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
                     </a>
                 </article>
-                <!-- Column 6 -->
+
                 <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
                     <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art6_title">공정한 팀 구성의 과학</h3>
                     <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art6_desc">다수결이 항상 정답일까요? 갈등 없는 모임을 위해 무작위 추첨이 필요한 이유를 사회 심리학적 관점에서 살펴봅니다.</p>
                     <a href="insights/fairness-science.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <!-- New Articles -->
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art7_title">오늘의 운세 활용법</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art7_desc">단순한 재미를 넘어 오늘의 운세를 삶의 긍정적인 에너지로 바꾸는 법. 긍정적 확언의 과학적 근거를 소개합니다.</p>
+                    <a href="insights/daily-fortune-philosophy.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art8_title">선택의 역설</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art8_desc">왜 선택지가 많을수록 우리는 더 불행해질까요? 풍요 속의 빈곤, 선택의 역설을 심리학적으로 분석합니다.</p>
+                    <a href="insights/paradox-of-choice.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art9_title">팀 의사결정 전략</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art9_desc">여러 사람이 모여 갈등 없이 결론을 내는 법. 효율적인 팀을 위한 '피스트 투 파이브' 등 다양한 기법을 알아봅니다.</p>
+                    <a href="insights/group-decision-strategies.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art10_title">AI 시대의 의사결정</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art10_desc">인공지능이 모든 것을 분석하는 시대, 인간의 직관은 여전히 유효할까요? AI와 인간의 협업 모델을 제시합니다.</p>
+                    <a href="insights/ai-decision-making.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art11_title">결정 후 후회 줄이기</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art11_desc">"다른 걸 선택했더라면?" 결정 후 찾아오는 부조화를 해결하고 자신의 선택에 만족하는 심리학적 기술 5가지.</p>
+                    <a href="insights/regret-management.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art12_title">복불복의 역사</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art12_desc">고대 그리스 민주주의부터 현대 예능까지. 인류가 운명에 결정을 맡겨온 흥미진진한 역사를 탐험합니다.</p>
+                    <a href="insights/history-of-games-of-chance.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art13_title">인지 편향의 이해</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art13_desc">우리의 판단을 흐리는 생각의 지름길, 인지 편향. 매몰 비용 오류와 확증 편향 등 결정의 오류들을 분석합니다.</p>
+                    <a href="insights/cognitive-biases-in-choices.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art14_title">마음챙김과 선택</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art14_desc">불안과 분노 속에서 내린 결정은 위험합니다. 현재에 집중하여 평온한 상태에서 올바른 선택을 내리는 명상법.</p>
+                    <a href="insights/mindfulness-and-decisions.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art15_title">인생의 게임화</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art15_desc">따분한 일상을 게임처럼 즐겁게! 게이미피케이션 기법을 의사결정에 도입하여 삶의 활력을 되찾는 비결.</p>
+                    <a href="insights/gamification-of-daily-life.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
+                        <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
+                    </a>
+                </article>
+
+                <article class="bg-surface p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3" data-key="art16_title">점술의 현대적 해석</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed flex-grow" data-key="art16_desc">과거의 신비주의를 넘어 심리적 위안과 통찰을 주는 현대적 점술 도구들의 역할과 가치를 재조명합니다.</p>
+                    <a href="insights/history-of-divination.html" class="mt-4 inline-flex items-center text-primary font-bold text-sm hover:text-primaryLight transition-colors">
                         <span data-key="read_more">자세히 보기</span> <span class="material-icons ml-1 text-[16px]">arrow_forward</span>
                     </a>
                 </article>
@@ -333,7 +414,6 @@
     </footer>
 
     <script>
-        const translations = {
             "en": {
                 "hub_title": "When decision is hard,<br>Zeze Hub will help you.",
                 "hub_desc": "Choose the tool that fits your concern. More features coming soon.",
@@ -360,17 +440,37 @@
                 "card8_desc": "High-tension wire cutting game! Carefully choose which wire to cut before it's too late.",
                 "article_section_title": "Decision Insights",
                 "art1_title": "Overcoming Decision Fatigue",
-                "art1_desc": "Know as 'Hamlet Syndrome'. Sometimes a 'fast decision' is better than a perfect one for reducing brain stress. Start light with our tools.",
+                "art1_desc": "Know as 'Hamlet Syndrome'. Sometimes a 'fast decision' is better than a perfect one for reducing brain stress.",
                 "art2_title": "Psychology of Luck",
-                "art2_desc": "Tools like the lamp don't just give answers; they reveal your true preference by showing you if you feel relieved or disappointed by the result.",
+                "art2_desc": "Tools like the lamp don't just give answers; they reveal your true preference by showing your reaction to results.",
                 "art3_title": "What is Crypto Randomness?",
-                "art3_desc": "Our genie uses Web Crypto API for true randomness, ensuring zero bias. It's the same security standard used in global communications.",
+                "art3_desc": "Our genie uses Web Crypto API for true randomness, ensuring zero bias. Global security standard.",
                 "art4_title": "MBTI Decision Styles",
-                "art4_desc": "How do J vs P, or T vs F types make choices? We analyze decision-making mechanisms by personality type and offer tailored advice.",
+                "art4_desc": "How do J vs P, or T vs F types make choices? We analyze mechanisms by personality type.",
                 "art5_title": "What's for Lunch?",
-                "art5_desc": "Tired of the daily lunch menu struggle? Here are 5 smart tips to reduce decision fatigue and make your mealtime happier.",
+                "art5_desc": "Tired of the daily lunch menu struggle? Here are 5 smart tips to reduce decision fatigue.",
                 "art6_title": "Science of Fair Grouping",
-                "art6_desc": "Is majority rule always the best? Explore why random selection is necessary for conflict-free meetings from a social psychology perspective.",
+                "art6_desc": "Is majority rule always the best? Explore why random selection is necessary for conflict-free meetings.",
+                "art7_title": "Fortune & Affirmation",
+                "art7_desc": "How to turn daily fortunes into positive life energy using the science of affirmation.",
+                "art8_title": "The Paradox of Choice",
+                "art8_desc": "Why having too many options makes us unhappy. Analyze the psychological burden of abundance.",
+                "art9_title": "Team Decision Strategies",
+                "art9_desc": "Reaching a conclusion without conflict. Learn 'Fist to Five' and other effective techniques.",
+                "art10_title": "AI Era Decision Making",
+                "art10_desc": "Is human intuition still valid in the age of AI? Exploring the collaboration between humans and AI.",
+                "art11_title": "Reducing Post-Regret",
+                "art11_desc": "Post-decision dissonance? 5 psychological techniques to be satisfied with your choice.",
+                "art12_title": "History of Chance",
+                "art12_desc": "From Athenian democracy to modern entertainment. Explore the fascinating history of fate.",
+                "art13_title": "Understanding Biases",
+                "art13_desc": "Cognitive biases that cloud our judgment. Analyze Sunk Cost Fallacy and Confirmation Bias.",
+                "art14_title": "Mindfulness & Choice",
+                "art14_desc": "Making choices in anger is dangerous. How to decide in a peaceful state through meditation.",
+                "art15_title": "Gamification of Life",
+                "art15_desc": "Make daily routines fun like a game! Secret to regaining vitality through gamification.",
+                "art16_title": "Modern Divination",
+                "art16_desc": "Beyond mysticism. Re-evaluating modern tools that provide psychological comfort and insight.",
                 "read_more": "Read more",
                 "footer_guide": "User Guide",
                 "footer_privacy": "Privacy Policy",
@@ -403,17 +503,37 @@
                 "card8_desc": "심장이 쫄깃한 와이어 끊기 게임! 언제 터질지 모르는 폭탄의 와이어를 신중하게 선택하세요.",
                 "article_section_title": "의사결정 인사이트",
                 "art1_title": "선택 장애를 극복하는 법",
-                "art1_desc": "결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여준다는 사실을 알고 계셨나요?",
+                "art1_desc": "결정하지 못해 괴로운 '햄릿 증후군'. 때로는 완벽한 정답보다 '빠른 결정'이 뇌의 스트레스를 줄여줍니다.",
                 "art2_title": "운과 확률의 심리학",
-                "art2_desc": "동전 던지기나 요술 램프는 사실 정답을 알려주는 것이 아니라, 결과가 나왔을 때 당신의 마음이 어느 쪽으로 기우는지 확인시켜주는 훌륭한 도구입니다.",
+                "art2_desc": "도구들은 정답을 알려주는 것이 아니라, 결과에 대한 당신의 반응을 통해 진심을 확인시켜줍니다.",
                 "art3_title": "암호학적 무작위성이란?",
-                "art3_desc": "저희 램프는 단순한 가짜 난수가 아닌 Web Crypto API를 사용합니다. 이는 보안 통신에 쓰이는 수준의 무작위성을 보장하며, 진정한 운명을 보여줍니다.",
+                "art3_desc": "저희 램프는 Web Crypto API를 사용합니다. 보안 통신 수준의 무작위성으로 공정성을 보장합니다.",
                 "art4_title": "MBTI별 결정 스타일",
-                "art4_desc": "계획적인 J와 즉흥적인 P, 논리의 T와 감정의 F는 어떻게 결정을 내릴까요? 성격 유형별 의사결정 방식을 분석해 봅니다.",
+                "art4_desc": "계획적인 J와 즉흥적인 P는 어떻게 결정을 내릴까요? 성격 유형별 의사결정 방식을 분석해 봅니다.",
                 "art5_title": "오늘 점심 뭐 먹지?",
-                "art5_desc": "매일 반복되는 지긋지긋한 점심 메뉴 고민! 결정 피로를 줄이고 행복한 식사 시간을 만드는 5가지 팁을 소개합니다.",
+                "art5_desc": "매일 반복되는 지긋지긋한 점심 메뉴 고민! 결정 피로를 줄이고 행복한 식사를 만드는 5가지 팁.",
                 "art6_title": "공정한 팀 구성의 과학",
-                "art6_desc": "다수결이 항상 정답일까요? 갈등 없는 모임을 위해 무작위 추첨이 필요한 이유를 사회 심리학적 관점에서 살펴봅니다.",
+                "art6_desc": "다수결이 항상 정답일까요? 갈등 없는 모임을 위해 무작위 추첨이 필요한 사회 심리학적 이유.",
+                "art7_title": "오늘의 운세 활용법",
+                "art7_desc": "단순한 재미를 넘어 오늘의 운세를 삶의 긍정적인 에너지로 바꾸는 법. 긍정적 확언의 과학적 근거.",
+                "art8_title": "선택의 역설",
+                "art8_desc": "왜 선택지가 많을수록 우리는 더 불행해질까요? 풍요 속의 빈곤, 선택의 역설을 심리학적으로 분석합니다.",
+                "art9_title": "팀 의사결정 전략",
+                "art9_desc": "여러 사람이 모여 갈등 없이 결론을 내는 법. 효율적인 팀을 위한 '피스트 투 파이브' 등 다양한 기법.",
+                "art10_title": "AI 시대의 의사결정",
+                "art10_desc": "인공지능이 모든 것을 분석하는 시대, 인간의 직관은 여전히 유효할까요? AI와 인간의 협업 모델.",
+                "art11_title": "결정 후 후회 줄이기",
+                "art11_desc": "\"다른 걸 선택했더라면?\" 결정 후 찾아오는 부조화를 해결하고 선택에 만족하는 심리학적 기술.",
+                "art12_title": "복불복의 역사",
+                "art12_desc": "고대 그리스 민주주의부터 현대 예능까지. 인류가 운명에 결정을 맡겨온 흥미진진한 역사를 탐험합니다.",
+                "art13_title": "인지 편향의 이해",
+                "art13_desc": "판단을 흐리는 생각의 지름길, 인지 편향. 매몰 비용 오류와 확증 편향 등 결정의 오류들을 분석합니다.",
+                "art14_title": "마음챙김과 선택",
+                "art14_desc": "불안과 분노 속에서 내린 결정은 위험합니다. 현재에 집중하여 올바른 선택을 내리는 명상법.",
+                "art15_title": "인생의 게임화",
+                "art15_desc": "따분한 일상을 게임처럼 즐겁게! 게이미피케이션 기법을 의사결정에 도입하여 삶의 활력을 되찾는 비결.",
+                "art16_title": "점술의 현대적 해석",
+                "art16_desc": "과거의 신비주의를 넘어 심리적 위안과 통찰을 주는 현대적 점술 도구들의 역할과 가치를 재조명합니다.",
                 "read_more": "자세히 보기",
                 "footer_guide": "사용 가이드",
                 "footer_privacy": "개인정보처리방침",

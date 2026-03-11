@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-key="meta_title">암호학적 무작위성이란? Zeze Hub의 기술적 투명성 - Zeze Hub Insight</title>
+    <title data-key="meta_title">생각의 지름길: 우리가 범하기 쉬운 결정의 오류 - Zeze Hub Insight</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -31,9 +31,9 @@
     <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12">
         <article class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
             <header class="mb-10 text-center">
-                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4" data-key="category">기술 칼럼</span>
-                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">암호학적 무작위성이란?<br>Zeze Hub의 기술적 투명성</h1>
-                <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 10월 28일 · 읽는 시간: 약 6분</p>
+                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4" data-key="category">인지 심리학 칼럼</span>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">생각의 지름길:<br>우리가 범하기 쉬운 결정의 오류</h1>
+                <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 11월 16일 · 읽는 시간: 약 7분</p>
             </header>
             <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
             <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
@@ -49,35 +49,35 @@
     <script>
         const translations = {
             "ko": {
-                "meta_title": "암호학적 무작위성과 공정성 - Zeze Hub Insight",
-                "category": "기술 칼럼",
-                "main_title": "암호학적 무작위성이란? Zeze Hub의 기술적 투명성",
-                "date_info": "작성일: 2024년 10월 28일 · 읽는 시간: 약 6분",
+                "meta_title": "인지 편향과 휴리스틱 - Zeze Hub Insight",
+                "category": "인지 심리학 칼럼",
+                "main_title": "생각의 지름길: 우리가 범하기 쉬운 결정의 오류",
+                "date_info": "작성일: 2024년 11월 16일 · 읽는 시간: 약 7분",
                 "back_home": "허브로 돌아가기",
                 "body": `
-                    <p>무작위 결정 도구에서 가장 중요한 것은 무엇일까요? 바로 '공정성'입니다. Zeze Hub는 이 공정성을 담보하기 위해 단순한 흉내를 넘어서는 기술을 사용합니다.</p>
-                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. 가짜 난수(PRNG) vs 진짜 난수(TRNG)</h2>
-                    <p>컴퓨터 프로그램이 만드는 난수는 대개 '수도 난수(Pseudo-Random Number)'입니다. 이는 특정 공식에 의해 계산되므로 완벽한 무작위는 아닙니다. 하지만 Zeze Hub는 브라우저 엔진이 제공하는 <strong>Web Crypto API</strong>를 활용합니다.</p>
-                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. Web Crypto API: 보안 통신 수준의 무작위성</h2>
-                    <p>Web Crypto API는 암호화 키 생성 등에 사용되는 높은 수준의 무작위성을 제공합니다. 이는 하드웨어 레벨의 엔트로피(노이즈)를 수집하여 생성되므로, 사람이 그 결과를 예측하거나 조작하는 것이 불가능에 가깝습니다.</p>
-                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. 당신의 결과가 안전한 이유</h2>
-                    <p>Zeze Hub의 모든 결정 로직은 서버가 아닌 당신의 기기(브라우저) 내에서만 실행됩니다. 따라서 결과가 중간에 가로채지거나 조작될 위험이 없습니다. 우리는 가장 투명한 기술로 당신의 운명을 지원합니다.</p>
+                    <p>우리의 뇌는 매 순간 합리적인 계산을 하기에는 너무 바쁩니다. 그래서 뇌는 '휴리스틱(Heuristics)'이라는 생각의 지름길을 사용합니다. 하지만 이 지름길은 때로 우리를 낭떠러지로 인도합니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. 가용성 휴리스틱 (Availability Heuristic)</h2>
+                    <p>최근에 본 뉴스나 강렬한 기억일수록 그것이 일어날 확률이 높다고 착각하는 현상입니다. 비행기 사고 뉴스를 본 직후 비행기 타기를 두려워하는 것이 대표적입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. 정박 효과 (Anchoring Effect)</h2>
+                    <p>처음 제시된 정보(숫자)에 마음이 고정되어 이후의 판단이 왜곡되는 현상입니다. 세일 가격표에 적힌 원래 가격이 우리의 구매 의사를 결정짓는 강력한 기준점이 되는 것과 같습니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">어떻게 극복할 것인가?</h2>
+                    <p>자신의 직관이 틀릴 수 있음을 늘 의심하세요. 그리고 데이터에 기반한 객관적인 도구를 사용하세요. Zeze Hub의 무작위 도구들은 당신의 뇌가 빠진 편향의 늪에서 잠시나마 벗어나게 해주는 훌륭한 환기 장치가 될 것입니다.</p>
                 `
             },
             "en": {
-                "meta_title": "What is Cryptographic Randomness? - Zeze Hub Insight",
-                "category": "Tech Column",
-                "main_title": "What is Cryptographic Randomness?<br>Zeze Hub's Technical Transparency",
-                "date_info": "Published: Oct 28, 2024 · Read time: Approx. 6 min",
+                "meta_title": "Thought Shortcuts and Common Errors - Zeze Hub Insight",
+                "category": "Cognitive Psychology Column",
+                "main_title": "Heuristics and Biases:<br>Common Errors in Human Judgment",
+                "date_info": "Published: Nov 16, 2024 · Read time: Approx. 7 min",
                 "back_home": "Back to Hub",
                 "body": `
-                    <p>What is the most important factor in a random decision tool? It's 'Fairness.' To guarantee this, Zeze Hub uses technology that goes far beyond simple imitation.</p>
-                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. Pseudo-Random (PRNG) vs. True Random (TRNG)</h2>
-                    <p>Most random numbers generated by computer programs are 'Pseudo-Random,' calculated by formulas and therefore not truly random. Zeze Hub, however, utilizes the <strong>Web Crypto API</strong> provided by your browser engine.</p>
-                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. Web Crypto API: Security-Grade Randomness</h2>
-                    <p>Web Crypto API provides high-level randomness used for creating encryption keys. It collects hardware-level entropy (noise), making it virtually impossible for anyone to predict or manipulate the outcome.</p>
-                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. Why Your Results are Secure</h2>
-                    <p>All decision logic at Zeze Hub runs only within your device (browser), not on a server. This eliminates the risk of interception or manipulation. We support your destiny with the most transparent technology available.</p>
+                    <p>Our brains are too busy to perform rational calculations for every single decision. Instead, they use 'Heuristics'—thought shortcuts. However, these shortcuts sometimes lead us straight off a cliff.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. Availability Heuristic</h2>
+                    <p>This is the tendency to overestimate the probability of events that are recent or vivid in our memory. For example, being afraid to fly immediately after seeing news about a plane crash.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. The Anchoring Effect</h2>
+                    <p>The tendency to rely too heavily on the first piece of information offered (the "anchor") when making decisions. Original prices on sales tags often act as anchors that distort our perception of value.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">How to Overcome?</h2>
+                    <p>Always doubt your own intuition. Use objective, data-driven tools. Zeze Hub's random tools serve as excellent "refresh buttons" to help your brain escape the swamp of cognitive biases.</p>
                 `
             }
         };

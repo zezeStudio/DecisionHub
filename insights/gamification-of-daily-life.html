@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="meta_title">인생의 게임화: 소소한 선택을 즐거움으로 바꾸는 비결 - Zeze Hub Insight</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { primary: '#6200EE', primaryLight: '#BB86FC', surface: '#FFFFFF', background: '#F5F5F5' } } }
+        }
+    </script>
+</head>
+<body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+    <nav class="bg-surface shadow-sm sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-primary"><span class="material-icons">arrow_back</span></a>
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Insight Blog</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">KO</button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12">
+        <article class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
+            <header class="mb-10 text-center">
+                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4" data-key="category">라이프스타일 칼럼</span>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">인생의 게임화:<br>소소한 선택을 즐거움으로 바꾸는 비결</h1>
+                <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 11월 13일 · 읽는 시간: 약 6분</p>
+            </header>
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
+            <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
+                <a href="../index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
+                    <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
+                </a>
+            </div>
+        </article>
+    </main>
+    <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
+        <p>© 2024 ZezeStudio Decision Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        const translations = {
+            "ko": {
+                "meta_title": "인생의 게임화 비결 - Zeze Hub Insight",
+                "category": "라이프스타일 칼럼",
+                "main_title": "인생의 게임화: 소소한 선택을 즐거움으로 바꾸는 비결",
+                "date_info": "작성일: 2024년 11월 13일 · 읽는 시간: 약 6분",
+                "back_home": "허브로 돌아가기",
+                "body": `
+                    <p>인생은 B(Birth)와 D(Death) 사이의 C(Choice)라는 말이 있습니다. 하지만 이 'C'가 매번 진지하고 무거울 필요는 없습니다. 최근 주목받는 <strong>게이미피케이션(Gamification)</strong>은 따분하고 힘든 일상을 게임처럼 즐겁게 만드는 강력한 도구입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. 사소한 선택에 서사를 부여하라</h2>
+                    <p>오늘 점심 메뉴를 고르는 것을 '생존을 위한 에너지 팩 선택'이라고 생각하면 어떨까요? Zeze Hub의 <a href="../coinflip/coinflip.html" class="text-primary font-bold">3D 동전 던지기</a>나 <a href="../magiclamp/magiclamp.html" class="text-primary font-bold">요술 램프</a>는 이러한 일상의 사소한 순간에 시각적, 청각적 재미를 더해줍니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. 결정의 스트레스를 '도전'으로 바꾸기</h2>
+                    <p>결정이 어려운 이유는 실패할까 봐 두렵기 때문입니다. 하지만 이를 게임의 '확률 요소'로 받아들이면, 결과가 어떻든 "이번 판은 이랬네!" 하고 웃어넘길 수 있는 여유가 생깁니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">결론: 즐기는 사람이 이깁니다</h2>
+                    <p>Zeze Hub가 제공하는 8가지 도구들은 당신의 삶을 게임처럼 유쾌하게 만들기 위해 설계되었습니다. 무거운 결정을 가볍게, 지루한 선택을 흥미진진한 이벤트로 바꿔보세요. 인생이라는 거대한 게임에서 당신은 가장 즐거운 플레이어가 될 수 있습니다.</p>
+                `
+            },
+            "en": {
+                "meta_title": "Gamification of Daily Life - Zeze Hub Insight",
+                "category": "Lifestyle Column",
+                "main_title": "Gamification of Daily Life:<br>Turning Small Choices into Big Fun",
+                "date_info": "Published: Nov 13, 2024 · Read time: Approx. 6 min",
+                "back_home": "Back to Hub",
+                "body": `
+                    <p>They say life is a Choice (C) between Birth (B) and Death (D). But that 'C' doesn't always have to be serious and heavy. <strong>Gamification</strong> is a powerful tool that makes tedious daily routines as engaging as a game.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. Add Narrative to Trivial Choices</h2>
+                    <p>What if picking lunch was actually "selecting an energy pack for survival"? Zeze Hub's <a href="../coinflip/coinflip.html" class="text-primary font-bold">3D Coin Flip</a> and <a href="../magiclamp/magiclamp.html" class="text-primary font-bold">Magic Lamp</a> add visual and auditory fun to these minor daily moments.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. Turn Decision Stress into a 'Challenge'</h2>
+                    <p>Decision-making is hard because of the fear of failure. By viewing choices as 'random elements' in a game, you gain the flexibility to laugh off any outcome: "Well, that was this round's luck!"</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Conclusion: The One Who Enjoys Wins</h2>
+                    <p>Zeze Hub's 8 tools are designed to make your life as cheerful as a game. Turn heavy decisions into light ones and boring choices into exciting events. In the grand game of life, you can be the most joyful player.</p>
+                `
+            }
+        };
+        let currentLang = localStorage.getItem('lang') || 'ko';
+        function applyLanguage() {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+            });
+            document.getElementById('article-body').innerHTML = translations[currentLang].body;
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.id.split('-')[1];
+                if (btnLang === currentLang) {
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
+                }
+            });
+        }
+        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
+</body>
+</html>
