@@ -81,7 +81,7 @@ const translations = {
         "info_title2": "팀 빌딩과 우연의 심리학: '운명 공유 효과'",
         "info_desc2": "심리학적으로 사람들은 자신이 직접 선택한 결과보다 '운명적으로 주어진 환경'에 대해 더 높은 수용성과 소속감을 느끼는 경향이 있습니다. 이를 '운명 공유 효과(Shared Fate Effect)'라고 합니다. 무작위로 한 팀이 된 멤버들은 서로를 '운명이 맺어준 동료'로 인식하며, 인위적으로 짜인 팀보다 더 빠르게 결속하고 서로를 돕는 행동을 보입니다. Zeze Hub는 Web Crypto API를 사용한 고도의 난수 생성을 통해, 그 어떤 인위적 개입도 없는 진정한 무작위 팀 구성을 보장합니다. 공정한 시작이 최고의 팀워크를 만드는 첫 단추가 됩니다.",
         "info_title3": "팀 메이커 효율적으로 활용하기: 상황별 최적화 팁",
-        "info_desc3": "<li><strong>대량 명단도 한 번에:</strong> 복잡하게 한 명씩 입력할 필요 없습니다. 엑셀이나 텍스트 파일의 명단을 복사하여 줄바꿈이나 쉼표로 한 번에 붙여넣으세요. 수십 명의 팀 구성도 1초 만에 끝납니다.</li><li><strong>두 가지 모드의 선택:</strong> 원하는 팀의 개수를 고정하거나, 혹은 한 팀당 인원수를 고정하는 두 가지 방식을 지원합니다. 조별 과제, 게임 파티, 스포츠 경기 등 상황에 맞는 최적의 배정이 가능합니다.</li><li><strong>재치 있는 팀 이름 설정:</strong> 기본 이름 대신 직접 팀명들을 입력해 보세요. 무작위로 배정된 팀원들과 재미있는 팀명을 공유하는 과정 자체가 하나의 즐거운 이벤트가 됩니다.</li><li><strong>철저한 데이터 보안:</strong> Zeze Hub는 입력된 명단을 별도의 서버에 저장하거나 수집하지 않습니다. 모든 데이터는 당신의 브라우저에서만 처리되므로 개인정보 유출 걱정 없이 안전하게 사용하세요.</li>"
+        "info_desc3": "<li><strong>대량 명단도 한 번에:</strong> 복잡하게 한 명씩 입력할 필요 없습니다. 엑셀이나 텍스트 파일의 명단을 복사하여 줄바꿈이나 쉼표로 한 번에 붙여넣으세요. 수십 명의 팀 구성도 1초 만에 끝납니다.</li><li><strong>두 가지 모드의 선택:</strong> 원하는 팀의 개수를 고정하거나, 혹은 한 팀당 인원수를 고정하는 두 가지 방식을 지원합니다. 조별 과제, 게임 파티, 스포츠 경기 등 상황에 맞는 최적의 배정이 가능합니다.</li><li><strong>재치 있는 팀 이름 설정:</strong> 기본 이름 대신 직접 팀명들을 입력해 보세요. 무작위로 배정된 팀원들과 재미있는 팀명을 공유하는 과정 자체가 하나의 즐거운 이벤트가 됩니다.</li><li><strong>철저한 데이터 보안:</strong> Zeze Hub는 입력된 명단을 별도의 서버에 저장하거나 수집하지 않습니다. 모든 데이터는 당신의 브라우저만에서 처리되므로 개인정보 유출 걱정 없이 안전하게 사용하세요.</li>"
     }
 };
 
@@ -89,6 +89,7 @@ let currentLang = localStorage.getItem('lang') || 'ko';
 let currentMode = 'teamCount'; 
 let targetValue = 2; 
 let players = [];
+let generatedTeams = [];
 
 const teamColors = [
     { border: 'border-primary', bg: 'bg-primary/5', text: 'text-primary', dot: 'bg-primary', chip: 'bg-primary/10' },
@@ -120,12 +121,66 @@ teamNamesGuideArea.innerHTML = `
     <span id="team-entered-count" class="text-[10px] text-primary font-bold"></span>
 `;
 
+// 💾 Session State Persistence
+function saveSessionState() {
+    const session = {
+        currentMode,
+        targetValue,
+        playerInputValue: playerInput.value,
+        teamNamesInputValue: teamNamesInput.value,
+        missionInputValue: missionInput.value,
+        generatedTeams,
+        isResultVisible: !resultStage.classList.contains('hidden')
+    };
+    localStorage.setItem('zeze_teammaker_session', JSON.stringify(session));
+}
+
+function loadSessionState() {
+    const saved = localStorage.getItem('zeze_teammaker_session');
+    if (!saved) return;
+
+    const state = JSON.parse(saved);
+    currentMode = state.currentMode;
+    targetValue = state.targetValue;
+    playerInput.value = state.playerInputValue || "";
+    teamNamesInput.value = state.teamNamesInputValue || "";
+    missionInput.value = state.missionInputValue || "";
+    generatedTeams = state.generatedTeams || [];
+
+    targetValueDisplay.textContent = targetValue;
+    updateInputCount();
+    applyTranslations();
+
+    if (state.isResultVisible && generatedTeams.length > 0) {
+        const customTeamNames = parseInput(teamNamesInput.value);
+        renderTeams(generatedTeams, customTeamNames, missionInput.value.trim());
+        setupSection.classList.add('hidden');
+        missionSection.classList.add('hidden');
+        resultStage.classList.remove('hidden');
+    }
+}
+
+function clearSessionState() {
+    localStorage.removeItem('zeze_teammaker_session');
+}
+
 function init() {
     if (teamNamesInput && teamNamesInput.parentNode) {
         teamNamesInput.parentNode.appendChild(teamNamesGuideArea);
     }
-    targetValueDisplay.textContent = targetValue;
+    
     applyTranslations();
+    
+    const perfEntries = performance.getEntriesByType('navigation');
+    const isReload = perfEntries.length > 0 && perfEntries[0].type === 'reload';
+    
+    if (isReload) {
+        loadSessionState();
+    } else {
+        clearSessionState();
+        targetValueDisplay.textContent = targetValue;
+    }
+    
     setupEventListeners();
 }
 
@@ -228,12 +283,15 @@ function makeTeams() {
         teams[index % numTeams].push(player);
     });
 
+    generatedTeams = teams;
     renderTeams(teams, customTeamNames, missionText);
     
     setupSection.classList.add('hidden');
     missionSection.classList.add('hidden');
     resultStage.classList.remove('hidden');
     
+    saveSessionState();
+
     confetti({
         particleCount: 150,
         spread: 70,
@@ -246,7 +304,6 @@ function renderTeams(teams, customTeamNames, missionText) {
     teamsContainer.innerHTML = '';
     const t = translations[currentLang];
 
-    // Add Mission display at the top if exists
     if (missionText) {
         const missionDisplay = document.createElement('div');
         missionDisplay.className = 'w-full mb-6 bg-white p-5 rounded-[32px] border border-primary/20 text-center shadow-sm animate-slideUp';
@@ -275,7 +332,7 @@ function renderTeams(teams, customTeamNames, missionText) {
                 <span class="text-[10px] font-bold px-2 py-0.5 ${color.chip} ${color.text} rounded-full">${members.length} Members</span>
             </div>
             <div class="flex flex-wrap gap-2">
-                ${members.map(m => `<span class="px-3 py-1.5 bg-white/80 border ${color.border}/20 rounded-xl text-xs font-bold ${color.text}">${m}</span>`).join('')}
+                ${members.map((m, mIdx) => `<span class="member-chip px-3 py-1.5 bg-white/80 border ${color.border}/20 rounded-xl text-xs font-bold ${color.text}" style="animation-delay: ${(index * 0.1) + (mIdx * 0.05)}s">${m}</span>`).join('')}
             </div>
         `;
         teamsGrid.appendChild(card);
@@ -283,8 +340,9 @@ function renderTeams(teams, customTeamNames, missionText) {
 }
 
 function setupEventListeners() {
-    playerInput.addEventListener('input', updateInputCount);
-    teamNamesInput.addEventListener('input', updateTeamNamesGuide);
+    playerInput.addEventListener('input', () => { updateInputCount(); saveSessionState(); });
+    teamNamesInput.addEventListener('input', () => { updateTeamNamesGuide(); saveSessionState(); });
+    missionInput.addEventListener('input', () => { saveSessionState(); });
 
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -299,6 +357,7 @@ function setupEventListeners() {
             targetValue = 2; 
             targetValueDisplay.textContent = targetValue;
             applyTranslations();
+            saveSessionState();
         });
     });
 
@@ -309,6 +368,7 @@ function setupEventListeners() {
             targetValue++;
             targetValueDisplay.textContent = targetValue;
             updateTeamNamesGuide();
+            saveSessionState();
         }
     });
 
@@ -317,6 +377,7 @@ function setupEventListeners() {
             targetValue--;
             targetValueDisplay.textContent = targetValue;
             updateTeamNamesGuide();
+            saveSessionState();
         }
     });
 
@@ -324,9 +385,11 @@ function setupEventListeners() {
     document.getElementById('reshuffle-btn').addEventListener('click', makeTeams);
     
     document.getElementById('reset-btn').addEventListener('click', () => {
+        clearSessionState();
         resultStage.classList.add('hidden');
         setupSection.classList.remove('hidden');
         missionSection.classList.remove('hidden');
+        generatedTeams = [];
     });
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
