@@ -494,10 +494,10 @@
                 const btnLang = btn.id.split('-')[1];
                 if (btnLang === currentLang) {
                     btn.classList.add('bg-primary', 'text-white', 'border-primary');
-                    btn.classList.remove('bg-transparent', 'text-gray-600');
+                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
                 } else {
                     btn.classList.remove('bg-primary', 'text-white', 'border-primary');
-                    btn.classList.add('bg-transparent', 'text-gray-600');
+                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
                 }
             });
             document.documentElement.lang = currentLang;

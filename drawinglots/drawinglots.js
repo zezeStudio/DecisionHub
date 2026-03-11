@@ -265,6 +265,20 @@ function applyTranslations() {
         const key = el.dataset.key;
         if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
+
+    // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        // 모든 스타일 관련 클래스 완전 초기화
+        btn.classList.remove('bg-primary', 'text-white', 'font-bold', 'bg-gray-50', 'border', 'border-gray-200', 'bg-transparent', 'border-transparent');
+        
+        if (btn.dataset.lang === currentLang) {
+            // 선택된 언어: 보라색 테마 강조
+            btn.classList.add('bg-primary', 'text-white', 'font-bold');
+        } else {
+            // 선택되지 않은 언어: 메뉴 배경색과 동일하게 투명 처리
+            btn.classList.add('bg-transparent', 'border-transparent');
+        }
+    });
 }
 
 function setLanguage(lang) {

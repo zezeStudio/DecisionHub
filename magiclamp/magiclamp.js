@@ -539,7 +539,7 @@ function init() {
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
-    translatePage();
+    applyLanguage();
     if (typeof updateCategoryUI === 'function') updateCategoryUI();
     renderLog();
     renderTrending();
@@ -574,11 +574,25 @@ function setLanguage(lang) {
     }
 }
 
-function translatePage() {
+function applyLanguage() {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.dataset.key;
         if (translations[currentLang] && translations[currentLang][key]) {
             el.innerHTML = translations[currentLang][key];
+        }
+    });
+
+    // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        // 모든 스타일 관련 클래스 제거
+        btn.classList.remove('bg-primary', 'text-white', 'font-bold', 'bg-white/5', 'border', 'border-white/10', 'bg-transparent', 'text-gray-400');
+        
+        if (btn.dataset.lang === currentLang) {
+            // 활성화: 한국어/영어 상관없이 동일한 강조색
+            btn.classList.add('bg-primary', 'text-white', 'font-bold');
+        } else {
+            // 비활성화: 메뉴창 배경과 동일하게 투명 처리
+            btn.classList.add('bg-transparent', 'text-gray-400');
         }
     });
 }
