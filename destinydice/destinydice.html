@@ -59,8 +59,6 @@
         </div>
         <ul class="p-4 space-y-2 text-sm text-gray-300">
             <li><a href="destinydice-guide.html" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="guide_title">사용 가이드</a></li>
-            <li><a href="../privacy.html" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="privacy_policy">개인정보처리방침</a></li>
-            <li><a href="../terms.html" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="terms_of_service">서비스 약관</a></li>
             <li class="py-2"><hr class="border-white/10"></li>
             <li>
                 <span class="block text-[10px] text-gray-500 mb-2 uppercase tracking-widest" data-key="language_select_label">Language</span>
@@ -76,14 +74,19 @@
     <!-- Main Content -->
     <main class="max-w-md mx-auto py-24 px-4 w-full flex-grow flex flex-col">
         <!-- Hero Section -->
-        <section class="text-center mb-10 relative">
+        <section class="text-center mb-6 relative">
             <div class="flex items-center justify-center gap-2">
                 <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-pink-300 to-secondary" data-key="main_title">운명의 주사위</h1>
                 <button id="help-toggle" class="text-gray-500 hover:text-secondary transition-colors focus:outline-none">
                     <span class="material-icons text-xl">help_outline</span>
                 </button>
             </div>
-            <p class="text-sm text-gray-400" data-key="main_description">선택지를 적고 주사위를 굴려보세요.</p>
+            <p class="text-sm text-gray-400 mb-4" data-key="main_description">선택지를 적고 주사위를 굴려보세요.</p>
+            
+            <!-- Top Guide Notice (New) -->
+            <div class="bg-secondary/10 border border-secondary/20 rounded-2xl p-3 mb-2 animate-pulse">
+                <p class="text-[11px] text-secondary font-bold leading-relaxed" data-key="top_guide_notice">💡 주사위를 숫자, Yes/No, 친구 이름 등 다양한 방법으로 응용해 보세요! 자세한 설명은 페이지 하단 가이드를 참고하세요.</p>
+            </div>
         </section>
 
         <!-- Help Modal (New) -->
@@ -118,6 +121,15 @@
                 <button id="help-ok-btn" class="w-full mt-8 bg-white/5 hover:bg-white/10 py-3 rounded-xl font-bold transition-all border border-white/10" data-key="help_ok">확인했습니다</button>
             </div>
         </div>
+
+        <!-- Mission Input Section -->
+        <section class="bg-white/5 p-6 rounded-3xl border border-white/10 mb-6 group focus-within:border-secondary transition-all">
+            <h2 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="material-icons text-xs text-secondary">campaign</span>
+                <span data-key="mission_label">오늘의 미션 / 내기 내용</span>
+            </h2>
+            <input type="text" id="mission-input" class="w-full bg-transparent border-none text-lg font-bold text-white placeholder:text-gray-600 outline-none" placeholder="예) 걸린 사람이 커피 쏘기! ☕️" maxlength="30">
+        </section>
 
         <!-- Options Input Section -->
         <section class="bg-white/5 p-6 rounded-3xl border border-white/10 mb-8">
@@ -250,7 +262,11 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 text-center mt-auto border-t border-white/5">
+    <footer class="py-12 text-center mt-auto border-t border-white/10">
+        <div class="flex justify-center gap-6 mb-6">
+            <a href="../privacy.html" class="text-[11px] text-gray-500 hover:text-secondary transition-colors" data-key="privacy_policy">개인정보처리방침</a>
+            <a href="../terms.html" class="text-[11px] text-gray-500 hover:text-secondary transition-colors" data-key="terms_of_service">서비스 약관</a>
+        </div>
         <p class="text-[10px] text-gray-600 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
         <p class="text-[10px] text-gray-600" data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
     </footer>

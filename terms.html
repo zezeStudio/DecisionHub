@@ -26,9 +26,9 @@
     <!-- Navigation Bar -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 h-16 flex items-center space-x-2">
-            <a href="index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 focus:outline-none flex items-center text-primary">
+            <button onclick="goBack()" class="p-2 -ml-2 rounded-full hover:bg-gray-100 focus:outline-none flex items-center text-primary">
                 <span class="material-icons">arrow_back</span>
-            </a>
+            </button>
             <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight" data-key="terms_nav_title">서비스 약관</span>
         </div>
     </nav>
@@ -55,6 +55,14 @@
     </footer>
 
     <script>
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
         const translations = {
             "en": {
                 "terms_doc_title": "Terms of Service - Zeze Hub",

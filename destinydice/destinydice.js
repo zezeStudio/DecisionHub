@@ -36,12 +36,16 @@ const translations = {
         "confirm_clear_log": "Clear all history log?",
         "error_empty_option": "Please fill in all options.",
         "error_duplicate_option": "Duplicate options are not allowed.",
+        "mission_label": "Mission / Bet Content",
+        "mission_placeholder": "e.g., Winner buys coffee! ☕️",
+        "top_guide_notice": "💡 Try using the dice for numbers, Yes/No, or friend names! See the guide at the bottom for more ways to use it.",
+        "win_suffix": " Selected",
         "info_title1": "Origins of Dice: From Ancient Times to Modern Day",
         "info_desc1": "Dice are ancient tools that predate recorded history. Early dice were carved from animal ankle bones (talus), widely used for divination and gaming in ancient Egyptian and Mesopotamian civilizations. For ancient Greeks, dice were seen not just as luck but as 'responses sent by the gods to humans.' Today, dice are central components of board games and mathematical symbols that played a crucial role in laying the foundations of probability theory and statistics.",
         "info_title2": "Psychology Behind Multiple Choices",
         "info_desc2": "We often suffer more when faced with two or more choices, a phenomenon known as the 'Paradox of Choice.' Dice serve as an immediate 'exit' that relieves the brain's cognitive load in complex multi-choice situations. Zeze Hub's Dice of Destiny is designed to allow users to custom-input up to 6 items, solving various concerns from lunch menus to daily to-do lists. Using a cryptographically secure random number generator ensures no bias towards any side, so you can trust your decisions to the roll.",
-        "info_title3": "Custom Dice Usage Tips",
-        "info_desc3": "<li>When choosing a menu: Enter 6 candidates and roll. Decision time turns into the joy of dining.</li><li>When assigning roles: Use it fairly for chores, dishwashing, or deciding who drives.</li><li>Record keeping: Check past decisions made by the dice in the 'Recent History' section.</li><li>Security: Your input option data is stored only in your browser and never leaked externally.</li>"
+        "info_title3": "Various Ways to Use Custom Dice",
+        "info_desc3": "<li><strong>Digital Dice Mode:</strong> Enter numbers 1 to 6 to use it as a 3D digital dice for board games.</li><li><strong>Yes or No:</strong> Stuck between two choices? Simply enter 'Yes' and 'No' for a quick answer.</li><li><strong>Penalty & Dutch Pay:</strong> Enter friends' names. The selected one can be the winner, the penalty taker, or the one to pay for everyone (Dok-bak)!</li><li><strong>Decision Support:</strong> Use it for anything from choosing a menu to picking the next task.</li><li><strong>Data Privacy:</strong> All input data is stored only in your current browser and never sent to any server.</li>"
     },
     "ko": {
         "app_title": "운명의 주사위 - Zeze Hub",
@@ -78,12 +82,16 @@ const translations = {
         "confirm_clear_log": "모든 결과 기록을 삭제할까요?",
         "error_empty_option": "모든 선택지를 입력해주세요.",
         "error_duplicate_option": "중복된 선택지가 있습니다.",
+        "mission_label": "오늘의 미션 / 내기 내용",
+        "mission_placeholder": "예) 걸린 사람이 커피 쏘기! ☕️",
+        "top_guide_notice": "💡 주사위를 숫자, Yes/No, 친구 이름 등 다양한 방법으로 응용해 보세요! 자세한 설명은 페이지 하단 가이드를 참고하세요.",
+        "win_suffix": " 당첨",
         "info_title1": "주사위의 기원: 인류 문명과 함께한 운명의 상징",
         "info_desc1": "주사위는 인류가 기록한 역사보다 더 오래된 유서 깊은 도구입니다. 초기 주사위는 동물의 발목뼈(복사뼈)를 깎아 만들었으며, 이는 고대 이집트와 메소포타미아 문명에서 점술과 놀이 용도로 널리 사용되었습니다. 고대 그리스인들에게 주사위는 단순한 운이 아니라 '신이 인간에게 보내는 응답'으로 여겨졌습니다. 로마 시대의 정치가 카이사르는 루비콘강을 건너며 \"주사위는 던져졌다\"는 유명한 말을 남기기도 했습니다. 오늘날 주사위는 보드게임의 핵심 부품일 뿐만 아니라, 확률론과 통계학의 기초를 닦는 데 결정적인 역할을 한 수학적 상징이기도 합니다.",
         "info_title2": "다양한 선택지 앞에서의 심리학: '선택의 역설'을 해결하라",
         "info_desc2": "우리는 때로 2가지 이상의 선택지 사이에서 더 큰 고통을 겪습니다. 심리학자 배리 슈워츠는 이를 '선택의 역설(Paradox of Choice)'이라고 불렀습니다. 선택지가 너무 많으면 뇌는 결정을 미루거나, 결정을 내린 후에도 다른 대안에 대한 미련 때문에 만족도가 떨어지게 됩니다. Zeze Hub의 운명의 주사위는 사용자가 직접 6개까지 커스텀 항목을 입력할 수 있게 설계되었습니다. 이는 복잡한 다중 선택 상황에서 당신의 뇌가 겪는 인지적 부하를 즉각적으로 덜어주는 '심리적 탈출구'가 됩니다. 정교한 알고리즘을 통해 어떤 면도 치우침 없이 나올 수 있도록 보장하므로, 복잡한 고민은 주사위에 맡기고 당신은 행동에 집중하세요.",
-        "info_title3": "커스텀 주사위 백배 활용하기: 일상의 즐거운 결정",
-        "info_desc3": "<li><strong>점심 메뉴 해결사:</strong> 먹고 싶은 후보 6곳을 입력하고 굴려보세요. '어디 갈까' 고민하는 10분을 줄여 식사 시간을 더 즐겁게 만들 수 있습니다.</li><li><strong>공정한 역할 분담:</strong> 설거지, 심부름, 운전 등 친구나 가족 사이에서 미묘한 갈등이 생길 수 있는 역할을 정할 때 사용하세요. 주사위의 결과는 누구도 부정할 수 없는 공정한 심판이 됩니다.</li><li><strong>기록 저장과 보안:</strong> '최근 기록' 섹션에서 과거에 주사위가 내린 결정들을 확인할 수 있습니다. 입력하신 모든 선택지 데이터는 서버에 저장되지 않고 오직 사용자의 브라우저에만 머무르므로 사생활 유출 걱정 없이 안전합니다.</li>"
+        "info_title3": "운명의 주사위 활용 가이드 (다양한 응용법)",
+        "info_desc3": "<li><strong>일반 주사위 대용:</strong> 선택지에 숫자 1부터 6까지 입력하면 보드게임 등에서 실제 주사위 대신 사용할 수 있는 고품질 3D 주사위가 됩니다.</li><li><strong>Yes or No 결정:</strong> '한다', '안 한다' 또는 'Yes', 'No'를 입력해 보세요. 망설여지는 순간 주사위가 명쾌한 해답을 내려줍니다.</li><li><strong>친구들과 벌칙 & 내기:</strong> 각 면에 친구들의 이름을 입력하세요. 선택된 사람이 벌칙을 수행하거나, 저녁 쏘기, 더치페이 제외, 또는 오늘의 모든 비용을 지불하는 '독박' 당첨자가 될 수 있습니다!</li><li><strong>메뉴 및 활동 선택:</strong> '오늘 뭐 먹지?' 혹은 '지금 뭐부터 하지?' 고민될 때 후보들을 적고 운명에 맡겨보세요.</li><li><strong>개인정보 보호:</strong> 입력하신 모든 데이터는 서버에 저장되지 않으며, 오직 현재 기기에만 안전하게 저장됩니다.</li>"
     }
 };
 
@@ -185,14 +193,12 @@ function renderOptions() {
 }
 
 function updateDiceFaces() {
-    const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
     const diceFaces = document.querySelectorAll('.dice .face');
     diceFaces.forEach((face, i) => {
         const text = options[i] || (i + 1);
         face.textContent = text;
         face.style.opacity = options[i] ? '1' : '0.3';
         
-        // Dynamic Font Sizing to prevent UI breakage
         if (text.toString().length > 12) face.style.fontSize = '12px';
         else if (text.toString().length > 8) face.style.fontSize = '16px';
         else face.style.fontSize = '24px';
@@ -209,27 +215,24 @@ function renderHistory() {
         const div = document.createElement('div');
         div.className = 'flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5 text-xs';
         div.innerHTML = `
-            <span class="text-gray-400">${item.time}</span>
-            <span class="font-bold text-secondary">${item.result}</span>
+            <span class="font-bold text-secondary flex-grow truncate mr-4">${item.result}</span>
+            <span class="text-gray-500 flex-shrink-0">${item.time}</span>
         `;
-        historyList.prepend(div); // Newest on top
+        historyList.prepend(div);
     });
 }
 
 function rollDice() {
     if (rollButton.disabled) return;
     
-    // Final sync of options before rolling
     const inputs = document.querySelectorAll('.option-item input');
     const inputValues = Array.from(inputs).map(input => input.value.trim());
 
-    // Validation: Empty check
     if (inputValues.some(val => val === "")) {
         alert(translations[currentLang].error_empty_option);
         return;
     }
 
-    // Validation: Duplicate check
     const uniqueOptions = new Set(inputValues);
     if (uniqueOptions.size !== inputValues.length) {
         alert(translations[currentLang].error_duplicate_option);
@@ -254,32 +257,45 @@ function rollDice() {
 
     setTimeout(() => {
         const result = options[resultIndex];
-        resultText.textContent = result;
+        const missionInput = document.getElementById('mission-input');
+        const missionText = missionInput ? missionInput.value.trim() : "";
+        const winSuffix = translations[currentLang].win_suffix;
         
-        // Save to History
+        // Formatted Result: Name + " 당첨" (if mission exists)
+        const finalResultDisplay = missionText ? `${result}${winSuffix}` : result;
+        resultText.textContent = finalResultDisplay;
+        
         const now = new Date();
         const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-        historyLog.push({ time: timeStr, result: result });
-        if (historyLog.length > 5) historyLog.shift();
+        
+        // Save to History: Name + " 당첨 : 미션내용"
+        const historyDisplay = missionText ? `${result}${winSuffix} : ${missionText}` : result;
+        historyLog.push({ time: timeStr, result: historyDisplay });
+        
+        if (historyLog.length > 10) historyLog.shift();
         localStorage.setItem('dice_history', JSON.stringify(historyLog));
         renderHistory();
 
-        const funStories = {
-            "ko": [
-                "주사위의 눈이 당신의 진심을 꿰뚫어 보았습니다. 이 선택이 당신을 빛나는 미래로 안내할 것입니다.",
-                "망설임은 끝났습니다. 우주가 점지해준 이 길이 당신에게 가장 완벽한 해답입니다.",
-                "운명의 수레바퀴가 멈춰 선 곳은 바로 여기입니다. 당신의 선택을 믿고 나아가세요.",
-                "놀라운 우연이 겹쳐 만들어진 결과입니다. 오늘 이 선택은 당신에게 행운을 가져다줄 거예요."
-            ],
-            "en": [
-                "The dice has seen through your heart. This choice will guide you to a shining future.",
-                "The hesitation is over. This path chosen by the universe is the perfect answer for you.",
-                "The wheel of destiny has stopped right here. Trust your choice and move forward.",
-                "A result made of amazing coincidences. This choice will bring you great luck today."
-            ]
-        };
-        const randomStory = funStories[currentLang][Math.floor(Math.random() * funStories[currentLang].length)];
-        storyDisplayText.textContent = randomStory;
+        if (missionText) {
+            storyDisplayText.innerHTML = `<span class="text-secondary font-bold">Mission:</span> ${missionText}`;
+        } else {
+            const funStories = {
+                "ko": [
+                    "주사위의 눈이 당신의 진심을 꿰뚫어 보았습니다. 이 선택이 당신을 빛나는 미래로 안내할 것입니다.",
+                    "망설임은 끝났습니다. 우주가 점지해준 이 길이 당신에게 가장 완벽한 해답입니다.",
+                    "운명의 수레바퀴가 멈춰 선 곳은 바로 여기입니다. 당신의 선택을 믿고 나아가세요.",
+                    "놀라운 우연이 겹쳐 만들어진 결과입니다. 오늘 이 선택은 당신에게 행운을 가져다줄 거예요."
+                ],
+                "en": [
+                    "The dice has seen through your heart. This choice will guide you to a shining future.",
+                    "The hesitation is over. This path chosen by the universe is the perfect answer for you.",
+                    "The wheel of destiny has stopped right here. Trust your choice and move forward.",
+                    "A result made of amazing coincidences. This choice will bring you great luck today."
+                ]
+            };
+            const randomStory = funStories[currentLang][Math.floor(Math.random() * funStories[currentLang].length)];
+            storyDisplayText.textContent = randomStory;
+        }
         
         destinySection.classList.add('result-visible');
         shareButtons.classList.remove('opacity-0');
@@ -297,16 +313,16 @@ function applyLanguage() {
         }
     });
 
-    // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
+    const missionInput = document.getElementById('mission-input');
+    if (missionInput && translations[currentLang].mission_placeholder) {
+        missionInput.placeholder = translations[currentLang].mission_placeholder;
+    }
+
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        // 모든 스타일 관련 클래스 완전 초기화
         btn.classList.remove('bg-secondary', 'text-white', 'font-bold', 'bg-white/5', 'border', 'border-white/10', 'bg-transparent', 'border-transparent');
-        
         if (btn.dataset.lang === currentLang) {
-            // 선택된 언어: 무조건 핑크색 테마 강조
             btn.classList.add('bg-secondary', 'text-white', 'font-bold');
         } else {
-            // 선택되지 않은 언어: 메뉴 배경색과 동일하게 투명 처리
             btn.classList.add('bg-transparent', 'border-transparent');
         }
     });
@@ -387,7 +403,7 @@ function setupEventListeners() {
         navigator.clipboard.writeText(text).then(() => alert(currentLang === 'ko' ? "링크가 복사되었습니다!" : "Link copied to clipboard!"));
     });
     
-    const clearOptionsLogic = () => {
+    document.getElementById('reset-options-btn').addEventListener('click', () => {
         if (confirm(translations[currentLang].confirm_clear)) {
             options = ["Yes", "No"];
             localStorage.setItem('dice_options', JSON.stringify(options));
@@ -395,12 +411,8 @@ function setupEventListeners() {
             destinySection.classList.remove('result-visible');
             destinySection.style.opacity = '0';
         }
-    };
+    });
 
-    // Clear Options
-    document.getElementById('reset-options-btn').addEventListener('click', clearOptionsLogic);
-
-    // Clear History Log
     document.getElementById('clear-history-log-btn').addEventListener('click', () => {
         if (confirm(translations[currentLang].confirm_clear_log)) {
             historyLog = [];
@@ -418,18 +430,15 @@ function setupEventListeners() {
         btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
     });
 
-    const sidebarMenu = document.getElementById('sidebar-menu');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
     document.getElementById('menu-toggle').addEventListener('click', () => {
-        sidebarMenu.classList.remove('translate-x-full');
-        sidebarOverlay.classList.remove('hidden');
+        document.getElementById('sidebar-menu').classList.remove('translate-x-full');
+        document.getElementById('sidebar-overlay').classList.remove('hidden');
     });
     document.getElementById('close-menu').addEventListener('click', () => {
-        sidebarMenu.classList.add('translate-x-full');
-        sidebarOverlay.classList.add('hidden');
+        document.getElementById('sidebar-menu').classList.add('translate-x-full');
+        document.getElementById('sidebar-overlay').classList.add('hidden');
     });
 
-    // Sound Toggle
     const soundToggle = document.getElementById('sound-toggle');
     if (soundToggle) {
         soundToggle.addEventListener('click', () => SoundManager.toggleMute());

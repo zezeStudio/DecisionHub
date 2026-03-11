@@ -8,7 +8,7 @@ const translations = {
         "language_select_label": "Language",
         "main_title": "Exciting Drawing Lots",
         "main_description": "Find the hidden lucky slips.",
-        "setup_title": "Settings",
+        "setup_title": "Participant Count",
         "winner_count_label": "Number of Winners",
         "start_btn": "Shuffle Slips",
         "reset_btn": "Reset",
@@ -20,10 +20,14 @@ const translations = {
         "winner_text": "WINNER!",
         "fail_text": "FAIL",
         "player_placeholder": "Ex) Player",
+        "mission_label": "Mission / Bet / Selection Content",
+        "mission_placeholder": "e.g., What is the penalty? ☕️",
+        "top_guide_notice": "💡 Use drawing lots for penalty selection, drawing, or bets! See the guide at the bottom for more ways to use it.",
         "error_empty_name": "Please enter all participant names.",
         "error_duplicate_name": "Participant names cannot be duplicated.",
+        "error_already_picked": "This slip has already been picked!",
         "fortune_disclaimer": "※ Please enjoy the results for entertainment purposes only.",
-        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
@@ -31,8 +35,8 @@ const translations = {
         "info_desc1": "Drawing lots is a decision-making method used for ages, documented even in the Bible and ancient texts. In ancient Athens, public officials were often chosen by lot rather than election—a highly democratic device intended to give every citizen an equal chance and prevent the monopoly of power. Today, it remains loved as the most intuitive, fair, and dispute-free tool for making decisions.",
         "info_title2": "Order and Probability: Is it better to go first?",
         "info_desc2": "People often wonder, 'Is it better to draw first or last?' Mathematically, drawing lots yields identical winning probabilities regardless of the order. For example, if there is 1 winner among 10 slips, the first person's chance is 1/10. The second person's chance is the probability of the first person losing (9/10) multiplied by the second person winning from the remaining slips (1/9), which equals 1/10. Zeze Hub implements this mathematical fairness with cryptographic randomness for truly equal luck.",
-        "info_title3": "Getting the Most Out of Drawing Lots",
-        "info_desc3": "<li>Set Winner Count: From picking a single winner to multiple people at once.</li><li>Real-time Suspense: Share the thrill with friends as you flip slips one by one.</li><li>Transparent Results: Review the 'Full Results Summary' after the game to openly reveal everyone's fate.</li><li>Secure Data: Participant info is never sent to a server and stays only on your current device.</li>"
+        "info_title3": "Drawing Lots Usage Guide (Various Applications)",
+        "info_desc3": "<li><strong>Penalty Selection:</strong> Enter friends' names and set the 'Number of Selection' to 1. The selected person performs the penalty!</li><li><strong>Giveaway Drawing:</strong> Use it for fair drawings in events. Set the selection count to the number of prizes available.</li><li><strong>Bets & Dutch Pay:</strong> Enter names and a mission like 'Winner pays for coffee'. It's the most transparent way to settle who pays.</li><li><strong>Decision Support:</strong> Can't choose a lunch menu? Enter menu options as 'Participant Names' and see which one gets selected!</li><li><strong>Data Privacy:</strong> All data is stored only in your browser and never sent to any server.</li>"
     },
     "ko": {
         "app_title": "제비뽑기 - Zeze Hub",
@@ -41,22 +45,26 @@ const translations = {
         "language_select_label": "언어",
         "main_title": "두근두근 제비뽑기",
         "main_description": "숨겨진 행운의 제비를 찾아보세요.",
-        "setup_title": "설정",
+        "setup_title": "참가자 인원",
         "winner_count_label": "당첨 인원",
         "start_btn": "제비 섞기",
         "reset_btn": "다시 설정",
         "reveal_btn": "결과 확인",
         "turn_text": "<b>{name}</b> 님 차례입니다! 제비를 골라주세요.",
         "all_picked_text": "제비를 모두 골랐습니다! 결과를 확인하세요.",
-        "winner_reveal_msg": "🎉 당첨자: <b>{names}</b>",
+        "winner_reveal_msg": "🎉 당첨된 분: <b>{names}</b>",
         "result_summary_title": "전체 결과 요약",
         "winner_text": "당첨!",
         "fail_text": "꽝",
         "player_placeholder": "예) 참가자",
+        "mission_label": "오늘의 미션 / 내기 내용 / 추첨 내용",
+        "mission_placeholder": "예) 이번 내기 벌칙은? ☕️",
+        "top_guide_notice": "💡 제비뽑기를 벌칙자 선정, 추첨, 내기 등 다양한 방법으로 응용해 보세요! 자세한 설명은 페이지 하단 가이드를 참고하세요.",
         "error_empty_name": "모든 참가자의 이름을 입력해주세요.",
         "error_duplicate_name": "중복된 참가자 이름이 있습니다.",
+        "error_already_picked": "이미 선택된 제비입니다!",
         "fortune_disclaimer": "※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.",
-        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
         "terms_of_service": "서비스 약관",
@@ -64,8 +72,8 @@ const translations = {
         "info_desc1": "제비뽑기는 성경이나 고대 문헌에서도 찾아볼 수 있을 만큼 인류가 오랫동안 사용해온 결정 방식입니다. 고대 그리스의 아테네에서는 공직자를 선출할 때 투표가 아닌 제비뽑기를 사용했는데, 이는 모든 시민에게 평등한 기회를 제공하고 특정 권력의 독점을 막기 위한 고도의 민주적 장치였습니다. 당시 사람들은 인간의 의지가 아닌 '하늘의 뜻'에 결정을 맡기는 것이 가장 순수하고 정의롭다고 믿었습니다. 오늘날에도 제비뽑기는 가장 직관적이고 다툼 없는 공정한 결정 도구로 전 세계 어디에서나 사랑받고 있습니다.",
         "info_title2": "순서와 확률의 오해: 먼저 뽑는 것이 정말 유리할까?",
         "info_desc2": "제비뽑기를 할 때 흔히 \"먼저 뽑는 것이 유리할까, 나중에 뽑는 것이 유리할까?\"를 고민하곤 합니다. 하지만 수학적으로 제비뽑기는 뽑는 순서와 상관없이 당첨 확률이 완벽하게 동일합니다. 예를 들어 10개의 제비 중 1개가 당첨일 때, 첫 번째 사람이 뽑을 확률은 1/10입니다. 두 번째 사람이 당첨될 확률은 첫 번째 사람이 꽝을 뽑고(9/10) 두 번째 사람이 당첨될 확률(1/9)을 곱한 것으로, 결국 똑같은 1/10이 됩니다. Zeze Hub의 제비뽑기는 이 수학적 공정성을 암호학적 무작위성으로 구현하여 누구에게나 평등한 행운을 제공합니다.",
-        "info_title3": "제비뽑기 백배 활용하기: 투명하고 짜릿한 결과 확인",
-        "info_desc3": "<li><strong>유연한 당첨 설정:</strong> 단순한 1명 뽑기부터 여러 명의 당첨자를 동시에 가려낼 수 있습니다. 벌칙자 한 명을 정하거나, 반대로 소수의 행운아를 정할 때 상황에 맞춰 설정하세요.</li><li><strong>실시간 확인의 스릴:</strong> 제비를 하나씩 뒤집을 때마다 느껴지는 짜릿한 긴장감을 친구들과 공유해 보세요. Zeze Hub는 애니메이션 효과를 통해 오프라인 제비뽑기의 아날로그적 재미를 디지털로 완벽히 재현합니다.</li><li><strong>투명한 결과 요약:</strong> 게임 종료 후 제공되는 '전체 결과 요약'을 통해 모든 참가자의 운명을 투명하게 공개할 수 있습니다. 입력한 참가자 정보는 서버에 저장되지 않으며, 사생활을 철저히 보호합니다.</li>"
+        "info_title3": "제비뽑기 활용 가이드 (다양한 응용법)",
+        "info_desc3": "<li><strong>벌칙자 선정:</strong> 참가자 이름에 친구들의 이름을 넣고, '추첨 인원'을 1명으로 설정하세요. '선정!' 문구가 뜬 사람이 벌칙 당첨자입니다!</li><li><strong>공정한 경품 추첨:</strong> 각종 이벤트나 모임에서 경품 당첨자를 뽑을 때 사용하세요. 추첨 인원을 경품 개수만큼 설정하면 한 번에 여러 명을 선정할 수 있습니다.</li><li><strong>내기 및 독박 정하기:</strong> '미션/내기 내용'에 '커피 쏘기' 등을 적고 친구들과 제비를 골라보세요. 가장 깔끔하고 뒷말 없는 내기가 가능합니다.</li><li><strong>결정 장애 해결:</strong> 점심 메뉴나 할 일 순서를 정하기 힘들 때, 선택지들을 참가자 이름란에 입력해 보세요. 운명이 정해주는 선택을 따르는 것도 좋은 방법입니다.</li><li><strong>개인정보 보호:</strong> 입력하신 모든 데이터는 서버에 저장되지 않으며, 오직 현재 기기에만 안전하게 유지됩니다.</li>"
     }
 };
 
@@ -80,6 +88,7 @@ let isAnimating = false;
 // DOM Elements
 const setupSection = document.getElementById('setup-section');
 const gameStage = document.getElementById('game-stage');
+const missionSection = document.querySelector('.mission-label-section') || document.getElementById('mission-input').parentElement;
 const playerInputsContainer = document.getElementById('player-inputs');
 const playerCountDisplay = document.getElementById('player-count');
 const winnerCountDisplay = document.getElementById('winner-count');
@@ -90,10 +99,64 @@ const revealBtn = document.getElementById('reveal-btn');
 const finalResultSection = document.getElementById('final-result-section');
 const resultList = document.getElementById('result-list');
 
+// 🎵 Sound Manager
+const SoundManager = {
+    ctx: null,
+    muted: localStorage.getItem('zeze_muted') === 'true',
+    init() {
+        if (!this.ctx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
+        }
+    },
+    updateMuteUI() {
+        const icon = document.getElementById('sound-icon');
+        if (icon) {
+            icon.textContent = this.muted ? 'volume_off' : 'volume_up';
+            if (this.muted) icon.classList.add('text-red-500');
+            else icon.classList.remove('text-red-500');
+        }
+    },
+    toggleMute() {
+        this.muted = !this.muted;
+        localStorage.setItem('zeze_muted', this.muted);
+        this.updateMuteUI();
+    },
+    playPick() {
+        if (this.muted) return;
+        this.init();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(800, this.ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.1);
+    },
+    playReveal() {
+        if (this.muted) return;
+        this.init();
+        [261.63, 329.63, 392.00].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + (i * 0.1));
+            gain.gain.setValueAtTime(0.1, this.ctx.currentTime + (i * 0.1));
+            gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.6);
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + (i * 0.1));
+            osc.stop(this.ctx.currentTime + 0.6);
+        });
+    }
+};
+
 function init() {
     renderInputs();
     applyTranslations();
     setupEventListeners();
+    SoundManager.updateMuteUI();
 }
 
 function renderInputs() {
@@ -116,7 +179,6 @@ function renderInputs() {
 
 function shuffleLots() {
     lots = [];
-    // Initialize with winners and losers
     for (let i = 0; i < playerCount; i++) {
         lots.push({
             isWinner: i < winnerCount,
@@ -124,8 +186,6 @@ function shuffleLots() {
             isRevealed: false
         });
     }
-    
-    // Fisher-Yates Shuffle
     for (let i = lots.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [lots[i], lots[j]] = [lots[j], lots[i]];
@@ -150,6 +210,26 @@ function startGame() {
     currentTurnIndex = 0;
     isAnimating = false;
     
+    const missionInput = document.getElementById('mission-input');
+    const missionText = missionInput.value.trim();
+
+    missionSection.classList.add('hidden');
+    
+    let missionDisplay = document.getElementById('game-mission-display');
+    if (!missionDisplay) {
+        missionDisplay = document.createElement('div');
+        missionDisplay.id = 'game-mission-display';
+        missionDisplay.className = 'w-full mb-4 bg-white p-4 rounded-2xl border border-primary/20 text-center shadow-sm';
+        gameStage.prepend(missionDisplay);
+    }
+    
+    if (missionText) {
+        missionDisplay.innerHTML = `<span class="text-[10px] text-primary font-black uppercase tracking-widest block mb-1">Current Mission</span><span class="text-lg font-bold text-gray-800">${missionText}</span>`;
+        missionDisplay.classList.remove('hidden');
+    } else {
+        missionDisplay.classList.add('hidden');
+    }
+
     setupSection.classList.add('hidden');
     gameStage.classList.remove('hidden');
     finalResultSection.classList.add('hidden');
@@ -161,9 +241,12 @@ function startGame() {
 
 function renderLots() {
     lotsContainer.innerHTML = '';
+    const gridCols = playerCount > 12 ? 'grid-cols-4' : 'grid-cols-3';
+    lotsContainer.className = `grid ${gridCols} gap-3 w-full p-4 bg-white rounded-3xl shadow-inner border border-gray-100 min-h-[300px]`;
+
     lots.forEach((lot, index) => {
         const div = document.createElement('div');
-        div.className = 'lot-slip bg-gray-50 border border-gray-200 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary/5 hover:border-primary transition-all active:scale-95 shadow-sm';
+        div.className = 'lot-slip bg-gray-50 border border-gray-200 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary/5 hover:border-primary transition-all active:scale-95 shadow-sm relative overflow-hidden h-24';
         div.innerHTML = `
             <span class="material-icons text-gray-300 text-3xl slip-icon">help_outline</span>
         `;
@@ -173,19 +256,25 @@ function renderLots() {
 }
 
 function handleLotClick(index, element) {
-    if (isAnimating || lots[index].playerIndex !== null) return;
+    if (isAnimating) return;
+    
+    if (lots[index].playerIndex !== null) {
+        alert(translations[currentLang].error_already_picked);
+        return;
+    }
     
     isAnimating = true;
     lots[index].playerIndex = currentTurnIndex;
+    SoundManager.playPick();
     
-    element.classList.add('picked');
+    element.classList.add('picked', 'bg-primary/5', 'border-primary');
     const icon = element.querySelector('.slip-icon');
     icon.textContent = 'person';
     icon.classList.remove('text-gray-300');
     icon.classList.add('text-primary');
     
     const nameLabel = document.createElement('span');
-    nameLabel.className = 'absolute bottom-2 text-[9px] font-bold text-primary truncate w-full px-2 text-center';
+    nameLabel.className = 'absolute bottom-2 left-0 right-0 text-[10px] font-bold text-primary truncate px-2 text-center bg-white/80 py-0.5';
     nameLabel.textContent = players[currentTurnIndex];
     element.appendChild(nameLabel);
     
@@ -198,6 +287,7 @@ function handleLotClick(index, element) {
         }, 300);
     } else {
         setTimeout(() => {
+            // 모두 골랐을 때 문구 업데이트
             turnIndicator.innerHTML = translations[currentLang].all_picked_text;
             turnIndicatorContainer.classList.remove('animate-pulse');
             revealBtn.classList.remove('hidden');
@@ -207,15 +297,19 @@ function handleLotClick(index, element) {
 }
 
 function updateTurnIndicator() {
-    turnIndicator.innerHTML = translations[currentLang].turn_text.replace('{name}', players[currentTurnIndex]);
+    if (currentTurnIndex < playerCount) {
+        turnIndicator.innerHTML = translations[currentLang].turn_text.replace('{name}', players[currentTurnIndex]);
+    } else {
+        turnIndicator.innerHTML = translations[currentLang].all_picked_text;
+    }
 }
 
 function revealAll() {
     revealBtn.classList.add('hidden');
     finalResultSection.classList.remove('hidden');
+    SoundManager.playReveal();
     
     const slips = document.querySelectorAll('.lot-slip');
-    const winners = [];
     
     lots.forEach((lot, index) => {
         const slip = slips[index];
@@ -223,13 +317,21 @@ function revealAll() {
         
         if (lot.isWinner) {
             slip.classList.add('bg-secondary/10', 'border-secondary');
+            slip.classList.remove('bg-primary/5', 'border-primary');
             icon.textContent = 'stars';
             icon.classList.add('text-secondary');
-            winners.push(players[lot.playerIndex]);
+            icon.classList.remove('text-primary');
+            
+            const label = slip.querySelector('span:not(.slip-icon)');
+            if (label) {
+                label.classList.add('text-secondary');
+                label.classList.remove('text-primary');
+            }
         } else {
             slip.classList.add('opacity-50');
             icon.textContent = 'close';
             icon.classList.add('text-gray-400');
+            icon.classList.remove('text-primary');
         }
     });
     
@@ -246,14 +348,26 @@ function revealAll() {
 function renderResultList() {
     resultList.innerHTML = '';
     
-    // Sort lots by player index to show chronological result
+    const missionInput = document.getElementById('mission-input');
+    const missionText = missionInput ? missionInput.value.trim() : "";
+    
+    if (missionText) {
+        const missionHeader = document.createElement('div');
+        missionHeader.className = 'bg-primary/5 p-4 rounded-2xl border border-primary/10 mb-4 text-center';
+        missionHeader.innerHTML = `<span class="text-[10px] text-primary font-black uppercase tracking-widest block mb-1">Mission</span><span class="text-gray-800 font-bold">${missionText}</span>`;
+        resultList.appendChild(missionHeader);
+    }
+
     const sortedLots = [...lots].sort((a, b) => a.playerIndex - b.playerIndex);
     
     sortedLots.forEach(lot => {
         const div = document.createElement('div');
         div.className = `flex justify-between items-center p-4 rounded-2xl border ${lot.isWinner ? 'bg-secondary/5 border-secondary/20' : 'bg-gray-50 border-gray-100'}`;
+        
+        const winSuffix = lot.isWinner ? ` ${translations[currentLang].winner_text}` : "";
+        
         div.innerHTML = `
-            <span class="font-bold text-sm ${lot.isWinner ? 'text-secondary' : 'text-gray-600'}">${players[lot.playerIndex]}</span>
+            <span class="font-bold text-sm ${lot.isWinner ? 'text-secondary' : 'text-gray-600'}">${players[lot.playerIndex]}${winSuffix}</span>
             <span class="text-xs font-black uppercase tracking-tighter ${lot.isWinner ? 'text-secondary' : 'text-gray-400'}">
                 ${lot.isWinner ? translations[currentLang].winner_text : translations[currentLang].fail_text}
             </span>
@@ -268,16 +382,21 @@ function applyTranslations() {
         if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
 
-    // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
+    const missionInput = document.getElementById('mission-input');
+    if (missionInput && translations[currentLang].mission_placeholder) {
+        missionInput.placeholder = translations[currentLang].mission_placeholder;
+    }
+
+    // 게임 중인 경우 turnIndicator 내용 실시간 번역
+    if (!gameStage.classList.contains('hidden')) {
+        updateTurnIndicator();
+    }
+
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        // 모든 스타일 관련 클래스 완전 초기화
         btn.classList.remove('bg-primary', 'text-white', 'font-bold', 'bg-gray-50', 'border', 'border-gray-200', 'bg-transparent', 'border-transparent');
-        
         if (btn.dataset.lang === currentLang) {
-            // 선택된 언어: 보라색 테마 강조
             btn.classList.add('bg-primary', 'text-white', 'font-bold');
         } else {
-            // 선택되지 않은 언어: 메뉴 배경색과 동일하게 투명 처리
             btn.classList.add('bg-transparent', 'border-transparent');
         }
     });
@@ -292,7 +411,7 @@ function setLanguage(lang) {
 
 function setupEventListeners() {
     document.getElementById('player-plus').addEventListener('click', () => {
-        if (playerCount < 12) {
+        if (playerCount < 20) {
             playerCount++;
             renderInputs();
         }
@@ -326,27 +445,16 @@ function setupEventListeners() {
         setupSection.classList.remove('hidden');
         gameStage.classList.add('hidden');
         finalResultSection.classList.add('hidden');
+        missionSection.classList.remove('hidden');
+        const missionDisplay = document.getElementById('game-mission-display');
+        if (missionDisplay) missionDisplay.classList.add('hidden');
     });
     
     revealBtn.addEventListener('click', revealAll);
 
-    // Global Sound & Sidebar
     const soundToggle = document.getElementById('sound-toggle');
     if (soundToggle) {
-        soundToggle.addEventListener('click', () => {
-            const icon = document.getElementById('sound-icon');
-            const isMuted = localStorage.getItem('zeze_muted') === 'true';
-            localStorage.setItem('zeze_muted', !isMuted);
-            icon.textContent = !isMuted ? 'volume_off' : 'volume_up';
-            if (!isMuted) icon.classList.add('text-red-500');
-            else icon.classList.remove('text-red-500');
-        });
-        
-        // Initial UI
-        const isMuted = localStorage.getItem('zeze_muted') === 'true';
-        const icon = document.getElementById('sound-icon');
-        icon.textContent = isMuted ? 'volume_off' : 'volume_up';
-        if (isMuted) icon.classList.add('text-red-500');
+        soundToggle.addEventListener('click', () => SoundManager.toggleMute());
     }
 
     document.querySelectorAll('.lang-btn').forEach(btn => {

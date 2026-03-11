@@ -53,7 +53,6 @@
         <ul class="p-4 space-y-2 text-sm text-gray-300">
             <li><a href="timebomb-guide.html" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="guide_title">사용 가이드</a></li>
             <li><button id="reset-game-menu" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="reset_btn">게임 초기화</button></li>
-            <li><a href="../privacy.html" class="block w-full text-left p-2 rounded-md hover:bg-white/10" data-key="privacy_policy">개인정보처리방침</a></li>
             <li class="py-2"><hr class="border-white/10"></li>
             <li>
                 <span class="block text-[10px] text-gray-400 mb-2 uppercase tracking-widest" data-key="language_select_label">Language</span>
@@ -163,13 +162,17 @@
                 <li>플레이어 수 설정: 2명부터 최대 8명까지 참여 가능하며, 인원에 따라 와이어 개수가 자동으로 조절됩니다.</li>
                 <li>차례 지키기: 이름 입력 기능을 통해 누구의 차례인지 명확히 알 수 있어 공정한 게임 진행이 가능합니다.</li>
                 <li>사운드와 진동: 메인 페이지의 사운드 설정을 켜면 폭발 시 더 강력한 시각적/촉각적 타격감을 느낄 수 있습니다.</li>
-                <li>안전한 기록: 입력된 참여자 이름은 외부 서버로 전송되지 않으며 오직 현재 브라우저 세션에만 임시 보관됩니다.</li>
+                <li>안전한 기록: 입력한 참여자 이름은 서버에 저장되지 않으며 오직 현재 브라우저 세션에만 임시 보관됩니다.</li>
             </ul>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 text-center mt-auto">
+    <footer class="py-12 text-center mt-auto border-t border-white/10">
+        <div class="flex justify-center gap-6 mb-6">
+            <a href="../privacy.html" class="text-[11px] text-gray-500 hover:text-primary transition-colors" data-key="privacy_policy">개인정보처리방침</a>
+            <a href="../terms.html" class="text-[11px] text-gray-400 hover:text-primary transition-colors" data-key="terms_of_service">서비스 약관</a>
+        </div>
         <p class="text-[10px] text-gray-600 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
         <p class="text-[10px] text-gray-600">© 2024 Zeze Decision Hub.</p>
     </footer>

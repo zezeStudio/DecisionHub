@@ -59,8 +59,6 @@
         </div>
         <ul class="p-4 space-y-2 text-sm text-gray-600">
             <li><a href="cardflip-guide.html" class="block w-full text-left p-2 rounded-md hover:bg-gray-50" data-key="guide_title">사용 가이드</a></li>
-            <li><a href="../privacy.html" class="block w-full text-left p-2 rounded-md hover:bg-gray-50" data-key="privacy_policy">개인정보처리방침</a></li>
-            <li><a href="../terms.html" class="block w-full text-left p-2 rounded-md hover:bg-gray-50" data-key="terms_of_service">서비스 약관</a></li>
             <li class="py-2"><hr class="border-gray-100"></li>
             <li>
                 <span class="block text-[10px] text-gray-400 mb-2 uppercase tracking-widest" data-key="language_select_label">Language</span>
@@ -78,7 +76,11 @@
         <!-- Hero Section -->
         <section class="text-center mb-8">
             <h1 class="text-3xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-b from-primary to-primaryLight" data-key="main_title">행운의 카드 뒤집기</h1>
-            <p class="text-sm text-gray-500" data-key="main_description">숨겨진 카드를 선택하고 결과를 확인하세요.</p>
+            <p class="text-sm text-gray-500 mb-4" data-key="main_description">숨겨진 카드를 선택하고 결과를 확인하세요.</p>
+            
+            <div class="bg-primary/10 border border-primary/10 rounded-2xl p-3 mb-2 animate-pulse">
+                <p class="text-[11px] text-primary font-bold leading-relaxed" data-key="top_guide_notice">💡 카드를 순서 정하기, 직접 내기 입력, 운세 확인 등 다양한 방법으로 응용해 보세요! 자세한 설명은 페이지 하단 가이드를 참고하세요.</p>
+            </div>
         </section>
 
         <!-- Setup Section -->
@@ -105,21 +107,43 @@
                 <p id="mode-description" class="text-xs text-gray-500 leading-relaxed text-center"></p>
             </div>
 
-            <!-- Custom Text Inputs (Shown only in 'custom' mode) -->
-            <div id="custom-inputs-area" class="hidden space-y-3">
-                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1" data-key="custom_label">카드 내용 입력</label>
-                <div id="custom-inputs-list" class="space-y-2 max-h-[200px] overflow-y-auto pr-1 no-scrollbar">
-                    <!-- Custom inputs will be generated here -->
+            <!-- Participant Setup (Shown in number and custom modes) -->
+            <div id="player-setup-area" class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest" data-key="player_label">참가자 명단</label>
+                    <div class="flex items-center bg-gray-100 rounded-full px-2 py-0.5 border border-gray-200">
+                        <button id="player-minus" class="material-icons text-gray-400 hover:text-primary text-base">remove</button>
+                        <span id="player-count-display" class="mx-3 font-bold text-primary w-4 text-center text-xs">4</span>
+                        <button id="player-plus" class="material-icons text-gray-400 hover:text-primary text-base">add</button>
+                    </div>
+                </div>
+                <div id="player-inputs-list" class="space-y-2 max-h-[200px] overflow-y-auto no-scrollbar pr-1">
+                    <!-- Dynamic player inputs -->
                 </div>
             </div>
 
-            <!-- Card Count -->
-            <div id="count-control" class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl border border-gray-100">
+            <!-- Custom Card Setup (Shown only in 'custom' mode) -->
+            <div id="custom-setup-area" class="hidden space-y-4 pt-4 border-t border-gray-100">
+                <div class="flex justify-between items-center">
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest" data-key="custom_label">카드 내용 입력</label>
+                    <div id="custom-count-control" class="flex items-center bg-gray-100 rounded-full px-2 py-0.5 border border-gray-200">
+                        <button id="card-minus" class="material-icons text-gray-400 hover:text-secondary text-base">remove</button>
+                        <span id="card-count-display" class="mx-3 font-bold text-secondary w-4 text-center text-xs">4</span>
+                        <button id="card-plus" class="material-icons text-gray-400 hover:text-secondary text-base">add</button>
+                    </div>
+                </div>
+                <div id="custom-inputs-list" class="space-y-2 max-h-[200px] overflow-y-auto no-scrollbar pr-1">
+                    <!-- Dynamic custom content inputs -->
+                </div>
+            </div>
+
+            <!-- Simple Card Count (Shown only in icon/advice modes) -->
+            <div id="simple-count-area" class="hidden flex justify-between items-center bg-gray-50 p-4 rounded-2xl border border-gray-100">
                 <span class="font-bold text-gray-700 text-sm" data-key="label_card_count">카드 개수</span>
                 <div class="flex items-center bg-white rounded-full px-3 py-1 shadow-sm border border-gray-100">
-                    <button id="count-minus" class="material-icons text-gray-400 hover:text-primary transition-colors text-lg">remove</button>
-                    <span id="card-count" class="mx-4 font-bold text-primary w-6 text-center">4</span>
-                    <button id="count-plus" class="material-icons text-gray-400 hover:text-primary transition-colors text-lg">add</button>
+                    <button id="simple-minus" class="material-icons text-gray-400 hover:text-primary transition-colors text-lg">remove</button>
+                    <span id="simple-count-display" class="mx-4 font-bold text-primary w-6 text-center">4</span>
+                    <button id="simple-plus" class="material-icons text-gray-400 hover:text-primary transition-colors text-lg">add</button>
                 </div>
             </div>
 
@@ -132,11 +156,11 @@
         <!-- Game Stage -->
         <section id="game-stage" class="hidden flex flex-col items-center w-full">
             <div id="instruction-bar" class="w-full mb-4 bg-primary text-white p-4 rounded-2xl text-center shadow-md animate-pulse">
-                <p class="text-sm font-bold" id="game-instruction-text">카드를 클릭하여 결과를 확인하세요!</p>
+                <p class="text-sm font-bold" id="game-instruction-text"></p>
             </div>
 
             <div id="cards-container" class="grid grid-cols-2 gap-4 w-full p-4 bg-white rounded-3xl shadow-inner border border-gray-100 min-h-[300px]">
-                <!-- Cards will be injected here -->
+                <!-- Cards -->
             </div>
 
             <div class="flex gap-3 w-full mt-8">
@@ -146,7 +170,7 @@
                 </button>
                 <button id="reveal-all-btn" class="flex-1 bg-secondary text-white py-4 rounded-2xl font-bold shadow-lg shadow-secondary/20 hover:opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2">
                     <span class="material-icons text-lg">visibility</span>
-                    <span data-key="reveal_all_btn">전체 공개</span>
+                    <span data-key="reveal_all_btn">결과 공개</span>
                 </button>
             </div>
         </section>
@@ -163,45 +187,12 @@
         </section>
     </main>
 
-    <!-- Deep Dive Information Section -->
-    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-gray-200 text-gray-600">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <article class="space-y-4">
-                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
-                    <span class="material-icons">history_edu</span>
-                    <span data-key="info_title1">카드의 역사와 상징성</span>
-                </h2>
-                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc1">
-                    카드를 이용한 점술과 결정은 중세 유럽의 타로 카드 이전부터 고대 중국과 인도 등 다양한 문명권에서 존재해왔습니다. 카드는 보이지 않는 뒷면과 드러나는 앞면이라는 이중성을 통해 '미지의 운명'을 상징합니다. 셔플(Shuffle) 과정은 혼돈 속에서 새로운 질서를 만드는 행위이며, 그중 하나를 선택하는 것은 수많은 가능성 중에서 자신만의 길을 결정하는 심리적 투영입니다. 오늘날 카드 뒤집기는 단순한 게임을 넘어 자아 성찰과 직관을 깨우는 도구로 널리 쓰이고 있습니다.
-                </p>
-            </article>
-            <article class="space-y-4">
-                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
-                    <span class="material-icons">psychology</span>
-                    <span data-key="info_title2">이미지와 언어가 주는 심리적 효과</span>
-                </h2>
-                <p class="text-sm leading-relaxed text-gray-500" data-key="info_desc2">
-                    Zeze Hub의 카드 뒤집기는 단순한 숫자뿐만 아니라 아이콘과 조언(Advice) 모드를 제공합니다. 심리학적으로 시각적 이미지(아이콘)와 짧은 텍스트는 뇌의 우뇌와 좌뇌를 동시에 자극하여, 논리적인 생각만으로는 도달하기 힘든 창의적인 해답을 찾도록 돕습니다. "이 카드가 나에게 무엇을 말하려 하는가?"를 생각하는 과정 자체가 내면의 목소리에 집중하게 만드는 명상의 역할을 합니다. 암호학적으로 보호된 무작위 셔플을 통해 당신에게 꼭 필요한 메시지를 만나보세요.
-                </p>
-            </article>
-        </div>
-        
-        <div class="mt-12 p-6 bg-gray-50 rounded-3xl border border-gray-100">
-            <h3 class="font-bold mb-3 flex items-center gap-2 text-primary">
-                <span class="material-icons text-sm">tips_and_updates</span>
-                <span data-key="info_title3">카드 뒤집기 활용 팁</span>
-            </h3>
-            <ul class="text-xs text-gray-500 space-y-2 list-disc ml-5 leading-relaxed" data-key="info_desc3">
-                <li>순서 정하기: 친구들과 모임에서 발표 순서나 벌칙자를 정할 때 '숫자 모드'를 사용하세요.</li>
-                <li>오늘의 가이드: '심리/조언 모드'를 통해 오늘 하루를 살아갈 긍정적인 메시지를 받아보세요.</li>
-                <li>커스텀 모드: 내기 내용이나 선택지를 직접 입력하여 당신만의 독특한 카드 덱을 만들 수 있습니다.</li>
-                <li>데이터 보안: 사용자가 입력한 모든 커스텀 텍스트는 서버에 저장되지 않으며 기기 내에서만 안전하게 처리됩니다.</li>
-            </ul>
-        </div>
-    </section>
-
     <!-- Footer -->
-    <footer class="py-8 text-center mt-auto border-t border-gray-100">
+    <footer class="py-12 text-center mt-auto border-t border-gray-100">
+        <div class="flex justify-center gap-6 mb-6">
+            <a href="../privacy.html" class="text-[11px] text-gray-400 hover:text-primary transition-colors" data-key="privacy_policy">개인정보처리방침</a>
+            <a href="../terms.html" class="text-[11px] text-gray-400 hover:text-primary transition-colors" data-key="terms_of_service">서비스 약관</a>
+        </div>
         <p class="text-[10px] text-gray-400 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
         <p class="text-[10px] text-gray-400" data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
     </footer>

@@ -9,7 +9,7 @@ const translations = {
         "main_title": "Random Team Maker",
         "main_description": "Input list and divide teams fairly.",
         "input_notice_title": "Required",
-        "input_notice_desc": "Please separate participant names by <b>newline (Enter)</b> or <b>comma (,)</b>.",
+        "input_notice_desc": "Please separate participant names by <b class='text-red-500'>newline (Enter)</b> or <b class='text-red-500'>comma (,)</b>.<br>If there are duplicate names, we recommend using labels like <b class='text-primary'>Alex A, Alex B</b>.",
         "input_label": "Participants",
         "input_placeholder": "Ex) Alex, Jordan, Taylor, Riley, Quinn",
         "team_names_label": "Custom Team Names (Optional)",
@@ -32,6 +32,8 @@ const translations = {
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
+        "mission_label": "Mission / Bet / Selection Content",
+        "mission_placeholder": "e.g., What is the penalty? ☕️",
         "footer_copyright": "© 2024 Zeze Decision Hub.",
         "info_title1": "Importance of Random Team Allocation",
         "info_desc1": "Subjective judgment or bias in team partitioning can harm group harmony. Random allocation is essential to prevent 'clustering by friendship' or 'stacking by skill.' In sports, group projects, or gaming parties, randomness creates unexpected combinations, acting as a trigger for new relationships and synergy. Zeze Hub's Team Maker maximizes this serendipity in group composition to help start fair and enjoyable cooperation.",
@@ -48,7 +50,7 @@ const translations = {
         "main_title": "무작위 팀 나누기",
         "main_description": "명단을 입력하고 공정하게 팀을 나눠보세요.",
         "input_notice_title": "필수 확인",
-        "input_notice_desc": "참가자 이름을 <b>줄바꿈(Enter)</b> 또는 <b>쉼표(,)</b>로 구분하여 입력해주세요.",
+        "input_notice_desc": "참가자 이름을 <b class='text-red-500'>줄바꿈(Enter)</b> 또는 <b class='text-red-500'>쉼표(,)</b>로 구분하여 입력해주세요.<br>동일한 이름이 있을 경우 <b class='text-primary font-bold'>홍길동A, 홍길동B</b>와 같이 구분하여 입력하시는 것을 추천합니다.",
         "input_label": "참가자 명단",
         "input_placeholder": "예) 강백호, 서태웅, 채치수, 송태섭, 정대만",
         "team_names_label": "팀 이름 지정 (선택 사항)",
@@ -71,6 +73,8 @@ const translations = {
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
         "terms_of_service": "서비스 약관",
+        "mission_label": "오늘의 미션 / 내기 내용 / 추첨 내용",
+        "mission_placeholder": "예) 이번 내기 벌칙은? ☕️",
         "footer_copyright": "© 2024 Zeze Decision Hub.",
         "info_title1": "무작위 팀 배정의 중요성: 주관을 배제한 완벽한 화합",
         "info_desc1": "조직이나 친목 모임에서 팀을 나누는 과정은 생각보다 민감한 문제입니다. 인간의 주관적인 판단이나 편견이 개입될 경우, 팀 구성 단계에서부터 갈등이 생기거나 팀워크가 저해될 수 있습니다. 특히 '친한 사람끼리' 혹은 '실력이 뛰어난 사람끼리' 쏠리는 현상은 집단의 역동성을 떨어뜨립니다. 무작위 팀 배정은 이러한 불확실성을 역이용하여 예상치 못한 조합을 만들어내고, 새로운 인간관계와 창의적인 시너지를 형성하는 강력한 촉매제가 됩니다. Zeze Hub의 팀 메이커는 모든 참가자에게 평등한 기회를 제공하여 가장 즐겁고 공정한 협력의 시작을 돕습니다.",
@@ -83,12 +87,25 @@ const translations = {
 
 let currentLang = localStorage.getItem('lang') || 'ko';
 let currentMode = 'teamCount'; 
-let targetValue = 2;
+let targetValue = 2; 
 let players = [];
+
+const teamColors = [
+    { border: 'border-primary', bg: 'bg-primary/5', text: 'text-primary', dot: 'bg-primary', chip: 'bg-primary/10' },
+    { border: 'border-secondary', bg: 'bg-secondary/5', text: 'text-secondary', dot: 'bg-secondary', chip: 'bg-secondary/10' },
+    { border: 'border-orange-500', bg: 'bg-orange-50', text: 'text-orange-600', dot: 'bg-orange-500', chip: 'bg-orange-100' },
+    { border: 'border-teal-500', bg: 'bg-teal-50', text: 'text-teal-600', dot: 'bg-teal-500', chip: 'bg-teal-100' },
+    { border: 'border-blue-500', bg: 'bg-blue-50', text: 'text-blue-600', dot: 'bg-blue-500', chip: 'bg-blue-100' },
+    { border: 'border-emerald-500', bg: 'bg-emerald-50', text: 'text-emerald-600', dot: 'bg-emerald-500', chip: 'bg-emerald-100' },
+    { border: 'border-rose-500', bg: 'bg-rose-50', text: 'text-rose-600', dot: 'bg-rose-500', chip: 'bg-rose-100' },
+    { border: 'border-indigo-500', bg: 'bg-indigo-50', text: 'text-indigo-600', dot: 'bg-indigo-500', chip: 'bg-indigo-100' }
+];
 
 // DOM Elements
 const playerInput = document.getElementById('player-list-input');
 const teamNamesInput = document.getElementById('team-names-input');
+const missionInput = document.getElementById('mission-input');
+const missionSection = missionInput.parentElement;
 const inputCountDisplay = document.getElementById('input-count');
 const targetValueDisplay = document.getElementById('target-value');
 const controlLabel = document.getElementById('control-label');
@@ -96,7 +113,6 @@ const setupSection = document.getElementById('setup-section');
 const resultStage = document.getElementById('result-stage');
 const teamsContainer = document.getElementById('teams-container');
 
-// New Helper: Dynamic guide for team names
 const teamNamesGuideArea = document.createElement('div');
 teamNamesGuideArea.className = 'flex justify-between items-center mt-1 px-1';
 teamNamesGuideArea.innerHTML = `
@@ -105,11 +121,10 @@ teamNamesGuideArea.innerHTML = `
 `;
 
 function init() {
-    // Insert guide area after teamNamesInput
     if (teamNamesInput && teamNamesInput.parentNode) {
         teamNamesInput.parentNode.appendChild(teamNamesGuideArea);
     }
-    
+    targetValueDisplay.textContent = targetValue;
     applyTranslations();
     setupEventListeners();
 }
@@ -144,6 +159,7 @@ function updateTeamNamesGuide() {
         countEl.innerHTML = t.team_names_count.replace('{m}', customTeamNames.length);
     }
 }
+
 function applyTranslations() {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.dataset.key;
@@ -152,25 +168,22 @@ function applyTranslations() {
         }
     });
 
-    // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        // 모든 스타일 관련 클래스 완전 초기화
         btn.classList.remove('bg-primary', 'text-white', 'font-bold', 'bg-gray-50', 'border', 'border-gray-200', 'bg-transparent', 'border-transparent');
-
         if (btn.dataset.lang === currentLang) {
-            // 선택된 언어: 보라색 테마 강조
             btn.classList.add('bg-primary', 'text-white', 'font-bold');
         } else {
-            // 선택되지 않은 언어: 메뉴 배경색과 동일하게 투명 처리
             btn.classList.add('bg-transparent', 'border-transparent');
         }
     });
 
     playerInput.placeholder = translations[currentLang].input_placeholder;
     teamNamesInput.placeholder = translations[currentLang].team_names_placeholder;
+    missionInput.placeholder = translations[currentLang].mission_placeholder;
     controlLabel.textContent = currentMode === 'teamCount' ? translations[currentLang].label_team_count : translations[currentLang].label_member_count;
     updateTeamNamesGuide();
 }
+
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
@@ -180,6 +193,7 @@ function setLanguage(lang) {
 function makeTeams() {
     players = parseInput(playerInput.value);
     const customTeamNames = parseInput(teamNamesInput.value);
+    const missionText = missionInput.value.trim();
 
     if (players.length < 2) {
         alert(translations[currentLang].error_min_players);
@@ -198,60 +212,73 @@ function makeTeams() {
         numTeams = Math.ceil(players.length / targetValue);
     }
 
-    if (numTeams < 1 || numTeams > players.length) {
+    if (numTeams < 2) {
         alert(translations[currentLang].error_invalid_value);
         return;
     }
 
-    // Shuffle players
     const shuffled = [...players];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    // Divide into teams
     const teams = Array.from({ length: numTeams }, () => []);
     shuffled.forEach((player, index) => {
         teams[index % numTeams].push(player);
     });
 
-    renderTeams(teams, customTeamNames);
+    renderTeams(teams, customTeamNames, missionText);
     
     setupSection.classList.add('hidden');
+    missionSection.classList.add('hidden');
     resultStage.classList.remove('hidden');
     
     confetti({
         particleCount: 150,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#6200EE', '#03DAC6', '#BB86FC']
+        colors: ['#6200EE', '#FF0266', '#FF9800', '#03DAC6']
     });
 }
 
-function renderTeams(teams, customTeamNames) {
+function renderTeams(teams, customTeamNames, missionText) {
     teamsContainer.innerHTML = '';
     const t = translations[currentLang];
 
+    // Add Mission display at the top if exists
+    if (missionText) {
+        const missionDisplay = document.createElement('div');
+        missionDisplay.className = 'w-full mb-6 bg-white p-5 rounded-[32px] border border-primary/20 text-center shadow-sm animate-slideUp';
+        missionDisplay.innerHTML = `<span class="text-[10px] text-primary font-black uppercase tracking-widest block mb-1">Current Mission</span><span class="text-xl font-bold text-gray-800">${missionText}</span>`;
+        teamsContainer.appendChild(missionDisplay);
+    }
+
+    const teamsGrid = document.createElement('div');
+    teamsGrid.className = 'grid grid-cols-1 gap-4';
+    teamsContainer.appendChild(teamsGrid);
+
     teams.forEach((members, index) => {
         const teamName = customTeamNames[index] || (t.team_name_prefix + (index + 1));
+        const color = teamColors[index % teamColors.length];
+        
         const card = document.createElement('div');
-        card.className = 'team-card bg-white p-5 rounded-3xl border border-gray-100 shadow-sm animate-fadeIn';
+        card.className = `team-card ${color.bg} p-5 rounded-3xl border ${color.border} shadow-sm animate-fadeIn`;
         card.style.animationDelay = `${index * 0.1}s`;
         
         card.innerHTML = `
             <div class="flex justify-between items-center mb-4">
-                <h3 class="font-black text-primary flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                <h3 class="font-black ${color.text} flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full ${color.dot}"></span>
                     ${teamName}
                 </h3>
-                <span class="text-[10px] font-bold px-2 py-0.5 bg-gray-100 text-gray-400 rounded-full">${members.length} Members</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 ${color.chip} ${color.text} rounded-full">${members.length} Members</span>
             </div>
             <div class="flex flex-wrap gap-2">
-                ${members.map(m => `<span class="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-xl text-xs font-medium text-gray-600">${m}</span>`).join('')}
+                ${members.map(m => `<span class="px-3 py-1.5 bg-white/80 border ${color.border}/20 rounded-xl text-xs font-bold ${color.text}">${m}</span>`).join('')}
             </div>
         `;
-        teamsContainer.appendChild(card);
+        teamsGrid.appendChild(card);
     });
 }
 
@@ -269,7 +296,7 @@ function setupEventListeners() {
             btn.classList.remove('text-gray-500');
             
             currentMode = btn.dataset.mode;
-            targetValue = 2; // Reset
+            targetValue = 2; 
             targetValueDisplay.textContent = targetValue;
             applyTranslations();
         });
@@ -277,7 +304,7 @@ function setupEventListeners() {
 
     document.getElementById('val-plus').addEventListener('click', () => {
         const list = parseInput(playerInput.value);
-        const max = list.length > 0 ? list.length : 20;
+        const max = list.length > 0 ? list.length : 50;
         if (targetValue < max) {
             targetValue++;
             targetValueDisplay.textContent = targetValue;
@@ -286,7 +313,7 @@ function setupEventListeners() {
     });
 
     document.getElementById('val-minus').addEventListener('click', () => {
-        if (targetValue > 1) {
+        if (targetValue > 2) { 
             targetValue--;
             targetValueDisplay.textContent = targetValue;
             updateTeamNamesGuide();
@@ -299,6 +326,7 @@ function setupEventListeners() {
     document.getElementById('reset-btn').addEventListener('click', () => {
         resultStage.classList.add('hidden');
         setupSection.classList.remove('hidden');
+        missionSection.classList.remove('hidden');
     });
 
     document.querySelectorAll('.lang-btn').forEach(btn => {

@@ -8,6 +8,7 @@ const translations = {
         "language_select_label": "Language",
         "main_title": "3D Coin Flip",
         "main_description": "Will it be Heads or Tails?",
+        "result_scroll_notice": "Results can be checked at the bottom of the page.",
         "prediction_label": "Predict the result",
         "heads_label": "Heads",
         "tails_label": "Tails",
@@ -23,6 +24,8 @@ const translations = {
         "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
         "heads_text": "HEADS",
         "tails_text": "TAILS",
+        "heads_advice": "Positive Sign",
+        "tails_advice": "Wait a moment",
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
@@ -49,6 +52,7 @@ const translations = {
         "language_select_label": "언어",
         "main_title": "3D 동전 던지기",
         "main_description": "운명은 앞면일까요, 뒷면일까요?",
+        "result_scroll_notice": "결과는 페이지 하단에서 확인할 수 있습니다.",
         "prediction_label": "결과를 예측해보세요",
         "heads_label": "앞면",
         "tails_label": "뒷면",
@@ -64,6 +68,8 @@ const translations = {
         "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
         "heads_text": "앞면 (Heads)",
         "tails_text": "뒷면 (Tails)",
+        "heads_advice": "긍정적인 신호",
+        "tails_advice": "잠시 멈춤",
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
         "terms_of_service": "서비스 약관",
@@ -142,6 +148,7 @@ let totalFlips = parseInt(localStorage.getItem('coin_total')) || 0;
 let headsCount = parseInt(localStorage.getItem('coin_heads')) || 0; 
 let tailsCount = parseInt(localStorage.getItem('coin_tails')) || 0; 
 let currentStreak = 0;
+let lastResult = null;
 
 // DOM
 const coin = document.getElementById('coin');
@@ -254,14 +261,46 @@ function updateDisplay() {
 function applySkin(skin) {
     currentSkin = skin;
     localStorage.setItem('coin_skin', skin);
-    coin.className = `coin skin-${skin}`;
-    const frontIcon = coin.querySelector('.front .coin-icon');
-    const backIcon = coin.querySelector('.back .coin-icon');
     
-    if (skin === 'gold') { frontIcon.textContent = 'face'; backIcon.textContent = 'toll'; }
-    else if (skin === 'bitcoin') { frontIcon.textContent = 'currency_bitcoin'; backIcon.textContent = 'savings'; }
-    else if (skin === 'heart') { frontIcon.textContent = 'favorite'; backIcon.textContent = 'favorite_border'; }
-    else if (skin === 'cat') { frontIcon.textContent = 'pets'; backIcon.textContent = 'catching_pokemon'; }
+    // Reset classes and add new skin
+    coin.className = `coin skin-${skin}`;
+    
+    const frontIcon = coin.querySelector('.side.front .coin-icon');
+    const backIcon = coin.querySelector('.side.back .coin-icon');
+    
+    if (frontIcon && backIcon) {
+        // Reset to default icon class
+        frontIcon.className = 'coin-icon material-icons text-6xl';
+        backIcon.className = 'coin-icon material-icons text-6xl';
+
+        if (skin === 'gold') { 
+            frontIcon.textContent = 'face'; 
+            backIcon.textContent = 'toll'; 
+        }
+        else if (skin === 'bitcoin') { 
+            frontIcon.textContent = 'currency_bitcoin'; 
+            backIcon.textContent = 'savings'; 
+        }
+        else if (skin === 'heart') { 
+            frontIcon.textContent = 'favorite'; 
+            backIcon.textContent = 'favorite_border'; 
+        }
+        else if (skin === 'cat') { 
+            frontIcon.textContent = 'pets'; 
+            backIcon.textContent = 'catching_pokemon'; 
+        }
+        else if (skin === 'star') { 
+            frontIcon.textContent = 'star'; 
+            backIcon.textContent = 'auto_awesome'; 
+        }
+        else if (skin === 'dog') { 
+            // For Dog skin, use emojis for a "picture" feel and remove material-icons class
+            frontIcon.className = 'coin-icon text-6xl flex items-center justify-center';
+            backIcon.className = 'coin-icon text-6xl flex items-center justify-center';
+            frontIcon.textContent = '🐶'; 
+            backIcon.textContent = '🦴'; 
+        }
+    }
 
     document.querySelectorAll('.skin-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.skin === skin));
 }
@@ -294,11 +333,12 @@ function flipCoin() {
 
     setTimeout(() => {
         const t = translations[currentLang];
+        lastResult = isHeads ? 'heads' : 'tails';
         const scenarioData = storyData[currentScenario];
-        const scenarioText = scenarioData[isHeads ? 'heads' : 'tails'][currentLang];
+        const scenarioText = scenarioData[lastResult][currentLang];
         
         resultText.textContent = isHeads ? t.heads_text : t.tails_text;
-        resultAdvice.textContent = isHeads ? "Positive Sign" : "Wait a moment";
+        resultAdvice.textContent = isHeads ? t.heads_advice : t.tails_advice;
         
         // Update Bottom Story Card
         storyDisplayText.textContent = scenarioText;
@@ -378,6 +418,27 @@ function applyLanguage() {
         const key = el.dataset.key;
         if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
     });
+
+    // Update current result if visible
+    if (lastResult !== null) {
+        const t = translations[currentLang];
+        const isHeads = lastResult === 'heads';
+        const scenarioData = storyData[currentScenario];
+        
+        resultText.textContent = isHeads ? t.heads_text : t.tails_text;
+        resultAdvice.textContent = isHeads ? t.heads_advice : t.tails_advice;
+        storyDisplayText.textContent = scenarioData[lastResult][currentLang];
+        storyThemeName.textContent = t[`sc_${currentScenario}`];
+
+        if (selectedPrediction) {
+            const isWin = selectedPrediction === lastResult;
+            if (isWin) {
+                winBadge.textContent = t.win_label;
+            } else {
+                winBadge.textContent = t.lose_label;
+            }
+        }
+    }
 
     // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
     document.querySelectorAll('.lang-btn').forEach(btn => {

@@ -56,8 +56,6 @@
         </div>
         <ul class="p-4 space-y-2 text-sm text-gray-600">
             <li><a href="teammaker-guide.html" class="block w-full text-left p-2 rounded-md hover:bg-gray-50" data-key="guide_title">사용 가이드</a></li>
-            <li><a href="../privacy.html" class="block w-full text-left p-2 rounded-md hover:bg-gray-50" data-key="privacy_policy">개인정보처리방침</a></li>
-            <li><a href="../terms.html" class="block w-full text-left p-2 rounded-md hover:bg-gray-50" data-key="terms_of_service">서비스 약관</a></li>
             <li class="py-2"><hr class="border-gray-100"></li>
             <li>
                 <span class="block text-[10px] text-gray-400 mb-2 uppercase tracking-widest" data-key="language_select_label">Language</span>
@@ -69,16 +67,25 @@
         </ul>
     </div>
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/20 z-40 hidden"></div>
+<!-- Main Content -->
+<main class="max-w-md mx-auto py-24 px-4 w-full flex-grow flex flex-col">
+    <!-- Hero Section -->
+    <section class="text-center mb-8">
+        <h1 class="text-3xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-b from-primary to-primaryLight" data-key="main_title">무작위 팀 나누기</h1>
+        <p class="text-sm text-gray-500" data-key="main_description">명단을 입력하고 공정하게 팀을 나눠보세요.</p>
+    </section>
 
-    <!-- Main Content -->
-    <main class="max-w-md mx-auto py-24 px-4 w-full flex-grow flex flex-col">
-        <!-- Hero Section -->
-        <section class="text-center mb-8">
-            <h1 class="text-3xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-b from-primary to-primaryLight" data-key="main_title">무작위 팀 나누기</h1>
-            <p class="text-sm text-gray-500" data-key="main_description">명단을 입력하고 공정하게 팀을 나눠보세요.</p>
-        </section>
+    <!-- Mission Input Section (New) -->
+    <section class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-6 group focus-within:border-primary transition-all">
+        <h2 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+            <span class="material-icons text-xs text-primary">campaign</span>
+            <span data-key="mission_label">오늘의 미션 / 내기 내용 / 추첨 내용</span>
+        </h2>
+        <input type="text" id="mission-input" class="w-full bg-transparent border-none text-lg font-bold text-gray-800 placeholder:text-gray-300 outline-none" placeholder="예) 이번 내기 벌칙은?" maxlength="30">
+    </section>
 
-        <!-- Input Section -->
+    <!-- Setup Section -->
+    <section id="setup-section" class="space-y-6">
         <section id="setup-section" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-8 space-y-6">
             <!-- Instruction Box -->
             <div class="bg-primary/5 border border-primary/10 p-4 rounded-2xl flex gap-3 items-start">
@@ -179,7 +186,7 @@
             </h3>
             <ul class="text-xs text-gray-500 space-y-2 list-disc ml-5 leading-relaxed" data-key="info_desc3">
                 <li>입력 편의성: 줄바꿈이나 쉼표로 대량의 명단을 한 번에 복사하여 붙여넣을 수 있습니다.</li>
-                <li>두 가지 모드: 원하는 팀의 개수를 정하거나, 한 팀당 인원수를 직접 설정하여 상황에 맞게 최적화하세요.</li>
+                <li>두 가지 모드: 원하는 팀의 개수를 정하거나, 한 팀당 인원수를 직접 설정하여 상황에 맞는 최적화하세요.</li>
                 <li>팀 이름 커스텀: 기본 이름(팀 1, 팀 2) 대신 재치 있는 팀명들을 미리 입력하여 재미를 더해보세요.</li>
                 <li>데이터 휘발성: Zeze Hub는 입력된 명단을 별도의 서버에 저장하지 않으므로 개인정보 유출 걱정 없이 안전하게 사용할 수 있습니다.</li>
             </ul>
@@ -187,7 +194,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 text-center mt-auto border-t border-gray-100">
+    <footer class="py-12 text-center mt-auto border-t border-gray-200">
+        <div class="flex justify-center gap-6 mb-6">
+            <a href="../privacy.html" class="text-[11px] text-gray-400 hover:text-primary transition-colors" data-key="privacy_policy">개인정보처리방침</a>
+            <a href="../terms.html" class="text-[11px] text-gray-400 hover:text-primary transition-colors" data-key="terms_of_service">서비스 약관</a>
+        </div>
+        <p class="text-[10px] text-gray-400 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
         <p class="text-[10px] text-gray-400" data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
     </footer>
 

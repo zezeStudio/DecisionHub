@@ -264,6 +264,8 @@ const adviceDB_en = {
 
 let currentLang = localStorage.getItem('lang') || 'ko';
 let selectedCategory = 'food';
+let currentTrendingIndex = null; // 현재 선택된 인기 고민 인덱스 저장
+let currentGenieVoiceIndex = null; // 현재 지니의 목소리 인덱스 저장
 
 // State
 let totalFlips = parseInt(localStorage.getItem('totalFlips')) || 0;
@@ -544,6 +546,27 @@ function setLanguage(lang) {
     renderLog();
     renderTrending();
     
+    // 언어 전환 시 인기 고민이 선택되어 있다면 입력창 텍스트도 함께 번역
+    if (currentTrendingIndex !== null) {
+        const list = translations[currentLang].trending_list || [];
+        if (list[currentTrendingIndex]) {
+            questionInput.value = list[currentTrendingIndex].q;
+        }
+    }
+
+    // 언어 전환 시 지니의 목소리 텍스트도 함께 번역
+    const genieVoice = document.getElementById('genie-voice');
+    if (genieVoice && currentGenieVoiceIndex !== null && currentFateData) {
+        const t = translations[currentLang];
+        if (currentFateData.type === 'positive') {
+            genieVoice.textContent = t.genie_pos[currentGenieVoiceIndex];
+        } else if (currentFateData.type === 'negative') {
+            genieVoice.textContent = t.genie_neg[currentGenieVoiceIndex];
+        }
+    } else if (genieVoice && currentFateData && currentFateData.type === 'error') {
+        genieVoice.textContent = translations[currentLang].genie_refused;
+    }
+    
     // Update currently visible answer card if any
     const answerReveal = document.getElementById('answer-reveal');
     if (answerReveal && answerReveal.classList.contains('answer-visible') && currentFateData) {
@@ -558,7 +581,10 @@ function setLanguage(lang) {
                 
                 if (answerText) {
                     answerText.textContent = translatedFate.answer;
-                    answerText.style.fontSize = translatedFate.answer.length > 5 ? '2.5rem' : '3.75rem';
+                    const len = translatedFate.answer.length;
+                    if (len > 8) answerText.style.fontSize = '1.8rem';
+                    else if (len > 4) answerText.style.fontSize = '2.5rem';
+                    else answerText.style.fontSize = '3.75rem';
                 }
                 if (answerAdvice) answerAdvice.textContent = translatedFate.text;
                 if (answerFunfact) answerFunfact.textContent = translatedFate.funFact || "";
@@ -629,6 +655,7 @@ function renderTrending() {
         badge.addEventListener('click', () => {
             const catBtn = document.querySelector(`.cat-btn[data-category="${item.cat}"]`);
             if (catBtn) catBtn.click();
+            currentTrendingIndex = index; // 현재 클릭한 고민의 인덱스 저장
             questionInput.value = item.q;
             questionInput.focus();
         });
@@ -785,7 +812,10 @@ function askLamp() {
 
         // Setup Result UI
         answerText.textContent = fateData.answer;
-        answerText.style.fontSize = fateData.answer.length > 5 ? '2.5rem' : '3.75rem';
+        const ansLen = fateData.answer.length;
+        if (ansLen > 8) answerText.style.fontSize = '1.8rem';
+        else if (ansLen > 4) answerText.style.fontSize = '2.5rem';
+        else answerText.style.fontSize = '3.75rem';
         
         // Change gradient based on result type
         if(fateData.type === 'positive') {
@@ -804,10 +834,13 @@ function askLamp() {
         if (genieVoice) {
             const t = translations[currentLang];
             if (fateData.type === 'positive') {
-                genieVoice.textContent = t.genie_pos[Math.floor(Math.random() * t.genie_pos.length)];
+                currentGenieVoiceIndex = Math.floor(Math.random() * t.genie_pos.length);
+                genieVoice.textContent = t.genie_pos[currentGenieVoiceIndex];
             } else if (fateData.type === 'negative') {
-                genieVoice.textContent = t.genie_neg[Math.floor(Math.random() * t.genie_neg.length)];
+                currentGenieVoiceIndex = Math.floor(Math.random() * t.genie_neg.length);
+                genieVoice.textContent = t.genie_neg[currentGenieVoiceIndex];
             } else {
+                currentGenieVoiceIndex = null;
                 genieVoice.textContent = t.genie_refused;
             }
         }
@@ -959,6 +992,7 @@ function setupEventListeners() {
 
     // Hide answer and reset lamp if user types a new question
     questionInput.addEventListener('input', () => {
+        currentTrendingIndex = null; // 수동 입력 시 인덱스 초기화
         if(answerReveal.classList.contains('answer-visible')) {
             answerReveal.classList.remove('answer-visible', 'pointer-events-auto');
             answerReveal.classList.add('opacity-0', 'scale-50');
