@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="meta_title">팀을 위한 최고의 의사결정 전략: 갈등 없이 결론 내는 법 - Zeze Hub Insight</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../style.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { primary: '#6200EE', primaryLight: '#BB86FC', surface: '#FFFFFF', background: '#F5F5F5' } } }
+        }
+    </script>
+</head>
+<body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+    <nav class="bg-surface shadow-sm sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-primary"><span class="material-icons">arrow_back</span></a>
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Insight Blog</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">KO</button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12">
+        <article class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
+            <header class="mb-10 text-center">
+                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4" data-key="category">비즈니스/협업 칼럼</span>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">팀을 위한 최고의 의사결정 전략:<br>갈등 없이 결론 내는 법</h1>
+                <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 11월 07일 · 읽는 시간: 약 6분</p>
+            </header>
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
+            <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
+                <a href="../index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
+                    <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
+                </a>
+            </div>
+        </article>
+    </main>
+    <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
+        <p>© 2024 ZezeStudio Decision Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        const translations = {
+            "ko": {
+                "meta_title": "팀 의사결정 전략 - Zeze Hub Insight",
+                "category": "비즈니스/협업 칼럼",
+                "main_title": "팀을 위한 최고의 의사결정 전략: 갈등 없이 결론 내는 법",
+                "date_info": "작성일: 2024년 11월 07일 · 읽는 시간: 약 6분",
+                "back_home": "허브로 돌아가기",
+                "body": `
+                    <p>혼자 하는 결정도 힘들지만, 여러 사람이 모여 하나의 결론을 내는 것은 훨씬 더 어렵습니다. 각자의 이해관계와 가치관이 충돌하기 때문입니다. 하지만 효율적인 팀은 '다수결' 이상의 전략을 사용합니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. 다수결의 함정을 경계하라</h2>
+                    <p>가장 흔히 쓰이는 다수결은 빠르지만 위험합니다. 소수의 의견이 완전히 무시되어 팀의 결속력을 해칠 수 있고, '집단 사고(Groupthink)'에 빠져 잘못된 길로 갈 수도 있습니다. 중요한 사안일수록 '동의(Consensus)' 과정을 거쳐야 합니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. 피스트 투 파이브 (Fist to Five) 기법</h2>
+                    <p>팀원들의 찬성 정도를 0(주먹)부터 5(다섯 손가락)까지 표시하게 하세요. 단순히 찬반을 나누는 것이 아니라, 의견의 강도를 확인함으로써 잠재적인 불만을 미리 파악할 수 있습니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. 무작위 할당의 심리학적 가치</h2>
+                    <p>업무 배분이나 순번 정하기처럼 감정 소모가 심한 결정에서는 오히려 <strong>'무작위 추첨'</strong>이 가장 강력한 공정성을 발휘합니다. 인간의 주관이 개입되지 않았다는 사실만으로도 팀원들은 결과에 승복하기 쉬워집니다.</p>
+                    <p>Zeze Hub의 <a href="../teammaker/teammaker.html" class="text-primary font-bold">팀 메이커</a>나 <a href="../ladderclimb/ladderclimb.html" class="text-primary font-bold">사다리 타기</a>는 이러한 팀 내 갈등을 원천 봉쇄하는 훌륭한 중재자 역할을 합니다.</p>
+                `
+            },
+            "en": {
+                "meta_title": "Best Decision Strategies for Teams - Zeze Hub Insight",
+                "category": "Business/Collaboration Column",
+                "main_title": "Best Decision-Making Strategies for Teams:<br>How to Reach a Conclusion Without Conflict",
+                "date_info": "Published: Nov 7, 2024 · Read time: Approx. 6 min",
+                "back_home": "Back to Hub",
+                "body": `
+                    <p>Deciding alone is hard, but reaching a consensus in a group is even tougher. Conflicting interests and values make it complex. However, high-performing teams use strategies beyond simple majority rule.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. Beware the Trap of Majority Rule</h2>
+                    <p>While fast, majority rule can be dangerous. It can alienate the minority and lead to 'Groupthink,' where the team follows a flawed path just to maintain harmony. For critical issues, aim for consensus.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. The 'Fist to Five' Technique</h2>
+                    <p>Ask team members to show their level of agreement using 0 (fist) to 5 (five fingers). This reveals the intensity of opinions and helps identify potential dissatisfaction early on.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. The Psychological Value of Random Allocation</h2>
+                    <p>For emotionally charged decisions like task assignments or order of turns, <strong>'Random Selection'</strong> is often the fairest method. The fact that no human bias was involved makes it much easier for members to accept the outcome.</p>
+                    <p>Zeze Hub's <a href="../teammaker/teammaker.html" class="text-primary font-bold">Team Maker</a> and <a href="../ladderclimb/ladderclimb.html" class="text-primary font-bold">Ladder Climb</a> act as perfect mediators to prevent such conflicts at their source.</p>
+                `
+            }
+        };
+        let currentLang = localStorage.getItem('lang') || 'ko';
+        function applyLanguage() {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+            });
+            document.getElementById('article-body').innerHTML = translations[currentLang].body;
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.id.split('-')[1];
+                if (btnLang === currentLang) {
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
+                }
+            });
+        }
+        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
+</body>
+</html>

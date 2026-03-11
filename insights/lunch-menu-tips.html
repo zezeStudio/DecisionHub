@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘 점심 뭐 먹지? 점심 메뉴 고르는 스마트한 방법 - Zeze Hub Insight</title>
-    
-    <meta name="description" content="매일 반복되는 '점심 메뉴 고민'을 끝낼 5가지 과학적이고 실용적인 방법을 소개합니다. 메뉴 선택의 스트레스를 줄여보세요.">
-    <meta name="keywords" content="점심 메뉴 추천, 오늘 뭐먹지, 메뉴 고르기, 결정 장애, 점심 추천, 직장인 고민, Zeze Hub">
-    
+    <title data-key="meta_title">오늘 점심 뭐 먹지? 결정 피로를 줄이는 5가지 팁 - Zeze Hub Insight</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -15,94 +11,105 @@
     <link rel="stylesheet" href="../style.css">
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { primary: '#6200EE', primaryLight: '#BB86FC', surface: '#FFFFFF', background: '#F5F5F5' }
-                }
-            }
+            theme: { extend: { colors: { primary: '#6200EE', primaryLight: '#BB86FC', surface: '#FFFFFF', background: '#F5F5F5' } } }
         }
     </script>
 </head>
 <body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
-
     <nav class="bg-surface shadow-sm sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-primary">
-                    <span class="material-icons">arrow_back</span>
-                </a>
-                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Lunch Insight</span>
+                <a href="../index.html" class="p-2 -ml-2 rounded-full hover:bg-gray-100 flex items-center text-primary"><span class="material-icons">arrow_back</span></a>
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight">Insight Blog</span>
             </div>
-            <a href="../index.html" class="text-sm font-bold text-gray-500 hover:text-primary transition-colors">홈으로</a>
+            <div class="flex items-center gap-2">
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">KO</button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
         </div>
     </nav>
-
     <main class="flex-grow max-w-3xl mx-auto w-full px-6 py-12">
         <article class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
             <header class="mb-10 text-center">
-                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 text-orange-700 text-xs font-bold mb-4">라이프스타일</span>
-                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight">"오늘 점심 뭐 먹지?" <br class="hidden md:block">결정 장애를 해결하는 5가지 방법</h1>
-                <p class="text-sm text-gray-500">작성일: 2024년 10월 25일 · 읽는 시간: 약 4분</p>
+                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4" data-key="category">라이프스타일 칼럼</span>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">오늘 점심 뭐 먹지?<br>결정 피로를 줄이는 5가지 팁</h1>
+                <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 10월 27일 · 읽는 시간: 약 5분</p>
             </header>
-
-            <div class="space-y-6 text-gray-700 leading-loose text-lg">
-                <p>
-                    대한민국 직장인과 학생들의 영원한 숙제, 바로 "오늘 점심 뭐 먹지?"입니다. 점심시간은 짧고 소중한데, 메뉴를 고르는 데만 10~20분을 허비하곤 합니다. 단순한 메뉴 선택이 왜 이렇게 힘들까요? 그리고 이 지긋지긋한 고민을 어떻게 하면 스마트하게 끝낼 수 있을까요?
-                </p>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. 선택지를 3가지로 압축하기</h2>
-                <p>
-                    선택지가 너무 많으면 뇌는 과부하에 걸립니다. 이를 '선택의 과부하' 현상이라고 합니다. 처음부터 모든 메뉴를 떠올리려 하지 말고, 크게 <strong>[한식 / 양식 / 일식·중식]</strong> 혹은 <strong>[국물 있는 것 / 마른 것 / 가벼운 것]</strong>과 같이 카테고리를 먼저 정하세요. 그 후 각 카테고리에서 딱 1~2개씩의 후보만 골라 총 3개 안에서 결정하는 것이 가장 빠릅니다.
-                </p>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. '어제 먹은 것' 제외하기</h2>
-                <p>
-                    가장 쉬운 소거법입니다. 어제 점심과 저녁에 무엇을 먹었는지 떠올려보세요. 인간의 뇌는 본능적으로 영양 불균형을 막기 위해 전날과 다른 영양소를 원합니다. 어제 면을 먹었다면 오늘은 밥을, 어제 고기를 먹었다면 오늘은 생선이나 채소 위주를 선택하는 식으로 리스트를 지워나가세요.
-                </p>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. 날씨와 컨디션 체크하기</h2>
-                <p>
-                    기온과 습도는 우리의 미각에 큰 영향을 줍니다. 비가 오거나 쌀쌀한 날에는 따뜻한 국물 요리가, 햇볕이 뜨거운 날에는 시원한 면 요리가 끌리는 것은 과학적인 이유가 있습니다. 또한, 스트레스가 많은 날에는 매운 음식이 엔도르핀 분비를 도와줍니다. 현재 자신의 기분과 날씨를 10초만 관찰해 보세요.
-                </p>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">4. '메뉴판' 없이 결정하기</h2>
-                <p>
-                    식당에 가서 메뉴판을 보며 고민하는 것은 이미 늦은 것입니다. 식당 입구에 도착하기 전에 이미 메뉴를 정해두는 <strong>'사전 결정(Pre-commitment)'</strong> 전략을 써보세요. 메뉴판의 화려한 사진과 다양한 옵션은 당신의 판단력을 흐리게 만들 뿐입니다.
-                </p>
-
-                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">5. 외부의 무작위성에 맡기기</h2>
-                <p>
-                    사실 점심 메뉴는 인생의 중대사가 아닙니다. 무엇을 먹어도 한 끼 식사로서 충분한 가치가 있습니다. 이럴 때 가장 효과적인 방법은 <strong>'운명'</strong>에 맡기는 것입니다. 고민하는 에너지를 아껴서 더 중요한 일에 쓰거나, 남은 점심시간 동안 휴식을 취하는 것이 훨씬 이득입니다.
-                </p>
-
-                <div class="my-10 p-8 bg-orange-50 rounded-3xl border border-orange-100 flex flex-col md:flex-row items-center gap-6">
-                    <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-sm shrink-0">
-                        <span class="material-icons text-4xl text-orange-500">casino</span>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-900 mb-2 text-xl">Zeze Hub로 3초 만에 결정하기</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            메뉴 후보 2~6개를 <a href="../destinydice/destinydice.html" class="text-orange-600 font-bold hover:underline">운명의 주사위</a>에 넣고 바로 굴려보세요. 혹은 <a href="../cardflip/cardflip.html" class="text-orange-600 font-bold hover:underline">행운의 카드 뒤집기</a>로 메뉴를 뽑아보는 것도 즐거운 점심시간의 시작이 될 것입니다.
-                        </p>
-                    </div>
-                </div>
-
-                <p class="text-center font-bold text-gray-900 mt-8">
-                    메뉴 고민으로 스트레스받지 마세요. <br>어떤 것을 선택하든, 맛있게 즐겁게 먹는 것이 가장 좋은 보약입니다!
-                </p>
-            </div>
-            
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
             <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
                 <a href="../index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
-                    <span class="material-icons">home</span> 허브로 돌아가기
+                    <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
                 </a>
             </div>
         </article>
     </main>
-
     <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
         <p>© 2024 ZezeStudio Decision Hub. All rights reserved.</p>
     </footer>
-
+    <script>
+        const translations = {
+            "ko": {
+                "meta_title": "오늘 점심 메뉴 고민 해결 팁 - Zeze Hub Insight",
+                "category": "라이프스타일 칼럼",
+                "main_title": "오늘 점심 뭐 먹지? 결정 피로를 줄이는 5가지 팁",
+                "date_info": "작성일: 2024년 10월 27일 · 읽는 시간: 약 5분",
+                "back_home": "허브로 돌아가기",
+                "body": `
+                    <p>매일 돌아오는 점심시간, "뭐 먹지?"라는 질문은 현대 직장인과 학생들에게 가장 큰 스트레스 중 하나입니다. 사소해 보이지만 이 고민은 우리의 뇌 에너지를 갉아먹습니다. 효율적이고 행복한 식사를 위한 5가지 전략을 소개합니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. '요일별 카테고리' 지정하기</h2>
+                    <p>월요일은 한식, 화요일은 면 요리, 수요일은 샐러드 등 요일마다 큰 카테고리를 정해두세요. 선택의 범위를 좁히는 것만으로도 뇌의 부담이 70% 이상 줄어듭니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. '점심 메이트'에게 결정권 위임하기</h2>
+                    <p>매일 돌아가며 결정권자를 정하세요. "아무거나"라고 말하기보다 "오늘은 네가 고르는 날이야"라고 명확히 역할을 맡기면 갈등이 줄어듭니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. 나만의 '베스트 3' 리스트 유지</h2>
+                    <p>고민하기 싫은 날을 위한 절대 실패하지 않는 단골집 3곳을 리스트업 해두세요. 새로운 도전이 피곤한 날, 이 리스트는 당신의 구세주가 됩니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">4. 날씨와 컨디션에 따른 자동 선택</h2>
+                    <p>비가 오면 짬뽕, 스트레스 받는 날은 매운 음식 등 자신만의 공식을 만드세요. 날씨라는 외부 요인이 결정을 대신 내려주게 하는 방법입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">5. Zeze Hub 도구 활용하기</h2>
+                    <p>도저히 못 고르겠다면, 후보 6개를 적고 <a href="../destinydice/destinydice.html" class="text-primary font-bold">운명의 주사위</a>를 굴리세요. 혹은 <a href="../magiclamp/magiclamp.html" class="text-primary font-bold">요술 램프</a>에게 "오늘 돈가스 먹을까요?"라고 물어보세요. 운명에 맡기는 순간, 비로소 당신이 진짜 먹고 싶었던 것이 무엇인지 깨닫게 될 것입니다.</p>
+                `
+            },
+            "en": {
+                "meta_title": "What's for Lunch? 5 Tips to Reduce Decision Fatigue - Zeze Hub Insight",
+                "category": "Lifestyle Column",
+                "main_title": "What's for Lunch?<br>5 Tips to Reduce Decision Fatigue",
+                "date_info": "Published: Oct 27, 2024 · Read time: Approx. 5 min",
+                "back_home": "Back to Hub",
+                "body": `
+                    <p>Lunchtime comes every day, and the question "What should we eat?" is one of the biggest stressors for office workers and students. It seems trivial, but it drains our brain energy. Here are 5 strategies for an efficient and happy meal.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. Assign 'Categories by Day'</h2>
+                    <p>Set a broad category for each day: Korean on Monday, Noodles on Tuesday, Salad on Wednesday, etc. Narrowing down the options reduces the cognitive load by over 70%.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. Delegate to your 'Lunch Mate'</h2>
+                    <p>Rotate the decision-maker daily. Instead of saying "Anything is fine," explicitly assign the role: "It's your turn to pick today." This prevents unnecessary conflict.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. Maintain a 'Best 3' List</h2>
+                    <p>Keep a list of 3 reliable spots for days when you don't want to think. On days when trying something new feels exhausting, this list will be your savior.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">4. Auto-Select by Weather or Mood</h2>
+                    <p>Create your own formulas: Spicy food for stressful days, soup for rainy days. Let external factors like weather make the choice for you.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">5. Use Zeze Hub Tools</h2>
+                    <p>If you really can't decide, list 6 candidates and roll the <a href="../destinydice/destinydice.html" class="text-primary font-bold">Dice of Destiny</a>. Or ask the <a href="../magiclamp/magiclamp.html" class="text-primary font-bold">Magic Lamp</a>, "Should I have pasta today?" The moment you leave it to fate, you'll realize what you truly wanted.</p>
+                `
+            }
+        };
+        let currentLang = localStorage.getItem('lang') || 'ko';
+        function applyLanguage() {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+            });
+            document.getElementById('article-body').innerHTML = translations[currentLang].body;
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.id.split('-')[1];
+                if (btnLang === currentLang) {
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
+                }
+            });
+        }
+        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+        document.addEventListener('DOMContentLoaded', applyLanguage);
+    </script>
 </body>
 </html>
