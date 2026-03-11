@@ -23,6 +23,7 @@ const translations = {
         "player_placeholder": "Player ",
         "privacy_policy": "Privacy Policy",
         "fortune_disclaimer": "※ Please enjoy the results for fun only.",
+        "footer_copyright": "© 2024 Zeze Decision Hub.",
         "guide_title": "User Guide",
         "info_title1": "The Tension and Charm of Random Games",
         "info_desc1": "The Time Bomb game follows in the footsteps of classic 'random' games like Russian Roulette or Pirate Roulette. Its core appeal lies in the powerful immersion that comes from the uncertainty of 'not knowing when it will explode.' Psychologically, this high-tension state stimulates the brain's frontal lobe, temporarily allowing one to forget daily stress and maximizing the sense of relief when the result is revealed. This is why bomb games are the ultimate mood makers at gatherings and parties.",
@@ -53,6 +54,7 @@ const translations = {
         "player_placeholder": "참여자 ",
         "privacy_policy": "개인정보처리방침",
         "fortune_disclaimer": "※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.",
+        "footer_copyright": "© 2024 Zeze Decision Hub.",
         "guide_title": "사용 가이드",
         "info_title1": "복불복 게임의 긴장감과 매력: 찰나의 순간에 마주하는 운명",
         "info_desc1": "시한 폭탄 게임은 '러시안 룰렛'이나 '해적 룰렛'과 같은 계보를 잇는 고전적인 복불복 게임의 디지털 진화형입니다. 이 게임의 핵심 매력은 '언제 터질지 모른다'는 불확실성에서 오는 강력한 몰입감과 아드레날린의 분출입니다. 심리학적으로 이러한 고도의 긴장 상태는 뇌의 전두엽을 일시적으로 강하게 자극하여 일상의 자잘한 스트레스를 잊게 만들고, 폭발을 피했을 때의 안도감을 극대화하는 효과가 있습니다. 친구들과 함께하는 술자리나 파티에서 폭탄 게임이 최고의 분위기 메이커로 손꼽히는 이유는 바로 이 공동의 긴장감과 해방감을 공유하기 때문입니다.",
@@ -71,6 +73,7 @@ let isGameOver = false;
 let totalWires = 8;
 let timerInterval = null;
 let remainingWiresCount = 0;
+let cutWires = [];
 
 // DOM Elements
 const setupSection = document.getElementById('setup-section');
@@ -85,61 +88,165 @@ const resultBanner = document.getElementById('result-banner');
 const resultTitle = document.getElementById('result-title');
 const resultDesc = document.getElementById('result-desc');
 
+// 🎵 Sound Manager
+const SoundManager = {
+    ctx: null,
+    muted: localStorage.getItem('zeze_muted') === 'true',
+    tickTimer: null,
+    init() {
+        if (!this.ctx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+    },
+    updateMuteUI() {
+        const icon = document.getElementById('sound-icon');
+        if (icon) {
+            icon.textContent = this.muted ? 'volume_off' : 'volume_up';
+            if (this.muted) icon.classList.add('text-red-500');
+            else icon.classList.remove('text-red-500');
+        }
+    },
+    toggleMute() {
+        this.muted = !this.muted;
+        localStorage.setItem('zeze_muted', this.muted);
+        this.updateMuteUI();
+        if (this.muted) this.stopTick();
+        else {
+            this.init();
+            // 게임이 진행 중(isGameOver가 아니고 setupSection이 숨겨진 상태)일 때만 다시 시작
+            if (!isGameOver && setupSection.classList.contains('hidden')) this.startTick();
+        }
+    },
+    startTick() {
+        if (this.muted || this.tickTimer) return;
+        this.init();
+        this.tickTimer = setInterval(() => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+            gain.gain.setValueAtTime(0.02, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(); osc.stop(this.ctx.currentTime + 0.05);
+        }, 1000);
+    },
+    stopTick() {
+        if (this.tickTimer) {
+            clearInterval(this.tickTimer);
+            this.tickTimer = null;
+        }
+    },
+    playCut() {
+        if (this.muted) return;
+        this.init();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, this.ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(50, this.ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.1);
+    },
+    playExplosion() {
+        if (this.muted) return;
+        this.init();
+        const bufSize = this.ctx.sampleRate * 1.5;
+        const buf = this.ctx.createBuffer(1, bufSize, this.ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buf;
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 1);
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.5, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 1.2);
+        noise.connect(filter); filter.connect(gain); gain.connect(this.ctx.destination);
+        noise.start();
+    },
+    playWin() {
+        if (this.muted) return;
+        this.init();
+        [440, 554.37, 659.25].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + (i * 0.1));
+            gain.gain.setValueAtTime(0.1, this.ctx.currentTime + (i * 0.1));
+            gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.5);
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + (i * 0.1));
+            osc.stop(this.ctx.currentTime + 0.5);
+        });
+    }
+};
+
 function init() {
     applyTranslations();
-    renderPlayerInputs();
+    const perfEntries = performance.getEntriesByType('navigation');
+    const isReload = perfEntries.length > 0 && perfEntries[0].type === 'reload';
+    if (isReload) loadState();
+    else { clearState(); renderPlayerInputs(); }
     setupEventListeners();
+    SoundManager.updateMuteUI();
+}
+
+function saveState() {
+    const state = { players, currentPlayerIndex, trapWireIndex, isGameOver, totalWires, remainingWiresCount, cutWires, setupVisible: !setupSection.classList.contains('hidden') };
+    localStorage.setItem('zeze_timebomb_state', JSON.stringify(state));
+}
+
+function loadState() {
+    const saved = localStorage.getItem('zeze_timebomb_state');
+    if (!saved) { renderPlayerInputs(); return; }
+    const state = JSON.parse(saved);
+    players = state.players; currentPlayerIndex = state.currentPlayerIndex; trapWireIndex = state.trapWireIndex;
+    isGameOver = state.isGameOver; totalWires = state.totalWires; remainingWiresCount = state.remainingWiresCount;
+    cutWires = state.cutWires || []; renderPlayerInputs();
+    if (!state.setupVisible) {
+        setupSection.classList.add('hidden'); gameStage.classList.remove('hidden');
+        resetUI(); updateTurnDisplay(); startTimerAnimation(); renderWires();
+        if (isGameOver) { clearInterval(timerInterval); if (remainingWiresCount === 1) win(true); else explode(true); }
+        else SoundManager.startTick();
+    }
+}
+
+function clearState() {
+    localStorage.removeItem('zeze_timebomb_state');
+    SoundManager.stopTick();
 }
 
 function applyTranslations() {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.dataset.key;
         if (translations[currentLang] && translations[currentLang][key]) {
-            if (key === 'turn_suffix') {
-                el.textContent = translations[currentLang][key];
-            } else {
-                el.innerHTML = translations[currentLang][key];
-            }
+            if (key === 'turn_suffix') el.textContent = translations[currentLang][key];
+            else el.innerHTML = translations[currentLang][key];
         }
     });
-    
-    // 언어 버튼 스타일 업데이트 (확실한 초기화 및 재설정)
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        // 모든 스타일 관련 클래스 완전 초기화
         btn.classList.remove('bg-primary', 'text-white', 'font-bold', 'bg-white/5', 'border', 'border-white/10', 'bg-transparent', 'border-transparent');
-        
-        if (btn.dataset.lang === currentLang) {
-            // 선택된 언어: 무조건 빨간색 테마 강조
-            btn.classList.add('bg-primary', 'text-white', 'font-bold');
-        } else {
-            // 선택되지 않은 언어: 메뉴 배경색과 동일하게 투명 처리
-            btn.classList.add('bg-transparent', 'border-transparent');
-        }
+        if (btn.dataset.lang === currentLang) btn.classList.add('bg-primary', 'text-white', 'font-bold');
+        else btn.classList.add('bg-transparent', 'border-transparent');
     });
-
     if (isGameOver) {
-        if (remainingWiresCount === 1) {
-            resultTitle.textContent = translations[currentLang].win_title;
-            resultDesc.textContent = translations[currentLang].win_desc;
-        } else {
-            resultTitle.textContent = translations[currentLang].lose_text;
-            resultDesc.innerHTML = `<span class="text-white font-bold">${players[currentPlayerIndex]}</span>${translations[currentLang].lose_desc_suffix}`;
-        }
+        if (remainingWiresCount === 1) { resultTitle.textContent = translations[currentLang].win_title; resultDesc.textContent = translations[currentLang].win_desc; }
+        else { resultTitle.textContent = translations[currentLang].lose_text; resultDesc.innerHTML = `<span class="text-white font-bold">${players[currentPlayerIndex]}</span>${translations[currentLang].lose_desc_suffix}`; }
     }
 }
 
 function saveCurrentNames() {
     const inputs = document.querySelectorAll('.player-name-input');
-    inputs.forEach((input, index) => {
-        if (players[index] !== undefined) {
-            players[index] = input.value;
-        }
-    });
+    inputs.forEach((input, index) => { if (players[index] !== undefined) players[index] = input.value; });
 }
 
 function renderPlayerInputs() {
     playerInputsContainer.innerHTML = '';
-    
     players.forEach((name, index) => {
         const div = document.createElement('div');
         div.className = 'flex gap-2 items-center animate-fadeIn';
@@ -156,56 +263,33 @@ function renderPlayerInputs() {
 function startGame() {
     saveCurrentNames();
     const names = players.map(n => n.trim()).filter(n => n !== "");
-    
-    if (names.length < 2) {
-        alert(translations[currentLang].error_min_players);
-        return;
-    }
-    
-    players = names;
-    currentPlayerIndex = 0;
-    isGameOver = false;
-    
+    if (names.length < 2) { alert(translations[currentLang].error_min_players); return; }
+    players = names; currentPlayerIndex = 0; isGameOver = false;
     totalWires = Math.max(6, Math.min(players.length * 2, 12));
-    remainingWiresCount = totalWires;
-    trapWireIndex = Math.floor(Math.random() * totalWires);
-    
-    setupSection.classList.add('hidden');
-    gameStage.classList.remove('hidden');
-    
-    resetUI();
-    updateTurnDisplay();
-    startTimerAnimation();
-    renderWires();
+    remainingWiresCount = totalWires; trapWireIndex = Math.floor(Math.random() * totalWires);
+    cutWires = new Array(totalWires).fill(false);
+    setupSection.classList.add('hidden'); gameStage.classList.remove('hidden');
+    resetUI(); updateTurnDisplay(); startTimerAnimation(); renderWires(); saveState();
+    SoundManager.startTick();
 }
 
 function resetUI() {
-    bomb.classList.remove('exploded');
-    document.body.classList.remove('screen-shake');
-    resultBanner.style.opacity = '0';
-    resultBanner.classList.add('scale-90');
-    resultTitle.classList.remove('text-success');
-    resultTitle.classList.add('text-primary');
+    bomb.classList.remove('exploded'); document.body.classList.remove('screen-shake');
+    resultBanner.style.opacity = '0'; resultBanner.style.pointerEvents = 'none'; resultBanner.classList.add('scale-90');
+    resultTitle.classList.remove('text-success'); resultTitle.classList.add('text-primary');
 }
 
-function updateTurnDisplay() {
-    currentPlayerNameDisplay.textContent = players[currentPlayerIndex];
-}
+function updateTurnDisplay() { currentPlayerNameDisplay.textContent = players[currentPlayerIndex]; }
 
 function renderWires() {
     wiresGrid.innerHTML = '';
     const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'white', 'red', 'blue', 'green', 'yellow'];
-    
     for (let i = 0; i < totalWires; i++) {
         const wireRow = document.createElement('div');
         wireRow.className = 'wire-row';
+        if (cutWires[i]) wireRow.classList.add('cut');
         wireRow.dataset.color = colors[i % colors.length];
-        wireRow.innerHTML = `
-            <div class="connector left"></div>
-            <div class="wire-cable"></div>
-            <div class="connector right"></div>
-        `;
-        
+        wireRow.innerHTML = `<div class="connector left"></div><div class="wire-cable"></div><div class="connector right"></div>`;
         wireRow.addEventListener('click', () => handleWireClick(i, wireRow));
         wiresGrid.appendChild(wireRow);
     }
@@ -213,73 +297,48 @@ function renderWires() {
 
 function handleWireClick(index, element) {
     if (isGameOver || element.classList.contains('cut')) return;
-    
-    element.classList.add('cut');
-    remainingWiresCount--;
-    
+    element.classList.add('cut'); cutWires[index] = true; remainingWiresCount--;
     const isMuted = localStorage.getItem('zeze_muted') === 'true';
-
-    if (index === trapWireIndex) {
-        explode();
-    } else if (remainingWiresCount === 1) {
-        win();
-    } else {
+    SoundManager.playCut();
+    if (index === trapWireIndex) explode();
+    else if (remainingWiresCount === 1) win();
+    else {
         if (!isMuted && "vibrate" in navigator) navigator.vibrate(20);
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-        updateTurnDisplay();
+        updateTurnDisplay(); saveState();
     }
 }
 
-function explode() {
-    isGameOver = true;
-    clearInterval(timerInterval);
-    
+function explode(noAnim = false) {
+    isGameOver = true; clearInterval(timerInterval); SoundManager.stopTick();
     bomb.classList.add('exploded');
-    document.body.classList.add('screen-shake');
-    
-    setTimeout(() => document.body.classList.remove('screen-shake'), 500);
-    
-    const isMuted = localStorage.getItem('zeze_muted') === 'true';
-
+    if (!noAnim) { document.body.classList.add('screen-shake'); setTimeout(() => document.body.classList.remove('screen-shake'), 500); SoundManager.playExplosion(); }
     setTimeout(() => {
         resultTitle.textContent = translations[currentLang].lose_text;
         resultTitle.className = "text-4xl font-black mb-2 tracking-tighter text-primary";
         resultDesc.innerHTML = `<span class="text-white font-bold">${players[currentPlayerIndex]}</span>${translations[currentLang].lose_desc_suffix}`;
-        
-        resultBanner.style.opacity = '1';
-        resultBanner.classList.remove('scale-90');
-        
-        if (!isMuted && "vibrate" in navigator) navigator.vibrate([100, 50, 200, 50, 300]);
-        
-        confetti({
-            particleCount: 150,
-            spread: 100,
-            origin: { y: 0.5 },
-            colors: ['#FF3D00', '#FFD600', '#FFFFFF', '#444444']
-        });
-    }, 200);
+        resultBanner.style.opacity = '1'; resultBanner.style.pointerEvents = 'auto'; resultBanner.classList.remove('scale-90');
+        if (!noAnim) {
+            const isMuted = localStorage.getItem('zeze_muted') === 'true';
+            if (!isMuted && "vibrate" in navigator) navigator.vibrate([100, 50, 200, 50, 300]);
+            confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 }, colors: ['#FF3D00', '#FFD600', '#FFFFFF', '#444444'] });
+        }
+        saveState();
+    }, noAnim ? 0 : 200);
 }
 
-function win() {
-    isGameOver = true;
-    clearInterval(timerInterval);
-    
+function win(noAnim = false) {
+    isGameOver = true; clearInterval(timerInterval); SoundManager.stopTick();
     resultTitle.textContent = translations[currentLang].win_title;
     resultTitle.className = "text-4xl font-black mb-2 tracking-tighter text-success";
     resultDesc.textContent = translations[currentLang].win_desc;
-    
-    resultBanner.style.opacity = '1';
-    resultBanner.classList.remove('scale-90');
-    
-    confetti({
-        particleCount: 200,
-        spread: 120,
-        origin: { y: 0.6 },
-        colors: ['#00E676', '#FFFFFF', '#FFD600']
-    });
+    resultBanner.style.opacity = '1'; resultBanner.style.pointerEvents = 'auto'; resultBanner.classList.remove('scale-90');
+    if (!noAnim) { SoundManager.playWin(); confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 }, colors: ['#00E676', '#FFFFFF', '#FFD600'] }); }
+    saveState();
 }
 
 function startTimerAnimation() {
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         if (isGameOver) return;
         const ms = Math.floor(Math.random() * 99).toString().padStart(2, '0');
@@ -296,59 +355,18 @@ function setLanguage(lang) {
 }
 
 function setupEventListeners() {
-    document.getElementById('add-player-btn').addEventListener('click', () => {
-        if (players.length < 8) {
-            saveCurrentNames();
-            players.push("");
-            renderPlayerInputs();
-        }
-    });
-
-    playerInputsContainer.addEventListener('click', (e) => {
-        if (e.target.closest('.remove-player-btn')) {
-            saveCurrentNames();
-            const index = parseInt(e.target.closest('.remove-player-btn').dataset.index);
-            players.splice(index, 1);
-            renderPlayerInputs();
-        }
-    });
-
-    playerInputsContainer.addEventListener('input', (e) => {
-        if (e.target.classList.contains('player-name-input')) {
-            saveCurrentNames();
-        }
-    });
-
+    document.getElementById('add-player-btn').addEventListener('click', () => { if (players.length < 8) { saveCurrentNames(); players.push(""); renderPlayerInputs(); saveState(); } });
+    playerInputsContainer.addEventListener('click', (e) => { if (e.target.closest('.remove-player-btn')) { saveCurrentNames(); const index = parseInt(e.target.closest('.remove-player-btn').dataset.index); players.splice(index, 1); renderPlayerInputs(); saveState(); } });
+    playerInputsContainer.addEventListener('input', (e) => { if (e.target.classList.contains('player-name-input')) { saveCurrentNames(); saveState(); } });
     document.getElementById('start-game-btn').addEventListener('click', startGame);
-    
-    document.getElementById('reset-btn').addEventListener('click', () => {
-        gameStage.classList.add('hidden');
-        setupSection.classList.remove('hidden');
-    });
-
-    document.getElementById('reset-game-menu').addEventListener('click', () => {
-        gameStage.classList.add('hidden');
-        setupSection.classList.remove('hidden');
-        document.getElementById('sidebar-menu').classList.add('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.add('hidden');
-    });
-
-    document.getElementById('menu-toggle').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.remove('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.remove('hidden');
-    });
-    document.getElementById('close-menu').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.add('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.add('hidden');
-    });
-    document.getElementById('sidebar-overlay').addEventListener('click', () => {
-        document.getElementById('sidebar-menu').classList.add('translate-x-full');
-        document.getElementById('sidebar-overlay').classList.add('hidden');
-    });
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
-    });
+    document.getElementById('reset-btn').addEventListener('click', () => { clearState(); gameStage.classList.add('hidden'); setupSection.classList.remove('hidden'); });
+    document.getElementById('reset-game-menu').addEventListener('click', () => { clearState(); gameStage.classList.add('hidden'); setupSection.classList.remove('hidden'); document.getElementById('sidebar-menu').classList.add('translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); });
+    document.getElementById('menu-toggle').addEventListener('click', () => { document.getElementById('sidebar-menu').classList.remove('translate-x-full'); document.getElementById('sidebar-overlay').classList.remove('hidden'); });
+    document.getElementById('close-menu').addEventListener('click', () => { document.getElementById('sidebar-menu').classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); });
+    document.getElementById('sidebar-overlay').addEventListener('click', () => { document.getElementById('sidebar-menu').classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); });
+    document.querySelectorAll('.lang-btn').forEach(btn => { btn.addEventListener('click', () => setLanguage(btn.dataset.lang)); });
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle) soundToggle.addEventListener('click', () => SoundManager.toggleMute());
 }
 
 document.addEventListener('DOMContentLoaded', init);
