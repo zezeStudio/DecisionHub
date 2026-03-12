@@ -9,9 +9,11 @@ const translations = {
         "main_title": "Bomb Defusal",
         "setup_desc": "Enter participants and set the order.",
         "label_players": "Participants",
+        "label_wires": "Number of Wires",
         "add_player": "Add Player",
         "start_btn": "Start Mission",
         "turn_suffix": "'s turn!",
+        "bomb_exploded_status": "BOMB EXPLODED!",
         "win_title": "SUCCESS!",
         "win_desc": "Miraculous! You successfully defused the bomb. Everyone is safe.",
         "lose_text": "BOOM!",
@@ -23,7 +25,7 @@ const translations = {
         "player_placeholder": "Player ",
         "privacy_policy": "Privacy Policy",
         "fortune_disclaimer": "※ Please enjoy the results for fun only.",
-        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "footer_copyright": "© 2026 Zeze Decision Hub.",
         "guide_title": "User Guide",
         "info_title1": "The Tension and Charm of Random Games",
         "info_desc1": "The Time Bomb game follows in the footsteps of classic 'random' games like Russian Roulette or Pirate Roulette. Its core appeal lies in the powerful immersion that comes from the uncertainty of 'not knowing when it will explode.' Psychologically, this high-tension state stimulates the brain's frontal lobe, temporarily allowing one to forget daily stress and maximizing the sense of relief when the result is revealed. This is why bomb games are the ultimate mood makers at gatherings and parties.",
@@ -40,9 +42,11 @@ const translations = {
         "main_title": "공포의 시한 폭탄",
         "setup_desc": "참여자를 입력하고 순서를 정하세요.",
         "label_players": "참여자 명단",
+        "label_wires": "와이어 개수",
         "add_player": "참여자 추가",
         "start_btn": "작전 시작하기",
         "turn_suffix": "님 차례입니다!",
+        "bomb_exploded_status": "폭탄이 터졌습니다!",
         "win_title": "해체 성공!",
         "win_desc": "운이 좋으시군요! 폭탄 제거에 성공하셨습니다. 모두가 안전합니다.",
         "lose_text": "BOOM!",
@@ -54,7 +58,7 @@ const translations = {
         "player_placeholder": "참여자 ",
         "privacy_policy": "개인정보처리방침",
         "fortune_disclaimer": "※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.",
-        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "footer_copyright": "© 2026 Zeze Decision Hub.",
         "guide_title": "사용 가이드",
         "info_title1": "복불복 게임의 긴장감과 매력: 찰나의 순간에 마주하는 운명",
         "info_desc1": "시한 폭탄 게임은 '러시안 룰렛'이나 '해적 룰렛'과 같은 계보를 잇는 고전적인 복불복 게임의 디지털 진화형입니다. 이 게임의 핵심 매력은 '언제 터질지 모른다'는 불확실성에서 오는 강력한 몰입감과 아드레날린의 분출입니다. 심리학적으로 이러한 고도의 긴장 상태는 뇌의 전두엽을 일시적으로 강하게 자극하여 일상의 자잘한 스트레스를 잊게 만들고, 폭발을 피했을 때의 안도감을 극대화하는 효과가 있습니다. 친구들과 함께하는 술자리나 파티에서 폭탄 게임이 최고의 분위기 메이커로 손꼽히는 이유는 바로 이 공동의 긴장감과 해방감을 공유하기 때문입니다.",
@@ -80,7 +84,10 @@ const setupSection = document.getElementById('setup-section');
 const gameStage = document.getElementById('game-stage');
 const playerInputsContainer = document.getElementById('player-inputs');
 const playerCountDisplay = document.getElementById('player-count');
+const wireCountDisplay = document.getElementById('wire-count');
 const currentPlayerNameDisplay = document.getElementById('current-player-name');
+const turnIndicatorBox = document.getElementById('turn-indicator');
+const turnIndicatorTextContainer = turnIndicatorBox ? turnIndicatorBox.querySelector('span.text-sm') : null;
 const bomb = document.getElementById('bomb');
 const digitalTimer = document.getElementById('digital-timer');
 const wiresGrid = document.getElementById('wires-panel');
@@ -115,8 +122,7 @@ const SoundManager = {
         if (this.muted) this.stopTick();
         else {
             this.init();
-            // 게임이 진행 중(isGameOver가 아니고 setupSection이 숨겨진 상태)일 때만 다시 시작
-            if (!isGameOver && setupSection.classList.contains('hidden')) this.startTick();
+            if (!isGameOver && setupSection && setupSection.classList.contains('hidden')) this.startTick();
         }
     },
     startTick() {
@@ -191,13 +197,18 @@ function init() {
     const perfEntries = performance.getEntriesByType('navigation');
     const isReload = perfEntries.length > 0 && perfEntries[0].type === 'reload';
     if (isReload) loadState();
-    else { clearState(); renderPlayerInputs(); }
+    else { 
+        clearState(); 
+        renderPlayerInputs();
+        totalWires = 8; 
+        if(wireCountDisplay) wireCountDisplay.textContent = totalWires;
+    }
     setupEventListeners();
     SoundManager.updateMuteUI();
 }
 
 function saveState() {
-    const state = { players, currentPlayerIndex, trapWireIndex, isGameOver, totalWires, remainingWiresCount, cutWires, setupVisible: !setupSection.classList.contains('hidden') };
+    const state = { players, currentPlayerIndex, trapWireIndex, isGameOver, totalWires, remainingWiresCount, cutWires, setupVisible: setupSection ? !setupSection.classList.contains('hidden') : true };
     localStorage.setItem('zeze_timebomb_state', JSON.stringify(state));
 }
 
@@ -208,7 +219,9 @@ function loadState() {
     players = state.players; currentPlayerIndex = state.currentPlayerIndex; trapWireIndex = state.trapWireIndex;
     isGameOver = state.isGameOver; totalWires = state.totalWires; remainingWiresCount = state.remainingWiresCount;
     cutWires = state.cutWires || []; renderPlayerInputs();
-    if (!state.setupVisible) {
+    if(wireCountDisplay) wireCountDisplay.textContent = totalWires;
+    
+    if (!state.setupVisible && setupSection) {
         setupSection.classList.add('hidden'); gameStage.classList.remove('hidden');
         resetUI(); updateTurnDisplay(); startTimerAnimation(); renderWires();
         if (isGameOver) { clearInterval(timerInterval); if (remainingWiresCount === 1) win(true); else explode(true); }
@@ -219,6 +232,20 @@ function loadState() {
 function clearState() {
     localStorage.removeItem('zeze_timebomb_state');
     SoundManager.stopTick();
+}
+
+function renderResultDesc() {
+    if (!resultDesc) return;
+    const name = players[currentPlayerIndex];
+    const fullSuffix = translations[currentLang].lose_desc_suffix;
+    
+    if (currentLang === 'ko') {
+        const namePart = name + "님이";
+        const restPart = fullSuffix.replace("님이 ", "");
+        resultDesc.innerHTML = `<span class="text-orange-500 text-xl font-black">${namePart}</span><br>${restPart}`;
+    } else {
+        resultDesc.innerHTML = `<span class="text-orange-500 text-xl font-black block mb-1">${name}</span>${fullSuffix}`;
+    }
 }
 
 function applyTranslations() {
@@ -235,8 +262,15 @@ function applyTranslations() {
         else btn.classList.add('bg-transparent', 'border-transparent');
     });
     if (isGameOver) {
-        if (remainingWiresCount === 1) { resultTitle.textContent = translations[currentLang].win_title; resultDesc.textContent = translations[currentLang].win_desc; }
-        else { resultTitle.textContent = translations[currentLang].lose_text; resultDesc.innerHTML = `<span class="text-white font-bold">${players[currentPlayerIndex]}</span>${translations[currentLang].lose_desc_suffix}`; }
+        updateTurnDisplay(); // 터진 상태 문구 반영
+        if (remainingWiresCount === 1) { 
+            resultTitle.textContent = translations[currentLang].win_title; 
+            resultDesc.textContent = translations[currentLang].win_desc; 
+        }
+        else { 
+            resultTitle.textContent = translations[currentLang].lose_text; 
+            renderResultDesc();
+        }
     }
 }
 
@@ -246,6 +280,7 @@ function saveCurrentNames() {
 }
 
 function renderPlayerInputs() {
+    if (!playerInputsContainer) return;
     playerInputsContainer.innerHTML = '';
     players.forEach((name, index) => {
         const div = document.createElement('div');
@@ -257,31 +292,65 @@ function renderPlayerInputs() {
         `;
         playerInputsContainer.appendChild(div);
     });
-    playerCountDisplay.textContent = `${players.length}/8`;
+    if (playerCountDisplay) playerCountDisplay.textContent = `${players.length}/8`;
 }
 
 function startGame() {
     saveCurrentNames();
     const names = players.map(n => n.trim()).filter(n => n !== "");
     if (names.length < 2) { alert(translations[currentLang].error_min_players); return; }
+    
     players = names; currentPlayerIndex = 0; isGameOver = false;
-    totalWires = Math.max(6, Math.min(players.length * 2, 12));
     remainingWiresCount = totalWires; trapWireIndex = Math.floor(Math.random() * totalWires);
     cutWires = new Array(totalWires).fill(false);
-    setupSection.classList.add('hidden'); gameStage.classList.remove('hidden');
+    
+    if (setupSection) setupSection.classList.add('hidden'); 
+    if (gameStage) gameStage.classList.remove('hidden');
     resetUI(); updateTurnDisplay(); startTimerAnimation(); renderWires(); saveState();
     SoundManager.startTick();
 }
 
 function resetUI() {
-    bomb.classList.remove('exploded'); document.body.classList.remove('screen-shake');
-    resultBanner.style.opacity = '0'; resultBanner.style.pointerEvents = 'none'; resultBanner.classList.add('scale-90');
-    resultTitle.classList.remove('text-success'); resultTitle.classList.add('text-primary');
+    if (bomb) bomb.classList.remove('exploded'); 
+    document.body.classList.remove('screen-shake');
+    if (resultBanner) {
+        resultBanner.style.opacity = '0'; 
+        resultBanner.style.pointerEvents = 'none'; 
+        resultBanner.classList.add('scale-90');
+    }
+    if (resultTitle) {
+        resultTitle.classList.remove('text-success'); 
+        resultTitle.classList.add('text-primary');
+    }
+    // 인디케이터 초기화
+    if (turnIndicatorBox) {
+        turnIndicatorBox.classList.remove('bg-red-500/20', 'border-red-500/30');
+        turnIndicatorBox.classList.add('bg-primary/10', 'border-primary/20');
+    }
 }
 
-function updateTurnDisplay() { currentPlayerNameDisplay.textContent = players[currentPlayerIndex]; }
+function updateTurnDisplay() {
+    if (isGameOver) {
+        if (remainingWiresCount > 1) { // 꽝
+            if (turnIndicatorBox) {
+                turnIndicatorBox.classList.remove('bg-primary/10', 'border-primary/20');
+                turnIndicatorBox.classList.add('bg-red-500/20', 'border-red-500/30');
+            }
+            if (turnIndicatorTextContainer) {
+                turnIndicatorTextContainer.innerHTML = `<span class="text-red-500 font-black animate-bounce">${translations[currentLang].bomb_exploded_status}</span>`;
+            }
+        }
+    } else {
+        if (currentPlayerNameDisplay) currentPlayerNameDisplay.textContent = players[currentPlayerIndex];
+        // 차례 문구 복구 (언어 전환 등 대응)
+        if (turnIndicatorTextContainer) {
+            turnIndicatorTextContainer.innerHTML = `<span id="current-player-name" class="text-primary text-base mr-1">${players[currentPlayerIndex]}</span>${translations[currentLang].turn_suffix}`;
+        }
+    }
+}
 
 function renderWires() {
+    if (!wiresGrid) return;
     wiresGrid.innerHTML = '';
     const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'white', 'red', 'blue', 'green', 'yellow'];
     for (let i = 0; i < totalWires; i++) {
@@ -311,13 +380,22 @@ function handleWireClick(index, element) {
 
 function explode(noAnim = false) {
     isGameOver = true; clearInterval(timerInterval); SoundManager.stopTick();
-    bomb.classList.add('exploded');
+    if (bomb) bomb.classList.add('exploded');
     if (!noAnim) { document.body.classList.add('screen-shake'); setTimeout(() => document.body.classList.remove('screen-shake'), 500); SoundManager.playExplosion(); }
+    
+    updateTurnDisplay(); // 멘트 즉시 변경
+
     setTimeout(() => {
-        resultTitle.textContent = translations[currentLang].lose_text;
-        resultTitle.className = "text-4xl font-black mb-2 tracking-tighter text-primary";
-        resultDesc.innerHTML = `<span class="text-white font-bold">${players[currentPlayerIndex]}</span>${translations[currentLang].lose_desc_suffix}`;
-        resultBanner.style.opacity = '1'; resultBanner.style.pointerEvents = 'auto'; resultBanner.classList.remove('scale-90');
+        if (resultTitle) {
+            resultTitle.textContent = translations[currentLang].lose_text;
+            resultTitle.className = "text-4xl font-black mb-2 tracking-tighter text-primary";
+        }
+        renderResultDesc();
+        if (resultBanner) {
+            resultBanner.style.opacity = '1'; 
+            resultBanner.style.pointerEvents = 'auto'; 
+            resultBanner.classList.remove('scale-90');
+        }
         if (!noAnim) {
             const isMuted = localStorage.getItem('zeze_muted') === 'true';
             if (!isMuted && "vibrate" in navigator) navigator.vibrate([100, 50, 200, 50, 300]);
@@ -329,10 +407,16 @@ function explode(noAnim = false) {
 
 function win(noAnim = false) {
     isGameOver = true; clearInterval(timerInterval); SoundManager.stopTick();
-    resultTitle.textContent = translations[currentLang].win_title;
-    resultTitle.className = "text-4xl font-black mb-2 tracking-tighter text-success";
-    resultDesc.textContent = translations[currentLang].win_desc;
-    resultBanner.style.opacity = '1'; resultBanner.style.pointerEvents = 'auto'; resultBanner.classList.remove('scale-90');
+    if (resultTitle) {
+        resultTitle.textContent = translations[currentLang].win_title;
+        resultTitle.className = "text-4xl font-black mb-2 tracking-tighter text-success";
+    }
+    if (resultDesc) resultDesc.textContent = translations[currentLang].win_desc;
+    if (resultBanner) {
+        resultBanner.style.opacity = '1'; 
+        resultBanner.style.pointerEvents = 'auto'; 
+        resultBanner.classList.remove('scale-90');
+    }
     if (!noAnim) { SoundManager.playWin(); confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 }, colors: ['#00E676', '#FFFFFF', '#FFD600'] }); }
     saveState();
 }
@@ -340,7 +424,7 @@ function win(noAnim = false) {
 function startTimerAnimation() {
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
-        if (isGameOver) return;
+        if (isGameOver || !digitalTimer) return;
         const ms = Math.floor(Math.random() * 99).toString().padStart(2, '0');
         const sec = Math.floor(Math.random() * 60).toString().padStart(2, '0');
         digitalTimer.textContent = `00:${sec}:${ms}`;
@@ -355,16 +439,73 @@ function setLanguage(lang) {
 }
 
 function setupEventListeners() {
-    document.getElementById('add-player-btn').addEventListener('click', () => { if (players.length < 8) { saveCurrentNames(); players.push(""); renderPlayerInputs(); saveState(); } });
-    playerInputsContainer.addEventListener('click', (e) => { if (e.target.closest('.remove-player-btn')) { saveCurrentNames(); const index = parseInt(e.target.closest('.remove-player-btn').dataset.index); players.splice(index, 1); renderPlayerInputs(); saveState(); } });
-    playerInputsContainer.addEventListener('input', (e) => { if (e.target.classList.contains('player-name-input')) { saveCurrentNames(); saveState(); } });
-    document.getElementById('start-game-btn').addEventListener('click', startGame);
-    document.getElementById('reset-btn').addEventListener('click', () => { clearState(); gameStage.classList.add('hidden'); setupSection.classList.remove('hidden'); });
-    document.getElementById('reset-game-menu').addEventListener('click', () => { clearState(); gameStage.classList.add('hidden'); setupSection.classList.remove('hidden'); document.getElementById('sidebar-menu').classList.add('translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); });
-    document.getElementById('menu-toggle').addEventListener('click', () => { document.getElementById('sidebar-menu').classList.remove('translate-x-full'); document.getElementById('sidebar-overlay').classList.remove('hidden'); });
-    document.getElementById('close-menu').addEventListener('click', () => { document.getElementById('sidebar-menu').classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); });
-    document.getElementById('sidebar-overlay').addEventListener('click', () => { document.getElementById('sidebar-menu').classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); });
+    const addPlayerBtn = document.getElementById('add-player-btn');
+    if (addPlayerBtn) addPlayerBtn.addEventListener('click', () => { if (players.length < 8) { saveCurrentNames(); players.push(""); renderPlayerInputs(); saveState(); } });
+    
+    if (playerInputsContainer) {
+        playerInputsContainer.addEventListener('click', (e) => { if (e.target.closest('.remove-player-btn')) { saveCurrentNames(); const index = parseInt(e.target.closest('.remove-player-btn').dataset.index); players.splice(index, 1); renderPlayerInputs(); saveState(); } });
+        playerInputsContainer.addEventListener('input', (e) => { if (e.target.classList.contains('player-name-input')) { saveCurrentNames(); saveState(); } });
+    }
+    
+    const wirePlus = document.getElementById('wire-plus');
+    const wireMinus = document.getElementById('wire-minus');
+    
+    if (wirePlus) {
+        wirePlus.addEventListener('click', () => {
+            if (totalWires < 20) {
+                totalWires++;
+                if (wireCountDisplay) wireCountDisplay.textContent = totalWires;
+                saveState();
+            }
+        });
+    }
+    
+    if (wireMinus) {
+        wireMinus.addEventListener('click', () => {
+            if (totalWires > 4) {
+                totalWires--;
+                if (wireCountDisplay) wireCountDisplay.textContent = totalWires;
+                saveState();
+            }
+        });
+    }
+
+    const startGameBtn = document.getElementById('start-game-btn');
+    if (startGameBtn) startGameBtn.addEventListener('click', startGame);
+    
+    const resetBtn = document.getElementById('reset-btn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => { 
+            clearState(); 
+            if (gameStage) gameStage.classList.add('hidden'); 
+            if (setupSection) setupSection.classList.remove('hidden'); 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+    
+    const resetMenuBtn = document.getElementById('reset-game-menu');
+    if (resetMenuBtn) {
+        resetMenuBtn.addEventListener('click', () => { 
+            clearState(); 
+            if (gameStage) gameStage.classList.add('hidden'); 
+            if (setupSection) setupSection.classList.remove('hidden'); 
+            document.getElementById('sidebar-menu').classList.add('translate-x-full'); 
+            document.getElementById('sidebar-overlay').classList.add('hidden'); 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+    
+    const menuToggle = document.getElementById('menu-toggle');
+    if (menuToggle) menuToggle.addEventListener('click', () => { document.getElementById('sidebar-menu').classList.remove('translate-x-full'); document.getElementById('sidebar-overlay').classList.remove('hidden'); });
+    
+    const closeMenu = document.getElementById('close-menu');
+    if (closeMenu) closeMenu.addEventListener('click', () => { document.getElementById('sidebar-menu').classList.add('translate-x-full'); if (sidebarOverlay) sidebarOverlay.classList.add('hidden'); });
+    
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', () => { document.getElementById('sidebar-menu').classList.add('translate-x-full'); sidebarOverlay.classList.add('hidden'); });
+    
     document.querySelectorAll('.lang-btn').forEach(btn => { btn.addEventListener('click', () => setLanguage(btn.dataset.lang)); });
+    
     const soundToggle = document.getElementById('sound-toggle');
     if (soundToggle) soundToggle.addEventListener('click', () => SoundManager.toggleMute());
 }

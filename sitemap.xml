@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://flipcoin-5ag.pages.dev/index.html</loc>
-    <lastmod>2026-02-10</lastmod>
-    <priority>1.0</priority>
-  </url>
+  <!-- Main Pages -->
+  <url><loc>https://flipcoin-5ag.pages.dev/index.html</loc><priority>1.0</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/privacy.html</loc><priority>0.5</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/terms.html</loc><priority>0.5</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/hub-guide.html</loc><priority>0.8</priority></url>
+
+  <!-- Decision Tools -->
+  <url><loc>https://flipcoin-5ag.pages.dev/magiclamp/magiclamp.html</loc><priority>0.9</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/coinflip/coinflip.html</loc><priority>0.9</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/destinydice/destinydice.html</loc><priority>0.9</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/ladderclimb/ladderclimb.html</loc><priority>0.9</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/drawinglots/drawinglots.html</loc><priority>0.9</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/teammaker/teammaker.html</loc><priority>0.9</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/cardflip/cardflip.html</loc><priority>0.9</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/timebomb/timebomb.html</loc><priority>0.9</priority></url>
+
+  <!-- Insights Columns -->
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/ai-decision-making.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/cognitive-biases-in-choices.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/crypto-randomness.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/daily-fortune-philosophy.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/decision-fatigue.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/fairness-science.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/gamification-of-daily-life.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/group-decision-strategies.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/heuristics-and-biases.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/history-of-divination.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/history-of-games-of-chance.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/luck-vs-probability.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/lunch-menu-tips.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/mbti-decisions.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/mindfulness-and-decisions.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/paradox-of-choice.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/psychology-of-luck.html</loc><priority>0.7</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/insights/regret-management.html</loc><priority>0.7</priority></url>
 </urlset>

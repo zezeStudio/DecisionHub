@@ -3,7 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <title data-key="app_title">시한 폭탄 돌리기 - Zeze Hub</title>
+    <meta name="description" content="공포의 시한 폭탄 - 심장이 쫄깃한 긴장감 넘치는 폭탄 돌리기 게임입니다. 마지막 와이어를 끊지 않도록 조심하세요! Time Bomb - A high-tension bomb passing game.">
+    <link rel="canonical" href="https://flipcoin-5ag.pages.dev/timebomb/timebomb.html">
+    <meta property="og:title" content="시한 폭탄 돌리기 - Zeze Hub">
+    <meta property="og:description" content="언제 터질지 모르는 시한 폭탄! 친구들과 돌아가며 와이어를 끊어 폭탄을 피해가세요. 짜릿한 복불복 게임입니다.">
+    <meta property="og:url" content="https://flipcoin-5ag.pages.dev/timebomb/timebomb.html">
+    <meta property="og:image" content="https://flipcoin-5ag.pages.dev/images/coinflip-social.png">
+    <meta property="og:type" content="website">
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Time Bomb - Zeze Hub",
+    "url": "https://flipcoin-5ag.pages.dev/timebomb/timebomb.html",
+    "description": "긴장감 넘치는 디지털 복불복 폭탄 게임입니다.",
+    "applicationCategory": "Game",
+    "operatingSystem": "All",
+    "author": {
+        "@type": "Organization",
+        "name": "Zeze Studio",
+        "url": "https://flipcoin-5ag.pages.dev/"
+    }
+}
+    </script>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -24,6 +50,10 @@
             }
         }
     </script>
+
+    <style>
+        button { touch-action: manipulation; }
+    </style>
 </head>
 <body class="bg-background text-white font-sans antialiased min-h-screen flex flex-col overflow-x-hidden">
 
@@ -92,6 +122,16 @@
                     <span class="material-icons text-sm">add</span>
                     <span data-key="add_player">참여자 추가</span>
                 </button>
+            </div>
+
+            <!-- Wire Count Selection -->
+            <div class="bg-surface p-6 rounded-3xl border border-white/10 flex justify-between items-center">
+                <label class="text-xs font-bold text-gray-500 uppercase tracking-widest" data-key="label_wires">와이어 개수</label>
+                <div class="flex items-center bg-white/5 rounded-full px-3 py-1 border border-white/10">
+                    <button id="wire-minus" class="material-icons text-gray-400 hover:text-primary transition-colors text-lg">remove</button>
+                    <span id="wire-count" class="mx-4 font-bold text-primary w-4 text-center">8</span>
+                    <button id="wire-plus" class="material-icons text-gray-400 hover:text-primary transition-colors text-lg">add</button>
+                </div>
             </div>
 
             <button id="start-game-btn" class="w-full bg-gradient-to-r from-primary to-orange-700 text-white py-4 rounded-2xl font-black shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" data-key="start_btn">작전 시작하기</button>
@@ -179,7 +219,7 @@
             <a href="../terms.html" class="text-[11px] text-gray-400 hover:text-primary transition-colors" data-key="terms_of_service">서비스 약관</a>
         </div>
         <p class="text-[10px] text-gray-600 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
-        <p class="text-[10px] text-gray-600">© 2024 Zeze Decision Hub.</p>
+        <p class="text-[10px] text-gray-600">© 2026 Zeze Decision Hub.</p>
     </footer>
 
     <!-- JS -->

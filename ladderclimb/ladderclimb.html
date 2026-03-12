@@ -3,7 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <title data-key="app_title">운명의 사다리 - Zeze Hub</title>
+    <meta name="description" content="운명의 사다리 타기 - 친구들과 함께 즐기는 고전적인 사다리 타기 게임입니다. 공정하게 역할이나 벌칙을 정해보세요. Ladder Climb - A classic ladder climbing game.">
+    <link rel="canonical" href="https://flipcoin-5ag.pages.dev/ladderclimb/ladderclimb.html">
+    <meta property="og:title" content="운명의 사다리 - Zeze Hub">
+    <meta property="og:description" content="사다리를 타고 운명을 결정하세요! 인원수와 당첨 내용을 설정하여 긴장감 넘치는 결과를 확인하세요.">
+    <meta property="og:url" content="https://flipcoin-5ag.pages.dev/ladderclimb/ladderclimb.html">
+    <meta property="og:image" content="https://flipcoin-5ag.pages.dev/images/coinflip-social.png">
+    <meta property="og:type" content="website">
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Ladder Climb - Zeze Hub",
+    "url": "https://flipcoin-5ag.pages.dev/ladderclimb/ladderclimb.html",
+    "description": "공정한 내기를 위한 온라인 사다리 타기 도구입니다.",
+    "applicationCategory": "Game",
+    "operatingSystem": "All",
+    "author": {
+        "@type": "Organization",
+        "name": "Zeze Studio",
+        "url": "https://flipcoin-5ag.pages.dev/"
+    }
+}
+    </script>
     <link rel="icon" type="image/png" href="../favicon.png">
     <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -26,6 +52,10 @@
             }
         }
     </script>
+
+    <style>
+        button { touch-action: manipulation; }
+    </style>
 </head>
 <body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
 
@@ -233,12 +263,13 @@
             <a href="../terms.html" class="text-[11px] text-gray-400 hover:text-primary transition-colors" data-key="terms_of_service">서비스 약관</a>
         </div>
         <p class="text-[10px] text-gray-400 mb-2" data-key="fortune_disclaimer">※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.</p>
-        <p class="text-[10px] text-gray-400" data-key="footer_copyright">© 2024 Zeze Decision Hub.</p>
+        <p class="text-[10px] text-gray-400" data-key="footer_copyright">© 2026 Zeze Decision Hub.</p>
     </footer>
 
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="ladderclimb.js" defer></script>
+    <script src="ladderclimb-audio.js" defer></script>
 
 </body>
 </html>
