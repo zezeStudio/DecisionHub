@@ -38,7 +38,7 @@ const translations = {
         "error_already_picked": "This card is already taken!",
         "instruction_limit_1": "You can only pick 1 card in this mode.",
         "top_guide_notice": "💡 Use cards for sequence, custom bets, or fortune telling! See the guide at the bottom for more ways to use it.",
-        "footer_copyright": "© 2024 Zeze Decision Hub."
+        "footer_copyright": "© 2026 Zeze Decision Hub."
     },
     "ko": {
         "app_title": "카드 뒤집기 - Zeze Hub",
@@ -77,7 +77,7 @@ const translations = {
         "error_already_picked": "이미 다른 사람이 찜한 카드입니다!",
         "instruction_limit_1": "이 모드에서는 1장의 카드만 고를 수 있습니다.",
         "top_guide_notice": "💡 카드를 순서 정하기, 직접 내기 입력, 운세 확인 등 다양한 방법으로 응용해 보세요! 자세한 설명은 페이지 하단 가이드를 참고하세요.",
-        "footer_copyright": "© 2024 Zeze Decision Hub."
+        "footer_copyright": "© 2026 Zeze Decision Hub."
     }
 };
 

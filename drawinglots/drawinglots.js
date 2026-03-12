@@ -27,7 +27,7 @@ const translations = {
         "error_duplicate_name": "Participant names cannot be duplicated.",
         "error_already_picked": "This slip has already been picked!",
         "fortune_disclaimer": "※ Please enjoy the results for entertainment purposes only.",
-        "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
+        "footer_copyright": "© 2026 Zeze Studio Decision Hub.",
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
@@ -64,7 +64,7 @@ const translations = {
         "error_duplicate_name": "중복된 참가자 이름이 있습니다.",
         "error_already_picked": "이미 선택된 제비입니다!",
         "fortune_disclaimer": "※ 본 서비스의 결과는 재미로만 즐겨주시기 바랍니다.",
-        "footer_copyright": "© 2024 Zeze Studio Decision Hub.",
+        "footer_copyright": "© 2026 Zeze Studio Decision Hub.",
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
         "terms_of_service": "서비스 약관",
@@ -222,7 +222,7 @@ function clearSessionState() {
 }
 
 function init() {
-    applyTranslations();
+    applyLanguage();
     
     // Check if Reload
     const perfEntries = performance.getEntriesByType('navigation');
@@ -390,7 +390,22 @@ function updateTurnIndicator() {
     if (currentTurnIndex < playerCount) {
         turnIndicator.innerHTML = translations[currentLang].turn_text.replace('{name}', players[currentTurnIndex]);
     } else {
-        turnIndicator.innerHTML = translations[currentLang].all_picked_text;
+        // 결과가 이미 공개된 상태인지 확인
+        const isRevealed = !finalResultSection.classList.contains('hidden');
+        if (isRevealed) {
+            const winners = lots.filter(l => l.isWinner && l.playerIndex !== null)
+                                .map(l => players[l.playerIndex]);
+            const winnerNames = winners.join(', ');
+            const missionText = missionInput.value.trim();
+            
+            let displayMsg = translations[currentLang].winner_reveal_msg.replace('{names}', winnerNames);
+            if (missionText) {
+                displayMsg = `<span class="text-xs opacity-70 block mb-1">[${missionText}]</span>${displayMsg}`;
+            }
+            turnIndicator.innerHTML = displayMsg;
+        } else {
+            turnIndicator.innerHTML = translations[currentLang].all_picked_text;
+        }
     }
 }
 
@@ -428,6 +443,18 @@ function revealAll(noAnim = false) {
             }
         }
     });
+
+    // 당첨자 명단 추출 및 상단 문구 업데이트
+    const winners = lots.filter(l => l.isWinner && l.playerIndex !== null)
+                        .map(l => players[l.playerIndex]);
+    const winnerNames = winners.join(', ');
+    const missionText = missionInput.value.trim();
+    
+    let displayMsg = translations[currentLang].winner_reveal_msg.replace('{names}', winnerNames);
+    if (missionText) {
+        displayMsg = `<span class="text-xs opacity-70 block mb-1">[${missionText}]</span>${displayMsg}`;
+    }
+    turnIndicator.innerHTML = displayMsg;
     
     if (!noAnim) {
         confetti({
@@ -472,7 +499,7 @@ function renderResultList() {
     });
 }
 
-function applyTranslations() {
+function applyLanguage() {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.dataset.key;
         if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];

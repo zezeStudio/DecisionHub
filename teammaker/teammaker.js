@@ -32,9 +32,10 @@ const translations = {
         "guide_title": "User Guide",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
-        "mission_label": "Mission / Bet / Selection Content",
-        "mission_placeholder": "e.g., What is the penalty? ☕️",
-        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "mission_label": "Event Name / Project / Group Name",
+        "mission_placeholder": "Ex) Company Workshop, Project Alpha Team, etc.",
+        "result_context_label": "Event / Purpose",
+        "footer_copyright": "© 2026 Zeze Decision Hub.",
         "info_title1": "Importance of Random Team Allocation",
         "info_desc1": "Subjective judgment or bias in team partitioning can harm group harmony. Random allocation is essential to prevent 'clustering by friendship' or 'stacking by skill.' In sports, group projects, or gaming parties, randomness creates unexpected combinations, acting as a trigger for new relationships and synergy. Zeze Hub's Team Maker maximizes this serendipity in group composition to help start fair and enjoyable cooperation.",
         "info_title2": "Psychology of Team Building and Chance",
@@ -73,9 +74,10 @@ const translations = {
         "guide_title": "사용 가이드",
         "privacy_policy": "개인정보처리방침",
         "terms_of_service": "서비스 약관",
-        "mission_label": "오늘의 미션 / 내기 내용 / 추첨 내용",
-        "mission_placeholder": "예) 이번 내기 벌칙은? ☕️",
-        "footer_copyright": "© 2024 Zeze Decision Hub.",
+        "mission_label": "행사명 / 프로젝트명 / 그룹 이름",
+        "mission_placeholder": "예) 회사 워크숍, 프로젝트 TF팀 등",
+        "result_context_label": "행사 및 목적",
+        "footer_copyright": "© 2026 Zeze Decision Hub.",
         "info_title1": "무작위 팀 배정의 중요성: 주관을 배제한 완벽한 화합",
         "info_desc1": "조직이나 친목 모임에서 팀을 나누는 과정은 생각보다 민감한 문제입니다. 인간의 주관적인 판단이나 편견이 개입될 경우, 팀 구성 단계에서부터 갈등이 생기거나 팀워크가 저해될 수 있습니다. 특히 '친한 사람끼리' 혹은 '실력이 뛰어난 사람끼리' 쏠리는 현상은 집단의 역동성을 떨어뜨립니다. 무작위 팀 배정은 이러한 불확실성을 역이용하여 예상치 못한 조합을 만들어내고, 새로운 인간관계와 창의적인 시너지를 형성하는 강력한 촉매제가 됩니다. Zeze Hub의 팀 메이커는 모든 참가자에게 평등한 기회를 제공하여 가장 즐겁고 공정한 협력의 시작을 돕습니다.",
         "info_title2": "팀 빌딩과 우연의 심리학: '운명 공유 효과'",
@@ -236,6 +238,13 @@ function applyTranslations() {
     teamNamesInput.placeholder = translations[currentLang].team_names_placeholder;
     missionInput.placeholder = translations[currentLang].mission_placeholder;
     controlLabel.textContent = currentMode === 'teamCount' ? translations[currentLang].label_team_count : translations[currentLang].label_member_count;
+    
+    // 결과가 출력된 상태라면 팀 명단 다시 렌더링 (언어 설정 반영)
+    if (!resultStage.classList.contains('hidden') && generatedTeams.length > 0) {
+        const customTeamNames = parseInput(teamNamesInput.value);
+        renderTeams(generatedTeams, customTeamNames, missionInput.value.trim());
+    }
+
     updateTeamNamesGuide();
 }
 
@@ -307,7 +316,7 @@ function renderTeams(teams, customTeamNames, missionText) {
     if (missionText) {
         const missionDisplay = document.createElement('div');
         missionDisplay.className = 'w-full mb-6 bg-white p-5 rounded-[32px] border border-primary/20 text-center shadow-sm animate-slideUp';
-        missionDisplay.innerHTML = `<span class="text-[10px] text-primary font-black uppercase tracking-widest block mb-1">Current Mission</span><span class="text-xl font-bold text-gray-800">${missionText}</span>`;
+        missionDisplay.innerHTML = `<span class="text-[10px] text-primary font-black uppercase tracking-widest block mb-1">${t.result_context_label}</span><span class="text-xl font-bold text-gray-800">${missionText}</span>`;
         teamsContainer.appendChild(missionDisplay);
     }
 
