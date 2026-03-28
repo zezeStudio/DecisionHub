@@ -43,7 +43,7 @@
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto py-12 px-6 w-full flex-grow">
+    <main class="max-w-4xl mx-auto py-12 px-6 w-full flex-grow space-y-12">
         <section class="bg-white/5 p-8 rounded-3xl border border-white/10 shadow-lg space-y-12">
             <div class="text-center">
                 <h2 class="text-3xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-secondary" data-key="guide_main_title">나만의 주사위로 결정하기</h2>
@@ -77,6 +77,45 @@
                 </div>
             </div>
         </section>
+
+        <!-- New Tips Section -->
+        <section class="bg-white/5 p-8 rounded-3xl border border-white/10 shadow-lg">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3 text-secondary">
+                <span class="material-icons">lightbulb</span>
+                <span data-key="guide_tips_title">실생활 활용 사례 & 꿀팁</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <h3 class="text-lg font-bold text-pink-300 flex items-center gap-2">
+                        <span class="material-icons text-sm">fitness_center</span>
+                        <span data-key="guide_tip1_title">운동 세트 수 결정하기</span>
+                    </h3>
+                    <p class="text-sm text-gray-400 leading-relaxed" data-key="guide_tip1_desc">오늘 스쿼트를 몇 세트 할지 고민되나요? 주사위를 굴려 나온 숫자만큼 세트를 진행해 보세요. 운동에 예상치 못한 재미와 동기부여를 더해줍니다.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-lg font-bold text-pink-300 flex items-center gap-2">
+                        <span class="material-icons text-sm">casino</span>
+                        <span data-key="guide_tip2_title">보드게임 주사위 대체</span>
+                    </h3>
+                    <p class="text-sm text-gray-400 leading-relaxed" data-key="guide_tip2_desc">보드게임을 하려는데 주사위를 잃어버렸나요? 걱정 마세요! '운명의 주사위'를 사용하면 실제 주사위보다 더 화려한 3D 효과와 함께 게임을 이어갈 수 있습니다.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-lg font-bold text-pink-300 flex items-center gap-2">
+                        <span class="material-icons text-sm">restaurant_menu</span>
+                        <span data-key="guide_tip3_title">메뉴판 랜덤 선택</span>
+                    </h3>
+                    <p class="text-sm text-gray-400 leading-relaxed" data-key="guide_tip3_desc">메뉴가 너무 많아 고르기 힘들 때는 각 메뉴에 1번부터 6번까지 번호를 매기고 주사위를 굴리세요. 주사위가 점지해 준 메뉴로 새로운 미식 경험을 해보는 건 어떨까요?</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-lg font-bold text-pink-300 flex items-center gap-2">
+                        <span class="material-icons text-sm">menu_book</span>
+                        <span data-key="guide_tip4_title">독서 페이지 정하기</span>
+                    </h3>
+                    <p class="text-sm text-gray-400 leading-relaxed" data-key="guide_tip4_desc">매일 조금씩 독서하는 습관을 들이고 싶다면, 주사위를 굴려 나온 숫자에 10을 곱한 페이지 수만큼 읽어보세요. (예: 3이 나오면 30페이지) 게임처럼 즐겁게 독서할 수 있습니다.</p>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="py-8 mt-auto text-center text-gray-600 text-xs">
@@ -97,7 +136,16 @@
                 "guide_step3_title": "Check Result",
                 "guide_step3_desc": "Check the lucky message that appears with the result. You can save the result card as an image.",
                 "guide_step4_title": "Reset History",
-                "guide_step4_desc": "Use 'Clear History' in the sidebar to reset your options and start over."
+                "guide_step4_desc": "Use 'Clear History' in the sidebar to reset your options and start over.",
+                "guide_tips_title": "Real-life Use Cases & Fun Tips",
+                "guide_tip1_title": "Deciding Exercise Sets",
+                "guide_tip1_desc": "Not sure how many sets of squats to do today? Roll the dice and do as many sets as the number shown. It adds unexpected fun and motivation to your workout.",
+                "guide_tip2_title": "Board Game Dice Substitute",
+                "guide_tip2_desc": "Lost your dice for a board game? No worries! Use 'Destiny Dice' to continue your game with more spectacular 3D effects than real dice.",
+                "guide_tip3_title": "Random Menu Selection",
+                "guide_tip3_desc": "When there are too many menu options, assign numbers 1 to 6 to each and roll the dice. Why not try a new culinary experience with the menu the dice chooses for you?",
+                "guide_tip4_title": "Choosing a Reading Page",
+                "guide_tip4_desc": "If you want to build a daily reading habit, roll the dice and read as many pages as the number multiplied by 10 (e.g., 30 pages if you roll a 3). You can enjoy reading like a game."
             },
             "ko": {
                 "guide_doc_title": "가이드 - 운명의 주사위",
@@ -111,7 +159,16 @@
                 "guide_step3_title": "운명의 결과 확인",
                 "guide_step3_desc": "결과와 함께 나타나는 행운의 메시지를 확인하세요. 결과 카드는 이미지로 저장할 수 있습니다.",
                 "guide_step4_title": "기록 초기화",
-                "guide_step4_desc": "사이드바의 '기록 지우기'를 통해 입력한 선택지들을 초기화하고 새롭게 시작할 수 있습니다."
+                "guide_step4_desc": "사이드바의 '기록 지우기'를 통해 입력한 선택지들을 초기화하고 새롭게 시작할 수 있습니다.",
+                "guide_tips_title": "실생활 활용 사례 & 꿀팁",
+                "guide_tip1_title": "운동 세트 수 결정하기",
+                "guide_tip1_desc": "오늘 스쿼트를 몇 세트 할지 고민되나요? 주사위를 굴려 나온 숫자만큼 세트를 진행해 보세요. 운동에 예상치 못한 재미와 동기부여를 더해줍니다.",
+                "guide_tip2_title": "보드게임 주사위 대체",
+                "guide_tip2_desc": "보드게임을 하려는데 주사위를 잃어버렸나요? 걱정 마세요! '운명의 주사위'를 사용하면 실제 주사위보다 더 화려한 3D 효과와 함께 게임을 이어갈 수 있습니다.",
+                "guide_tip3_title": "메뉴판 랜덤 선택",
+                "guide_tip3_desc": "메뉴가 너무 많아 고르기 힘들 때는 각 메뉴에 1번부터 6번까지 번호를 매기고 주사위를 굴리세요. 주사위가 점지해 준 메뉴로 새로운 미식 경험을 해보는 건 어떨까요?",
+                "guide_tip4_title": "독서 페이지 정하기",
+                "guide_tip4_desc": "매일 조금씩 독서하는 습관을 들이고 싶다면, 주사위를 굴려 나온 숫자에 10을 곱한 페이지 수만큼 읽어보세요. (예: 3이 나오면 30페이지) 게임처럼 즐겁게 독서할 수 있습니다."
             }
         };
 

@@ -19,24 +19,11 @@
     <meta name="description" content="개인정보처리방침 - Zeze Hub는 사용자 여러분의 개인 정보를 존중하며 보호하기 위해 최선을 다합니다. Privacy Policy - Zeze Hub is committed to respecting and protecting your privacy.">
     <link rel="canonical" href="https://flipcoin-5ag.pages.dev/privacy.html">
     <meta property="og:title" content="개인정보처리방침 - Zeze Hub">
-    <meta property="og:description" content="Zeze Hub는 사용자 여러분의 개인 정보를 존중하며 보호하기 위해 최선을 다합니다. Zeze Hub is committed to respecting and protecting your privacy.">
+    <meta property="og:description" content="Zeze Hub의 개인정보처리방침입니다. 사용자의 개인정보 보호를 최우선으로 합니다.">
     <meta property="og:url" content="https://flipcoin-5ag.pages.dev/privacy.html">
     <meta property="og:image" content="https://flipcoin-5ag.pages.dev/images/coinflip-social.png">
     <meta property="og:type" content="website">
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Privacy Policy - Zeze Hub",
-    "url": "https://flipcoin-5ag.pages.dev/privacy.html",
-    "description": "Zeze Hub의 개인정보처리방침입니다. 사용자의 개인정보 보호를 최우선으로 합니다.",
-    "author": {
-        "@type": "Organization",
-        "name": "Zeze Studio",
-        "url": "https://flipcoin-5ag.pages.dev/"
-    }
-}
-    </script>
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,91 +41,142 @@
             }
         }
     </script>
-
-    <style>
-        button { touch-action: manipulation; }
-    </style>
 </head>
 <body class="bg-background text-gray-900 font-sans antialiased min-h-screen flex flex-col">
     <!-- Navigation Bar -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center space-x-2">
-            <button onclick="goBack()" class="p-2 -ml-2 rounded-full hover:bg-gray-100 focus:outline-none flex items-center text-primary">
-                <span class="material-icons">arrow_back</span>
-            </button>
-            <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight" data-key="privacy_nav_title">개인정보처리방침</span>
+        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="./" class="p-2 -ml-2 rounded-full hover:bg-gray-100 focus:outline-none flex items-center text-primary">
+                    <span class="material-icons">arrow_back</span>
+                </a>
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primaryLight" data-key="privacy_nav_title">개인정보처리방침</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-ko" onclick="setLanguage('ko')">KO</button>
+                <button class="lang-btn px-3 py-1 rounded-full text-xs font-bold transition-all border border-gray-200" id="lang-en" onclick="setLanguage('en')">EN</button>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto py-12 px-6 w-full flex-grow">
-        <section class="bg-white p-8 rounded-3xl border border-gray-100 shadow-lg text-sm text-gray-600 space-y-4 leading-relaxed">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6" data-key="privacy_promise_title">프라이버시 보호 약속</h2>
+        <section class="bg-white p-8 md:p-12 rounded-3xl border border-gray-100 shadow-lg space-y-8">
+            <h1 class="text-2xl font-black text-gray-900 mb-8 pb-4 border-b border-gray-100" data-key="privacy_main_title">개인정보처리방침</h1>
             
-            <p data-key="privacy_promise_desc">Zeze Hub는 사용자 여러분의 개인 정보를 존중하며 보호하기 위해 최선을 다합니다.</p>
+            <div class="space-y-8 text-sm text-gray-600 leading-relaxed">
+                <!-- Section 1 -->
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3" data-key="sec1_title">1. 개인정보의 수집</h2>
+                    <p data-key="sec1_desc">Zeze Hub는 회원가입 절차가 없으며, 사용자의 이름, 이메일 주소, 전화번호 등 어떠한 개인 식별 정보도 수집하거나 서버에 저장하지 않습니다.</p>
+                </div>
 
-            <h3 class="text-lg font-bold text-primary mt-8" data-key="privacy_section1_title">1. 개인정보 수집 및 저장</h3>
-            <p data-key="privacy_section1_desc">본 서비스는 어떠한 개인 식별 정보(이름, 연락처, 이메일 등)도 수집, 저장 또는 공유하지 않습니다. 서비스 이용 과정에서 발생하는 모든 데이터(질문 기록, 설정값, 통계 등)는 전적으로 <strong>사용자 기기의 브라우저 로컬 저장소(Local Storage)</strong>에만 안전하게 저장됩니다.</p>
+                <!-- Section 2 -->
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3" data-key="sec2_title">2. 데이터 저장 (Local Storage)</h2>
+                    <p data-key="sec2_desc">서비스 이용 중 발생하는 설정값, 참여자 명단, 게임 결과 등은 사용자의 브라우저 로컬 저장소(Local Storage)에만 저장됩니다. 이 데이터는 전적으로 사용자의 기기에 머물며 본 서비스 개발자를 포함한 그 누구도 열람할 수 없습니다.</p>
+                </div>
 
-            <h3 class="text-lg font-bold text-primary mt-8" data-key="privacy_section2_title">2. 데이터 제어권</h3>
-            <p data-key="privacy_section2_desc">사용자의 데이터는 외부 서버로 전송되지 않으므로 제3자가 열람할 수 없습니다. 사용자는 각 도구 내의 '기록 지우기' 옵션이나 브라우저의 데이터 삭제 기능을 사용하여 언제든지 자신의 모든 데이터를 완전히 삭제하고 제어할 수 있습니다.</p>
+                <!-- Section 3: Google AdSense & Cookies (MUST HAVE FOR ADSENSE) -->
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    <h2 class="text-lg font-bold text-primary mb-3" data-key="sec3_title">3. 쿠키(Cookie) 사용 및 광고 정책</h2>
+                    <p class="mb-4" data-key="sec3_desc1">본 사이트는 광고 게재 및 서비스 분석을 위해 쿠키를 사용합니다.</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li data-key="sec3_li1"><strong>구글 애드센스(Google AdSense):</strong> 구글을 포함한 제3자 제공업체는 사용자의 이전 방문 기록을 바탕으로 광고를 게재하기 위해 쿠키를 사용합니다.</li>
+                        <li data-key="sec3_li2"><strong>관심 기반 광고:</strong> 구글의 광고 쿠키를 사용하여 구글 및 파트너사는 본 사이트 또는 다른 사이트 방문 기록을 바탕으로 사용자에게 최적화된 광고를 제공할 수 있습니다.</li>
+                        <li data-key="sec3_li3"><strong>거부 방법:</strong> 사용자는 <a href="https://www.google.com/settings/ads" target="_blank" class="text-primary underline">구글 광고 설정</a>을 방문하여 맞춤 설정된 광고를 게재하지 않도록 설정할 수 있습니다.</li>
+                    </ul>
+                </div>
 
-            <h3 class="text-lg font-bold text-primary mt-8" data-key="privacy_section3_title">3. 외부 서비스 이용</h3>
-            <p data-key="privacy_section3_desc">서비스의 품질 개선 및 분석을 위해 익명의 통계 도구가 사용될 수 있으나, 이 과정에서도 개인을 식별할 수 있는 정보는 절대 포함되지 않습니다.</p>
+                <!-- Section 4: Analytics -->
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3" data-key="sec4_title">4. 로그 분석 도구</h2>
+                    <p data-key="sec4_desc">본 사이트는 서비스 개선을 위해 구글 애널리틱스(Google Analytics)를 사용하여 방문 통계를 분석합니다. 수집되는 정보는 비식별화된 통계 데이터이며, 개인을 특정할 수 없습니다.</p>
+                </div>
+
+                <!-- Section 5: Contact -->
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3" data-key="sec5_title">5. 문의처</h2>
+                    <p data-key="sec5_desc">본 방침이나 프라이버시 관련 문의 사항이 있으시면 아래 이메일로 연락주시기 바랍니다.</p>
+                    <p class="font-bold text-gray-900 mt-2">Email: support@zeze.studio</p>
+                </div>
+            </div>
         </section>
     </main>
 
     <footer class="bg-white py-8 mt-auto border-t border-gray-200 text-center text-gray-500 text-xs">
-        <p>© 2026 ZezeStudio Decision Hub.</p>
+        <p>© 2026 ZezeStudio Decision Hub. All rights reserved.</p>
     </footer>
 
     <script>
-        function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                window.location.href = './';
-            }
-        }
-
         const translations = {
-            "en": {
-                "privacy_doc_title": "Privacy Policy - Zeze Hub",
-                "privacy_nav_title": "Privacy Policy",
-                "privacy_promise_title": "Privacy Promise",
-                "privacy_promise_desc": "Zeze Hub is committed to respecting and protecting your privacy.",
-                "privacy_section1_title": "1. Data Collection & Storage",
-                "privacy_section1_desc": "This service does not collect, store, or share any personally identifiable information (name, contact, email, etc.). All data generated during use (questions, settings, statistics) is stored exclusively and safely in your browser's Local Storage.",
-                "privacy_section2_title": "2. Data Control",
-                "privacy_section2_desc": "Your data is never sent to external servers and cannot be viewed by third parties. You have full control to delete all your data at any time using the 'Clear Log' options within each tool or by clearing your browser data.",
-                "privacy_section3_title": "3. External Services",
-                "privacy_section3_desc": "Anonymous analytics tools may be used to improve service quality, but no personally identifiable information is ever included in this process."
-            },
             "ko": {
                 "privacy_doc_title": "개인정보처리방침 - Zeze Hub",
                 "privacy_nav_title": "개인정보처리방침",
-                "privacy_promise_title": "프라이버시 보호 약속",
-                "privacy_promise_desc": "Zeze Hub는 사용자 여러분의 개인 정보를 존중하며 보호하기 위해 최선을 다합니다.",
-                "privacy_section1_title": "1. 개인정보 수집 및 저장",
-                "privacy_section1_desc": "본 서비스는 어떠한 개인 식별 정보(이름, 연락처, 이메일 등)도 수집, 저장 또는 공유하지 않습니다. 서비스 이용 과정에서 발생하는 모든 데이터(질문 기록, 설정값, 통계 등)는 전적으로 사용자 기기의 브라우저 로컬 저장소(Local Storage)에만 안전하게 저장됩니다.",
-                "privacy_section2_title": "2. 데이터 제어권",
-                "privacy_section2_desc": "사용자의 데이터는 외부 서버로 전송되지 않으므로 제3자가 열람할 수 없습니다. 사용자는 각 도구 내의 '기록 지우기' 옵션이나 브라우저의 데이터 삭제 기능을 사용하여 언제든지 자신의 모든 데이터를 완전히 삭제하고 제어할 수 있습니다.",
-                "privacy_section3_title": "3. 외부 서비스 이용",
-                "privacy_section3_desc": "서비스의 품질 개선 및 분석을 위해 익명의 통계 도구가 사용될 수 있으나, 이 과정에서도 개인을 식별할 수 있는 정보는 절대 포함되지 않습니다."
+                "privacy_main_title": "개인정보처리방침",
+                "sec1_title": "1. 개인정보의 수집",
+                "sec1_desc": "Zeze Hub는 회원가입 절차가 없으며, 사용자의 이름, 이메일 주소, 전화번호 등 어떠한 개인 식별 정보도 수집하거나 서버에 저장하지 않습니다.",
+                "sec2_title": "2. 데이터 저장 (Local Storage)",
+                "sec2_desc": "서비스 이용 중 발생하는 설정값, 참여자 명단, 게임 결과 등은 사용자의 브라우저 로컬 저장소(Local Storage)에만 저장됩니다. 이 데이터는 전적으로 사용자의 기기에 머물며 본 서비스 개발자를 포함한 그 누구도 열람할 수 없습니다.",
+                "sec3_title": "3. 쿠키(Cookie) 사용 및 광고 정책",
+                "sec3_desc1": "본 사이트는 광고 게재 및 서비스 분석을 위해 쿠키를 사용합니다.",
+                "sec3_li1": "구글 애드센스(Google AdSense): 구글을 포함한 제3자 제공업체는 사용자의 이전 방문 기록을 바탕으로 광고를 게재하기 위해 쿠키를 사용합니다.",
+                "sec3_li2": "관심 기반 광고: 구글의 광고 쿠키를 사용하여 구글 및 파트너사는 본 사이트 또는 다른 사이트 방문 기록을 바탕으로 사용자에게 최적화된 광고를 제공할 수 있습니다.",
+                "sec3_li3": "거부 방법: 사용자는 구글 광고 설정을 방문하여 맞춤 설정된 광고를 게재하지 않도록 설정할 수 있습니다.",
+                "sec4_title": "4. 로그 분석 도구",
+                "sec4_desc": "본 사이트는 서비스 개선을 위해 구글 애널리틱스(Google Analytics)를 사용하여 방문 통계를 분석합니다. 수집되는 정보는 비식별화된 통계 데이터이며, 개인을 특정할 수 없습니다.",
+                "sec5_title": "5. 문의처",
+                "sec5_desc": "본 방침이나 프라이버시 관련 문의 사항이 있으시면 아래 이메일로 연락주시기 바랍니다."
+            },
+            "en": {
+                "privacy_doc_title": "Privacy Policy - Zeze Hub",
+                "privacy_nav_title": "Privacy Policy",
+                "privacy_main_title": "Privacy Policy",
+                "sec1_title": "1. Data Collection",
+                "sec1_desc": "Zeze Hub has no registration process and does not collect or store any personally identifiable information (name, email, phone number, etc.) on our servers.",
+                "sec2_title": "2. Data Storage (Local Storage)",
+                "sec2_desc": "Settings, participant lists, and game results generated during use are stored only in your browser's Local Storage. This data stays entirely on your device and cannot be viewed by anyone, including the developer.",
+                "sec3_title": "3. Cookies & Advertising Policy",
+                "sec3_desc1": "This site uses cookies for advertising and service analysis.",
+                "sec3_li1": "Google AdSense: Third party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites.",
+                "sec3_li2": "Interest-based Advertising: Google's use of advertising cookies enables it and its partners to serve ads to users based on their visit to this sites and/or other sites on the Internet.",
+                "sec3_li3": "Opt-out: Users may opt out of personalized advertising by visiting Google Ads Settings.",
+                "sec4_title": "4. Analytics Tools",
+                "sec4_desc": "We use Google Analytics to analyze visit statistics for service improvement. The information collected is de-identified statistical data and cannot identify individuals.",
+                "sec5_title": "5. Contact Us",
+                "sec5_desc": "If you have any questions about this policy or privacy, please contact us via the email below."
             }
         };
 
+        let currentLang = localStorage.getItem('lang') || 'ko';
+
         function applyLanguage() {
-            const lang = localStorage.getItem('lang') || 'ko';
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.dataset.key;
-                if (translations[lang] && translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
                 }
             });
-            if (translations[lang] && translations[lang].privacy_doc_title) {
-                document.title = translations[lang].privacy_doc_title;
+            if (translations[currentLang] && translations[currentLang].privacy_doc_title) {
+                document.title = translations[currentLang].privacy_doc_title;
             }
-            document.documentElement.lang = lang;
+            document.documentElement.lang = currentLang;
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const btnLang = btn.id.split('-')[1];
+                if (btnLang === currentLang) {
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('bg-transparent', 'text-gray-600', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.add('bg-transparent', 'text-gray-600', 'border-gray-200');
+                }
+            });
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            applyLanguage();
         }
 
         document.addEventListener('DOMContentLoaded', applyLanguage);

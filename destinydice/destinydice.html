@@ -248,19 +248,56 @@
                 <p class="text-xs text-gray-600 italic text-center py-4" data-key="no_history">아직 기록이 없습니다.</p>
             </div>
         </section>
+<!-- Share Buttons -->
+<div class="flex gap-3 mt-6 opacity-0 transition-opacity duration-500" id="share-buttons">
+    <button id="save-img-btn" class="flex-1 flex items-center justify-center gap-2 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-white transition-all border border-white/10">
+        <span class="material-icons text-sm">download</span> <span data-key="save_img_btn">저장</span>
+    </button>
+    <button id="share-link-btn" class="flex-1 flex items-center justify-center gap-2 py-3 bg-secondary/10 hover:bg-secondary/20 rounded-xl text-xs font-bold text-secondary transition-all border border-secondary/20">
+        <span class="material-icons text-sm">share</span> <span data-key="copy_link_btn">공유</span>
+    </button>
+</div>
 
-        <!-- Share Buttons -->
-        <div class="flex gap-3 mt-6 opacity-0 transition-opacity duration-500" id="share-buttons">
-            <button id="save-img-btn" class="flex-1 flex items-center justify-center gap-2 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-white transition-all border border-white/10">
-                <span class="material-icons text-sm">download</span> <span data-key="save_img_btn">저장</span>
-            </button>
-            <button id="share-link-btn" class="flex-1 flex items-center justify-center gap-2 py-3 bg-secondary/10 hover:bg-secondary/20 rounded-xl text-xs font-bold text-secondary transition-all border border-secondary/20">
-                <span class="material-icons text-sm">share</span> <span data-key="copy_link_btn">공유</span>
-            </button>
-        </div>
+</main>
 
-    </main>
+<!-- Deep Dive Information Section (For SEO & User Value) -->
+<section class="max-w-4xl mx-auto px-6 py-16 border-t border-white/10 text-gray-300">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <article class="space-y-4">
+        <h2 class="text-xl font-bold text-pink-400 flex items-center gap-2">
+            <span class="material-icons">history_edu</span>
+            <span data-key="info_title1">주사위의 역사: 운명을 결정하는 도구</span>
+        </h2>
+        <p class="text-sm leading-relaxed text-gray-400" data-key="info_desc1">
+            주사위는 수천 년 전부터 인류와 함께해 온 가장 오래된 오락 도구이자 결정 도구입니다. 고대 이집트와 메소포타미아 문명에서도 주사위의 형태가 발견되었으며, 당시에는 동물의 뼈를 깎아 만들기도 했습니다. 고대인들은 주사위의 결과를 단순히 '확률'로 보지 않고, 신의 뜻이 담긴 '계시'로 여겼습니다. 오늘날 주사위는 보드게임의 필수 요소이자, 일상의 복잡한 선택지를 단순화해주는 가장 대중적인 도구로 자리 잡았습니다.
+        </p>
+    </article>
+    <article class="space-y-4">
+        <h2 class="text-xl font-bold text-pink-400 flex items-center gap-2">
+            <span class="material-icons">auto_awesome</span>
+            <span data-key="info_title2">Zeze Hub의 디지털 주사위는 무엇이 다른가요?</span>
+        </h2>
+        <p class="text-sm leading-relaxed text-gray-400" data-key="info_desc2">
+            물리적인 주사위는 무게 중심의 미세한 차이로 인해 특정 숫자가 더 자주 나올 가능성이 있습니다. 하지만 Zeze Hub의 '운명의 주사위'는 암호학적으로 안전한 난수 생성기(Web Crypto API)를 기반으로 작동합니다. 이는 모든 숫자가 나올 확률이 수학적으로 완벽하게 동일함을 보장합니다. 화려한 3D 애니메이션은 시각적 재미를 더해주며, 당신의 선택에 공정성과 투명성을 부여합니다.
+        </p>
+    </article>
+</div>
 
+<div class="mt-12 p-6 bg-white/5 rounded-3xl border border-white/10">
+    <h3 class="font-bold mb-3 flex items-center gap-2 text-yellow-500">
+        <span class="material-icons text-sm">tips_and_updates</span>
+        <span data-key="info_title3">운명의 주사위 활용 꿀팁</span>
+    </h3>
+    <ul class="text-xs text-gray-500 space-y-2 list-disc ml-5 leading-relaxed" data-key="info_desc3">
+        <li><strong>메뉴 결정:</strong> 오늘 먹고 싶은 후보 6개를 입력하고 굴려보세요. 가장 먼저 나오는 메뉴가 오늘의 정답입니다.</li>
+        <li><strong>벌칙 정하기:</strong> 친구들과 모임에서 1번부터 6번까지 벌칙을 정하고 주사위로 운명을 결정하세요.</li>
+        <li><strong>학습 도구:</strong> 단어 암기나 문제 풀이 순서를 정할 때 사용하여 공부에 재미를 더해보세요.</li>
+        <li><strong>공정한 순서:</strong> 발표 순서나 게임의 선공을 정할 때 가장 빠르고 공정하게 결론을 내릴 수 있습니다.</li>
+    </ul>
+</div>
+</section>
+
+<!-- Footer -->
     <!-- Deep Dive Information Section -->
     <section class="max-w-4xl mx-auto px-6 py-16 border-t border-white/10 text-gray-300">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
