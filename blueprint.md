@@ -1,29 +1,43 @@
-# CoinFlip - 신비로운 요술 램프 버전 (Magic Lamp Edition)
+# Zeze Hub Project Overview
+Zeze Hub is a comprehensive decision-making platform that provides various tools like Magic Lamp, Coin Flip, Dice, and more to help users overcome decision fatigue. It also features a series of "Decision Insights" articles that provide psychological context and tips for better decision-making.
 
-## 프로젝트 개요
-단순한 동전 던지기를 넘어, 사용자의 고민 카테고리에 맞춰 신비로운 연기와 함께 해답을 제시하는 '인터랙티브 의사결정 플랫폼'입니다. 구글 애드센스 정책 준수를 위해 풍부한 콘텐츠와 독창적인 사용자 경험(UX)을 제공합니다.
+## Implemented Features
+- **Magic Lamp:** Yes/No answers based on categories (Food, Love, Money, etc.).
+- **3D Coin Flip:** Heads or Tails with 3D physics.
+- **Dice of Destiny:** Custom dice for multiple choices.
+- **Ladder Climb:** Fair role assignment and betting.
+- **Team Maker:** Fairly divides teams.
+- **Card Flip & Time Bomb:** High-tension games for fun and decision-making.
+- **Daily Fortune:** A word of wisdom once a day.
+- **Decision Insights:** A blog section with 18 articles on psychology and decision-making.
+- **I18n:** Full support for Korean and English.
 
-## 주요 기능 및 디자인
-1. **신비로운 요술 램프 UX:**
-   - 동전 대신 요술 램프 아이콘 사용.
-   - 클릭 시 램프가 흔들리며 신비로운 연기 효과 발생.
-   - 연기 속에서 '네/아니오' 답변이 몽환적으로 등장.
-2. **카테고리별 맞춤 질문:**
-   - 음식, 연애, 금전, 학업, 일상 등 5가지 이상의 카테고리 제공.
-   - 사용자가 직접 질문을 입력하는 텍스트 필드.
-3. **카테고리별 '램프의 조언':**
-   - '예/아니오' 결과에 따라 카테고리별로 특화된 20여 가지의 조언 문구 제공.
-4. **고급 디자인 (Material Design & Baseline):**
-   - `oklch` 컬러 스페이스를 사용한 선명하고 깊이 있는 색감.
-   - 배경에 미세한 노이즈 텍스처와 다층 그림자(Drop Shadows) 효과.
-   - 인터랙티브한 버튼 및 입력창 글로우(Glow) 효과.
+## Current Update: Fixed Language Switching in "Decision Insights"
+- Fixed a bug where the "Decision Insights" articles would not switch language correctly due to a syntax error in the `applyLanguage` function (an extra `});` ending the function prematurely).
+- Fixed 18 article files in the `insights/` directory:
+    - ai-decision-making.html
+    - cognitive-biases-in-choices.html
+    - crypto-randomness.html
+    - daily-fortune-philosophy.html
+    - decision-fatigue.html
+    - fairness-science.html
+    - gamification-of-daily-life.html
+    - group-decision-strategies.html
+    - heuristics-and-biases.html
+    - history-of-divination.html
+    - history-of-games-of-chance.html
+    - luck-vs-probability.html
+    - lunch-menu-tips.html
+    - mbti-decisions.html
+    - mindfulness-and-decisions.html
+    - paradox-of-choice.html
+    - psychology-of-luck.html
+    - regret-management.html
+- Added missing article titles and descriptions for the main hub page in `main.js` so they switch correctly.
+- Robust implementation of `applyLanguage` across the blog files that handles both simple and array-based summary content.
 
-## 구현 상세 (Current Step)
-- `index.html`: 카테고리 선택 UI, 질문 입력창, 요술 램프 영역 추가.
-- `style.css`: 램프 흔들림, 연기 발생, 답변 플로팅 애니메이션 정의.
-- `main.js`: 카테고리 관리 로직, 질문 입력 확인, 랜덤 답변 및 맞춤 조언 생성 로직 구현.
-
-## 애드센스 승인 전략
-- **가치 있는 콘텐츠:** 사용자의 입력을 유도하고 맞춤형 답변을 제공하여 '도구형 콘텐츠'로서의 가치 극대화.
-- **체류 시간 증대:** 질문 입력, 애니메이션 감상, 조언 읽기 과정을 통해 체류 시간 확보.
-- **독창성:** 흔한 동전 던지기 앱과 차별화된 '요술 램프' 컨셉과 연기 효과 구현.
+## Current Update: Service Worker v1.2.0
+- Updated `CACHE_NAME` to `zeze-hub-v1.2.0` to trigger cache refresh.
+- Added `about.html`, `privacy.html`, `terms.html`, and `hub-guide.html` to the `ASSETS` list for offline support.
+- Implemented **Stale-While-Revalidate** caching strategy. This allows the app to load instantly from the cache while simultaneously fetching the latest version from the network in the background, ensuring the app is always up-to-date without sacrificing speed.
+- Improved fetch event handling to skip non-GET requests and browser extensions.

@@ -86,16 +86,24 @@
             </header>
 
             <!-- 핵심 요약 섹션 -->
-            <div class="bg-gray-50 border-l-4 border-primary p-4 mb-8 rounded-r-xl">
-                <h2 class="text-sm font-bold text-primary mb-2 flex items-center gap-1">
-                    <span class="material-icons text-sm">auto_awesome</span>
+            <div class="bg-gray-50 border-l-4 border-primary p-6 mb-10 rounded-r-xl">
+                <h2 class="text-base font-bold text-primary mb-3 flex items-center gap-2">
+                    <span class="material-icons text-lg">auto_awesome</span>
                     <span data-key="summary_title">핵심 요약</span>
                 </h2>
-                <ul class="text-sm text-gray-600 list-disc pl-5 space-y-1" id="article-summary" data-key="summary">
+                <ul class="text-sm md:text-base text-gray-600 list-disc pl-5 space-y-2" id="article-summary" data-key="summary"><li>Zeze Hub는 공정성을 위해 단순한 수도 난수가 아닌 브라우저의 Web Crypto API를 활용합니다.</li><li>Web Crypto API는 보안 통신 수준의 무작위성을 제공하며, 하드웨어 레벨의 엔트로피를 수집해 예측이나 조작이 불가능합니다.</li><li>모든 결정 로직은 사용자의 기기 내에서 실행되므로 외부 개입 없이 투명하고 안전한 결과를 보장합니다.</li>
                 </ul>
             </div>
 
-            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body" class="space-y-8 text-gray-700 leading-loose text-lg">
+                <p>무작위 결정 도구에서 가장 중요한 것은 무엇일까요? 바로 '공정성'입니다. Zeze Hub는 이 공정성을 담보하기 위해 단순한 흉내를 넘어서는 기술을 사용합니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. 가짜 난수(PRNG) vs 진짜 난수(TRNG)</h2>
+                    <p>컴퓨터 프로그램이 만드는 난수는 대개 '수도 난수(Pseudo-Random Number)'입니다. 이는 특정 공식에 의해 계산되므로 완벽한 무작위는 아닙니다. 하지만 Zeze Hub는 브라우저 엔진이 제공하는 <strong>Web Crypto API</strong>를 활용합니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. Web Crypto API: 보안 통신 수준의 무작위성</h2>
+                    <p>Web Crypto API는 암호화 키 생성 등에 사용되는 높은 수준의 무작위성을 제공합니다. 이는 하드웨어 레벨의 엔트로피(노이즈)를 수집하여 생성되므로, 사람이 그 결과를 예측하거나 조작하는 것이 불가능에 가깝습니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. 당신의 결과가 안전한 이유</h2>
+                    <p>Zeze Hub의 모든 결정 로직은 서버가 아닌 당신의 기기(브라우저) 내에서만 실행됩니다. 따라서 결과가 중간에 가로채지거나 조작될 위험이 없습니다. 우리는 가장 투명한 기술로 당신의 운명을 지원합니다.</p>
+            </div>
             <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
                 <a href="../" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
                     <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
@@ -103,7 +111,10 @@
             </div>
         </article>
     </main>
-    <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
+    <footer class="bg-surface py-12 mt-auto border-t border-gray-200 text-center text-gray-500 text-xs">
+        <div class="flex justify-center gap-6 mb-4">
+            <a href="../about.html" class="hover:text-primary transition-colors" data-key="footer_about">소개</a>
+        </div>
         <p>© 2026 ZezeStudio Decision Hub. All rights reserved.</p>
     </footer>
     <script>
@@ -124,8 +135,8 @@
                     <p>Web Crypto API는 암호화 키 생성 등에 사용되는 높은 수준의 무작위성을 제공합니다. 이는 하드웨어 레벨의 엔트로피(노이즈)를 수집하여 생성되므로, 사람이 그 결과를 예측하거나 조작하는 것이 불가능에 가깝습니다.</p>
                     <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. 당신의 결과가 안전한 이유</h2>
                     <p>Zeze Hub의 모든 결정 로직은 서버가 아닌 당신의 기기(브라우저) 내에서만 실행됩니다. 따라서 결과가 중간에 가로채지거나 조작될 위험이 없습니다. 우리는 가장 투명한 기술로 당신의 운명을 지원합니다.</p>
-                `
-            },
+                `,
+                "footer_about": "소개"},
             "en": {
                 "meta_title": "What is Cryptographic Randomness? - Zeze Hub Insight",
                 "category": "Tech Column",
@@ -142,16 +153,32 @@
                     <p>Web Crypto API provides high-level randomness used for creating encryption keys. It collects hardware-level entropy (noise), making it virtually impossible for anyone to predict or manipulate the outcome.</p>
                     <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">3. Why Your Results are Secure</h2>
                     <p>All decision logic at Zeze Hub runs only within your device (browser), not on a server. This eliminates the risk of interception or manipulation. We support your destiny with the most transparent technology available.</p>
-                `
-            }
+                `,
+                "footer_about": "About"}
         };
         let currentLang = localStorage.getItem('lang') || 'ko';
-        function applyLanguage() {
+                function applyLanguage() {
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.dataset.key;
-                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+                if (translations[currentLang][key]) {
+                    if (key !== 'summary' || !Array.isArray(translations[currentLang].summary)) {
+                        el.innerHTML = translations[currentLang][key];
+                    }
+                }
             });
             document.getElementById('article-body').innerHTML = translations[currentLang].body;
+            
+            const summaryEl = document.getElementById('article-summary');
+            if (summaryEl && translations[currentLang].summary) {
+                if (Array.isArray(translations[currentLang].summary)) {
+                    summaryEl.innerHTML = translations[currentLang].summary
+                        .map(item => `<li class="flex items-start gap-2 text-gray-600"><span class="text-primary mt-1 text-sm">•</span><span>${item}</span></li>`)
+                        .join('');
+                } else {
+                    summaryEl.innerHTML = translations[currentLang].summary;
+                }
+            }
+            
             document.documentElement.lang = currentLang;
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 const btnLang = btn.id.split('-')[1];
@@ -164,7 +191,7 @@
                 }
             });
         }
-        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
         document.addEventListener('DOMContentLoaded', applyLanguage);
     </script>
 </body>

@@ -3,6 +3,7 @@
   <!-- Main Pages -->
   <url><loc>https://flipcoin-5ag.pages.dev/</loc><changefreq>weekly</changefreq>
   <lastmod>2026-03-12</lastmod><priority>1.0</priority></url>
+  <url><loc>https://flipcoin-5ag.pages.dev/about.html</loc><priority>0.8</priority></url>
   <url><loc>https://flipcoin-5ag.pages.dev/privacy.html</loc><priority>0.5</priority></url>
   <url><loc>https://flipcoin-5ag.pages.dev/terms.html</loc><priority>0.5</priority></url>
   <url><loc>https://flipcoin-5ag.pages.dev/hub-guide.html</loc><priority>0.8</priority></url>

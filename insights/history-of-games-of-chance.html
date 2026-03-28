@@ -85,8 +85,29 @@
                 <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight" data-key="main_title">복불복의 역사:<br>고대부터 현대까지</h1>
                 <p class="text-sm text-gray-500" data-key="date_info">작성일: 2024년 11월 17일 · 읽는 시간: 약 6분</p>
             </header>
-            <div id="article-summary" class="mb-10 p-6 bg-primary/5 rounded-2xl border border-primary/10 text-sm md:text-base"></div>
-            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
+            <!-- 핵심 요약 섹션 -->
+            <!-- 핵심 요약 섹션 -->
+            <div class="bg-gray-50 border-l-4 border-primary p-6 mb-10 rounded-r-xl">
+                <h2 class="text-base font-bold text-primary mb-3 flex items-center gap-2">
+                    <span class="material-icons text-lg">auto_awesome</span>
+                    <span data-key="summary_title">핵심 요약</span>
+                </h2>
+                <ul class="text-sm md:text-base text-gray-600 list-disc pl-5 space-y-2" id="article-summary" data-key="summary">
+                    <li>복불복은 인류 역사에서 공정성을 지키기 위한 핵심 기술이었습니다.</li>
+                    <li>고대 아테네는 제비뽑기를 통해 민주적 평등을 실현했습니다.</li>
+                    <li>무작위성은 인간의 주관을 배제하여 불필요한 갈등을 방지합니다.</li>
+                </ul>
+            </div>
+            </div>
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body" class="space-y-8 text-gray-700 leading-loose text-lg">
+                <p>복불복은 단순히 운을 시험하는 게임이 아닙니다. 인류 역사에서 공정성을 지키기 위한 가장 오래된 기술 중 하나입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. 고대 그리스의 제비뽑기 민주주의</h2>
+                    <p>민주주의의 발상지인 아테네에서는 공직자를 투표가 아닌 '제비뽑기'로 정했습니다. 이는 돈과 권력을 가진 사람이 정치에 개입하는 것을 막기 위한 완벽한 평등의 실현이었습니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. 전쟁과 평화의 결정</h2>
+                    <p>역사적으로 영토 분쟁이나 왕위 계승에서도 무작위 추첨이 쓰였습니다. 인간의 주관이 닿지 않는 곳에 결정을 맡김으로써 불필요한 전쟁을 막기도 했습니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">오늘날의 복불복</h2>
+                    <p>Zeze Hub는 이러한 역사적 유산을 현대적인 알고리즘으로 계승합니다. 복잡한 고민 앞에서 고대의 지혜를 빌려보세요.</p>
+            </div>
             <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
                 <a href="../" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
                     <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
@@ -94,7 +115,10 @@
             </div>
         </article>
     </main>
-    <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
+    <footer class="bg-surface py-12 mt-auto border-t border-gray-200 text-center text-gray-500 text-xs">
+        <div class="flex justify-center gap-6 mb-4">
+            <a href="../about.html" class="hover:text-primary transition-colors" data-key="footer_about">소개</a>
+        </div>
         <p>© 2026 ZezeStudio Decision Hub. All rights reserved.</p>
     </footer>
     <script>
@@ -114,8 +138,8 @@
                     <p>역사적으로 영토 분쟁이나 왕위 계승에서도 무작위 추첨이 쓰였습니다. 인간의 주관이 닿지 않는 곳에 결정을 맡김으로써 불필요한 전쟁을 막기도 했습니다.</p>
                     <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">오늘날의 복불복</h2>
                     <p>Zeze Hub는 이러한 역사적 유산을 현대적인 알고리즘으로 계승합니다. 복잡한 고민 앞에서 고대의 지혜를 빌려보세요.</p>
-                `
-            },
+                `,
+                "footer_about": "소개"},
             "en": {
                 "meta_title": "History of Games of Chance - Zeze Hub Insight",
                 "category": "History Column",
@@ -131,19 +155,32 @@
                     <p>Historically, random draws were used in land disputes or royal successions. Leaving decisions to forces beyond human control often prevented unnecessary wars.</p>
                     <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Modern Randomness</h2>
                     <p>Zeze Hub inherits this historical legacy with modern algorithms. Borrow the wisdom of antiquity when faced with complex decisions.</p>
-                `
-            }
+                `,
+                "footer_about": "About"}
         };
         let currentLang = localStorage.getItem('lang') || 'ko';
-        function applyLanguage() {
+                function applyLanguage() {
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.dataset.key;
-                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+                if (translations[currentLang][key]) {
+                    if (key !== 'summary' || !Array.isArray(translations[currentLang].summary)) {
+                        el.innerHTML = translations[currentLang][key];
+                    }
+                }
             });
             document.getElementById('article-body').innerHTML = translations[currentLang].body;
-            if (translations[currentLang].summary) {
-                document.getElementById('article-summary').innerHTML = translations[currentLang].summary;
+            
+            const summaryEl = document.getElementById('article-summary');
+            if (summaryEl && translations[currentLang].summary) {
+                if (Array.isArray(translations[currentLang].summary)) {
+                    summaryEl.innerHTML = translations[currentLang].summary
+                        .map(item => `<li class="flex items-start gap-2 text-gray-600"><span class="text-primary mt-1 text-sm">•</span><span>${item}</span></li>`)
+                        .join('');
+                } else {
+                    summaryEl.innerHTML = translations[currentLang].summary;
+                }
             }
+            
             document.documentElement.lang = currentLang;
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 const btnLang = btn.id.split('-')[1];
@@ -156,7 +193,7 @@
                 }
             });
         }
-        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
         document.addEventListener('DOMContentLoaded', applyLanguage);
     </script>
 </body>

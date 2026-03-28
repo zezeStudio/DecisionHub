@@ -91,12 +91,33 @@
                     <span class="material-icons text-primary">auto_awesome</span>
                     <span data-key="summary_title">핵심 요약 (Key Takeaways)</span>
                 </h3>
-                <ul class="space-y-3" id="article-summary">
-                    <!-- Summary items will be injected by JS -->
+                <!-- 핵심 요약 섹션 -->
+            <!-- 핵심 요약 섹션 -->
+            <div class="bg-gray-50 border-l-4 border-primary p-6 mb-10 rounded-r-xl">
+                <h2 class="text-base font-bold text-primary mb-3 flex items-center gap-2">
+                    <span class="material-icons text-lg">auto_awesome</span>
+                    <span data-key="summary_title">핵심 요약</span>
+                </h2>
+                <ul class="text-sm md:text-base text-gray-600 list-disc pl-5 space-y-2" id="article-summary" data-key="summary">
                 </ul>
             </div>
+            </div>
 
-            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body" class="space-y-8 text-gray-700 leading-loose text-lg">
+                <p>우리는 더 많은 자유와 선택권이 있을수록 더 행복해질 것이라고 믿습니다. 하지만 현대 사회의 풍요로움은 때로 우리를 불행하게 만듭니다. 심리학자 배리 슈워츠(Barry Schwartz)는 이를 <strong>'선택의 역설(The Paradox of Choice)'</strong>이라고 명명했습니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">선택지가 많아질 때 발생하는 세 가지 부작용</h2>
+                    <ul class="list-disc pl-6 space-y-4">
+                        <li><strong>결정 마비 (Analysis Paralysis):</strong> 수많은 옵션을 비교하다가 결국 아무것도 선택하지 못하거나 결정을 무한정 미루게 됩니다.</li>
+                        <li><strong>기회비용에 대한 미련:</strong> 한 가지를 선택하면 포기해야 하는 다른 매력적인 옵션들이 떠올라, 선택한 결과에 대한 만족도가 떨어집니다.</li>
+                        <li><strong>기대치의 상승:</strong> 선택지가 많으면 "이 중에 완벽한 것이 반드시 있을 것"이라는 기대를 하게 되고, 현실적인 선택 결과에 실망하기 쉽습니다.</li>
+                    </ul>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">맥시마이저 vs 새티스파이저</h2>
+                    <p>슈워츠는 사람을 두 유형으로 나눕니다. <strong>맥시마이저(Maximizer)</strong>는 모든 대안을 조사하여 최고의 선택을 하려 노력합니다. 반면 <strong>새티스파이저(Satisficer)</strong>는 자신의 기준을 충족하는 첫 번째 옵션을 선택합니다.</p>
+                    <p>연구 결과, 맥시마이저는 객관적으로 더 좋은 결과를 얻을 확률이 높지만, 주관적인 행복도는 새티스파이저가 훨씬 높았습니다. 맥시마이저는 선택 후에도 끊임없이 '더 나은 것이 있었을지 모른다'는 후회에 시달리기 때문입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">해결책: 선택의 폭을 스스로 제한하라</h2>
+                    <p>행복한 결정을 내리기 위해서는 의도적으로 선택지를 줄여야 합니다. "오늘 점심은 무조건 이 건물 안에서 해결하겠다"는 식으로 물리적, 심리적 한계를 설정하세요.</p>
+                    <p>Zeze Hub의 도구들은 바로 이 지점에서 힘을 발휘합니다. 6개의 선택지만 주사위에 넣거나, 동전의 두 면 중 하나를 고르는 행위는 당신의 뇌를 무한한 가능성의 지옥에서 구출해내는 적극적인 심리 치료 과정입니다.</p>
+            </div>
             <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
                 <a href="../" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
                     <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
@@ -104,7 +125,10 @@
             </div>
         </article>
     </main>
-    <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
+    <footer class="bg-surface py-12 mt-auto border-t border-gray-200 text-center text-gray-500 text-xs">
+        <div class="flex justify-center gap-6 mb-4">
+            <a href="../about.html" class="hover:text-primary transition-colors" data-key="footer_about">소개</a>
+        </div>
         <p>© 2026 ZezeStudio Decision Hub. All rights reserved.</p>
     </footer>
     <script>
@@ -135,8 +159,8 @@
                     <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">해결책: 선택의 폭을 스스로 제한하라</h2>
                     <p>행복한 결정을 내리기 위해서는 의도적으로 선택지를 줄여야 합니다. "오늘 점심은 무조건 이 건물 안에서 해결하겠다"는 식으로 물리적, 심리적 한계를 설정하세요.</p>
                     <p>Zeze Hub의 도구들은 바로 이 지점에서 힘을 발휘합니다. 6개의 선택지만 주사위에 넣거나, 동전의 두 면 중 하나를 고르는 행위는 당신의 뇌를 무한한 가능성의 지옥에서 구출해내는 적극적인 심리 치료 과정입니다.</p>
-                `
-            },
+                `,
+                "footer_about": "소개"},
             "en": {
                 "meta_title": "The Paradox of Choice: Why More is Less - Zeze Hub Insight",
                 "category": "Psychology Column",
@@ -163,24 +187,32 @@
                     <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Solution: Limit Your Options Intentionally</h2>
                     <p>To make happy decisions, you must intentionally limit your choices. Set physical or psychological boundaries, like "I'll pick lunch from this building only."</p>
                     <p>Zeze Hub's tools work exactly at this point. Putting only 6 options on a dice or choosing between two sides of a coin is an active psychological rescue mission for your brain, saving it from the hell of infinite possibilities.</p>
-                `
-            }
+                `,
+                "footer_about": "About"}
         };
         let currentLang = localStorage.getItem('lang') || 'ko';
-        function applyLanguage() {
+                function applyLanguage() {
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.dataset.key;
-                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+                if (translations[currentLang][key]) {
+                    if (key !== 'summary' || !Array.isArray(translations[currentLang].summary)) {
+                        el.innerHTML = translations[currentLang][key];
+                    }
+                }
             });
             document.getElementById('article-body').innerHTML = translations[currentLang].body;
             
-            const summaryList = document.getElementById('article-summary');
-            if (summaryList && translations[currentLang].summary) {
-                summaryList.innerHTML = translations[currentLang].summary
-                    .map(item => `<li class="flex items-start gap-2 text-gray-600"><span class="text-primary mt-1 text-sm">•</span><span>${item}</span></li>`)
-                    .join('');
+            const summaryEl = document.getElementById('article-summary');
+            if (summaryEl && translations[currentLang].summary) {
+                if (Array.isArray(translations[currentLang].summary)) {
+                    summaryEl.innerHTML = translations[currentLang].summary
+                        .map(item => `<li class="flex items-start gap-2 text-gray-600"><span class="text-primary mt-1 text-sm">•</span><span>${item}</span></li>`)
+                        .join('');
+                } else {
+                    summaryEl.innerHTML = translations[currentLang].summary;
+                }
             }
-
+            
             document.documentElement.lang = currentLang;
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 const btnLang = btn.id.split('-')[1];
@@ -193,7 +225,7 @@
                 }
             });
         }
-        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
         document.addEventListener('DOMContentLoaded', applyLanguage);
     </script>
 </body>

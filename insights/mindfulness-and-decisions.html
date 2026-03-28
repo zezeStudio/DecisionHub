@@ -91,12 +91,27 @@
                     <span class="material-icons text-primary">auto_awesome</span>
                     <span data-key="summary_title">핵심 요약 (Key Takeaways)</span>
                 </h3>
-                <ul class="space-y-3" id="article-summary">
-                    <!-- Summary items will be injected by JS -->
+                <!-- 핵심 요약 섹션 -->
+            <!-- 핵심 요약 섹션 -->
+            <div class="bg-gray-50 border-l-4 border-primary p-6 mb-10 rounded-r-xl">
+                <h2 class="text-base font-bold text-primary mb-3 flex items-center gap-2">
+                    <span class="material-icons text-lg">auto_awesome</span>
+                    <span data-key="summary_title">핵심 요약</span>
+                </h2>
+                <ul class="text-sm md:text-base text-gray-600 list-disc pl-5 space-y-2" id="article-summary" data-key="summary">
                 </ul>
             </div>
+            </div>
 
-            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body"></div>
+            <div class="space-y-6 text-gray-700 leading-loose text-lg" id="article-body" class="space-y-8 text-gray-700 leading-loose text-lg">
+                <p>결정을 내릴 때 우리는 종종 과거의 실패를 후회하거나 미래의 불확실성을 걱정합니다. 하지만 진정으로 현명한 결정은 '지금 이 순간'에 온전히 깨어있을 때 가능합니다. 이것이 바로 <strong>마음챙김(Mindfulness)</strong> 의사결정입니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. 감정적 폭풍 가라앉히기</h2>
+                    <p>불안이나 분노 상태에서 내린 결정은 나중에 후회할 가능성이 매우 높습니다. 마음챙김은 강렬한 감정과 나 사이에 거리를 두게 하여, 객관적인 관점에서 상황을 바라볼 수 있게 돕습니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">2. '일시 정지'의 힘</h2>
+                    <p>즉각적인 반응 대신 3초간 숨을 들이마시고 내쉬는 것만으로도 뇌의 전전두엽이 활성화됩니다. 이 짧은 멈춤이 충동적인 선택을 막고 더 나은 길을 보여줍니다.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Zeze Hub: 비우기를 통한 채우기</h2>
+                    <p>머릿속이 너무 복잡해 아무것도 결정할 수 없다면, 잠시 명상을 하고 <a href="../magiclamp/magiclamp.html" class="text-primary font-bold">요술 램프</a>의 무작위 결과를 받아들여 보세요. 그것이 정답이라서가 아니라, 당신의 뇌가 잠시 휴식하고 본능적인 직관에 집중할 시간을 주기 위해서입니다.</p>
+            </div>
             <div class="mt-12 pt-8 border-t border-gray-100 flex justify-center">
                 <a href="../" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-bold rounded-full hover:bg-gray-800 transition-colors">
                     <span class="material-icons">home</span> <span data-key="back_home">허브로 돌아가기</span>
@@ -104,7 +119,10 @@
             </div>
         </article>
     </main>
-    <footer class="bg-surface py-8 border-t border-gray-200 text-center text-gray-500 text-xs">
+    <footer class="bg-surface py-12 mt-auto border-t border-gray-200 text-center text-gray-500 text-xs">
+        <div class="flex justify-center gap-6 mb-4">
+            <a href="../about.html" class="hover:text-primary transition-colors" data-key="footer_about">소개</a>
+        </div>
         <p>© 2026 ZezeStudio Decision Hub. All rights reserved.</p>
     </footer>
     <script>
@@ -129,8 +147,8 @@
                     <p>즉각적인 반응 대신 3초간 숨을 들이마시고 내쉬는 것만으로도 뇌의 전전두엽이 활성화됩니다. 이 짧은 멈춤이 충동적인 선택을 막고 더 나은 길을 보여줍니다.</p>
                     <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Zeze Hub: 비우기를 통한 채우기</h2>
                     <p>머릿속이 너무 복잡해 아무것도 결정할 수 없다면, 잠시 명상을 하고 <a href="../magiclamp/magiclamp.html" class="text-primary font-bold">요술 램프</a>의 무작위 결과를 받아들여 보세요. 그것이 정답이라서가 아니라, 당신의 뇌가 잠시 휴식하고 본능적인 직관에 집중할 시간을 주기 위해서입니다.</p>
-                `
-            },
+                `,
+                "footer_about": "소개"},
             "en": {
                 "meta_title": "Mindfulness and Choice - Zeze Hub Insight",
                 "category": "Mental Health Column",
@@ -151,24 +169,32 @@
                     <p>Simply taking a 3-second breath before reacting activates the prefrontal cortex. This short pause prevents impulsive choices and reveals a better path.</p>
                     <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">Zeze Hub: Filling by Emptying</h2>
                     <p>If your mind is too cluttered to decide, try a brief meditation and then accept a random result from the <a href="../magiclamp/magiclamp.html" class="text-primary font-bold">Magic Lamp</a>. Not because it's the "answer," but to give your brain a rest and a chance to focus on your instinctive intuition.</p>
-                `
-            }
+                `,
+                "footer_about": "About"}
         };
         let currentLang = localStorage.getItem('lang') || 'ko';
-        function applyLanguage() {
+                function applyLanguage() {
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.dataset.key;
-                if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+                if (translations[currentLang][key]) {
+                    if (key !== 'summary' || !Array.isArray(translations[currentLang].summary)) {
+                        el.innerHTML = translations[currentLang][key];
+                    }
+                }
             });
             document.getElementById('article-body').innerHTML = translations[currentLang].body;
             
-            const summaryList = document.getElementById('article-summary');
-            if (summaryList && translations[currentLang].summary) {
-                summaryList.innerHTML = translations[currentLang].summary
-                    .map(item => `<li class="flex items-start gap-2 text-gray-600"><span class="text-primary mt-1 text-sm">•</span><span>${item}</span></li>`)
-                    .join('');
+            const summaryEl = document.getElementById('article-summary');
+            if (summaryEl && translations[currentLang].summary) {
+                if (Array.isArray(translations[currentLang].summary)) {
+                    summaryEl.innerHTML = translations[currentLang].summary
+                        .map(item => `<li class="flex items-start gap-2 text-gray-600"><span class="text-primary mt-1 text-sm">•</span><span>${item}</span></li>`)
+                        .join('');
+                } else {
+                    summaryEl.innerHTML = translations[currentLang].summary;
+                }
             }
-
+            
             document.documentElement.lang = currentLang;
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 const btnLang = btn.id.split('-')[1];
@@ -181,7 +207,7 @@
                 }
             });
         }
-        function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
+function setLanguage(lang) { currentLang = lang; localStorage.setItem('lang', lang); applyLanguage(); }
         document.addEventListener('DOMContentLoaded', applyLanguage);
     </script>
 </body>

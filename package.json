@@ -1,4 +1,8 @@
 {
+  "name": "zeze-decision-hub",
+  "version": "1.1.0",
+  "description": "Smart Decision-making Tool Set with Magic Lamp UX",
+  "main": "main.js",
   "dependencies": {
     "html2canvas": "^1.4.1"
   }
