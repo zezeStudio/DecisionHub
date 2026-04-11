@@ -1,14 +1,37 @@
-# Clean URLs - Force redirection from .html to extensionless URLs
+# 1. Direct File Access Prevention (301 Redirects to Clean URLs)
 /index.html / 301
-
-# Root Pages
 /about.html /about 301
 /contact.html /contact 301
 /privacy.html /privacy 301
 /terms.html /terms 301
 /hub-guide.html /hub-guide 301
 
-# Tool Guide Pages
+# Tool Main Files - Hide actual filenames
+/magiclamp/lamp.html /magiclamp/ 301
+/coinflip/flip.html /coinflip/ 301
+/destinydice/dice.html /destinydice/ 301
+/ladderclimb/climb.html /ladderclimb/ 301
+/drawinglots/lots.html /drawinglots/ 301
+/teammaker/make.html /teammaker/ 301
+/cardflip/card.html /cardflip/ 301
+/timebomb/bomb.html /timebomb/ 301
+/insights/blog.html /insights/ 301
+
+# 2. Internal Mappings (200 Rewrites - Map directory to custom file)
+/magiclamp/ /magiclamp/lamp.html 200
+/coinflip/ /coinflip/flip.html 200
+/destinydice/ /destinydice/dice.html 200
+/ladderclimb/ /ladderclimb/climb.html 200
+/drawinglots/ /drawinglots/lots.html 200
+/teammaker/ /teammaker/make.html 200
+/cardflip/ /cardflip/card.html 200
+/timebomb/ /timebomb/bomb.html 200
+/insights/ /insights/blog.html 200
+
+# 3. Clean URLs for Guides and Articles
+# We rely on Cloudflare's automatic .html matching for extensionless requests.
+# To avoid loops, we do NOT 301 redirect the .html version of these specifically
+# if they are causing issues, but the rules below are usually safe.
 /magiclamp/magiclamp-guide.html /magiclamp/magiclamp-guide 301
 /coinflip/coinflip-guide.html /coinflip/coinflip-guide 301
 /destinydice/destinydice-guide.html /destinydice/destinydice-guide 301
@@ -18,16 +41,6 @@
 /cardflip/cardflip-guide.html /cardflip/cardflip-guide 301
 /timebomb/timebomb-guide.html /timebomb/timebomb-guide 301
 
-# Insights Articles
-/insights/blog.html /insights/ 301
+# Insights Articles (slug matching)
+# Redirect .html to clean URL
 /insights/:slug.html /insights/:slug 301
-
-# Tool Main Files (Security: hide internal file names like lamp.html)
-/magiclamp/lamp.html /magiclamp/ 301
-/coinflip/flip.html /coinflip/ 301
-/destinydice/dice.html /destinydice/ 301
-/ladderclimb/climb.html /ladderclimb/ 301
-/drawinglots/lots.html /drawinglots/ 301
-/teammaker/make.html /teammaker/ 301
-/cardflip/card.html /cardflip/ 301
-/timebomb/bomb.html /timebomb/ 301
